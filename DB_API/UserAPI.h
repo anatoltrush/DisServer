@@ -9,15 +9,13 @@ class UserAPI
 public:
     UserAPI();
 
-    bool addUser(const QSqlDatabase& db);
-    bool deleteUser(const QSqlDatabase& db);
-    bool redactUser(const QSqlDatabase& db);
-    bool getUser(const QSqlDatabase& db, dis::User& user);
+    bool addUser(const QSqlDatabase& db, const dis::User &user);
+    bool deleteUser(const QSqlDatabase& db, const QString &uuid);
+    bool updateUser(const QSqlDatabase& db, const QString &uuid, const dis::User &newData);
+    bool getUserByUuid(const QSqlDatabase& db, const QString &uuid, dis::User &user);
 
     bool getUsers(const QSqlDatabase& db, QList<dis::User>& users);
 };
 }
 
 #endif // USERAPI_H
-
-// TODO: add GET

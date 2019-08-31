@@ -15,13 +15,18 @@ void dis::DBController::disconnect(){
 }
 
 bool dis::DBController::parseByteArray(const QByteArray &array){
-// make list of words
+    //TODO: make list of words
+}
+
+dis::User dis::DBController::getUserFromWords(){
+    // TODO: getUserFromWords
 }
 
 bool dis::DBController::parseQuery(){
     if(words.at(0) == "POST"){
         if(words.at(1) == "User"){
-            userAPI.addUser(dataBase); // TODO: implement
+            dis::User usr = getUserFromWords();
+            userAPI.addUser(dataBase, usr); // TODO: implement
         }
         if(words.at(1) == "Discussion"){
             discussionAPI.addDiscussion();
@@ -48,7 +53,8 @@ bool dis::DBController::parseQuery(){
     }
     if(words.at(0) == "DELETE"){
         if(words.at(1) == "User"){
-            userAPI.deleteUser(dataBase);
+            QString usUUID = words.at(2);
+            userAPI.deleteUser(dataBase, usUUID);
         }
         if(words.at(1) == "Discussion"){
             discussionAPI.deleteDiscussion();

@@ -16,12 +16,6 @@ public:
     bool connect(const QString& connectString);
     void disconnect();
 
-    //! fill "parsedWords"
-    bool parseByteArray(const QByteArray& array);
-
-    //!make right query
-    bool parseQuery();
-
     UserAPI userAPI;
     DiscussionAPI discussionAPI;
     PurchaseAPI purchaseAPI;
@@ -32,6 +26,15 @@ private:
     bool connected = false;
 
     QStringList words;
+
+    //!make right query
+    bool parseQuery();
+
+    //! fill "parsedWords"
+    bool parseByteArray(const QByteArray& array);
+
+    //! make User from ByteArray
+    dis::User getUserFromWords();
 };
 }
 

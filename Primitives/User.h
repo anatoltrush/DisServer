@@ -15,10 +15,10 @@ public:
     //! short constructor
     User(); // PHOTO?
     //! full constructor
-    //TODO: impl
+    //TODO: implement constructor if need
 
     // COMMON PROPERTY
-    QUuid uuid = QUuid::createUuid();
+    QString uuid = QUuid::createUuid().toString();
     QString name;
     QString surname;
     QString country;
@@ -29,19 +29,20 @@ public:
     int sex = 0;
 
     // SPECIAL PROPERTY
+    QString nickName;
+    QString login;
+    QString password;
     int score = 0;
     int level = 0;
     QDate time_registration;
     QDate last_active;
-    QString nickName;
-    QString login;
-    QString password;
 
     std::vector<dis::Discussion> discsGood;
     std::vector<dis::Discussion> discsBad;
     std::vector<dis::Purchase> purchases;
 
-    void fillData(const QSqlQuery& query, const QSqlRecord& rec);
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
+    void fillByList(const QList<QString> &words);
 
 private:
 };
