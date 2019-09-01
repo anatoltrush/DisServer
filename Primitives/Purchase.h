@@ -10,7 +10,7 @@ class Purchase
 public:
     Purchase();
 
-    QUuid uuid = QUuid::createUuid();
+    QString uuid = QUuid::createUuid().toString();
     int cost = 0;
     QString purch_name;
     QDate time_paid;

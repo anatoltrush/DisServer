@@ -10,13 +10,15 @@ class Discussion
 public:
     Discussion();
 
-    QUuid uuid = QUuid::createUuid();
+    QString uuid = QUuid::createUuid().toString();
     QString section;
     QString topic;
     QString author;
     QDate time_create;
+    int type = -1;
     int level = 0;
     int reward = 0;
+    QString languageRegion;
 };
 }
 

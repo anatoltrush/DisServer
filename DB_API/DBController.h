@@ -16,6 +16,8 @@ public:
     bool connect(const QString& connectString);
     void disconnect();
 
+    bool doQuery(const QByteArray& array);
+
     UserAPI userAPI;
     DiscussionAPI discussionAPI;
     PurchaseAPI purchaseAPI;
@@ -24,13 +26,14 @@ public:
 
 private:    
     bool connected = false;
+    QString connString;
 
     QStringList words;
 
     //!make right query
     bool parseQuery();
 
-    //! fill "parsedWords"
+    //! fill "words"
     bool parseByteArray(const QByteArray& array);
 
     //! make User from ByteArray
@@ -39,5 +42,3 @@ private:
 }
 
 #endif // DBCONTROLLER_H
-
-// TODO: check words size (validation of incoming message)

@@ -7,26 +7,68 @@ bool dis::DBController::connect(const QString &connectString){
     dataBase.setDatabaseName(connectString);
     //    db.setUserName("250PC\\Anatol250");
     //    db.setPassword("");
-    return  dataBase.open();
+    if(dataBase.open()){
+        connected = true;
+        connString = connectString;
+        qDebug() << "CONNECTED: "+ connString;
+        return true;
+    }
+    else{
+        connected = false;
+        qDebug() << "Not connected to DataBase";
+        return false;
+    }
 }
 
 void dis::DBController::disconnect(){
     dataBase.close();
 }
 
+bool dis::DBController::doQuery(const QByteArray &array){
+    if(parseByteArray(array)){
+        if(parseQuery()) return true;
+        else{
+            qDebug() << "Query NOT done";
+            return false;
+        }
+    }
+    else{
+        qDebug() << "QByteArray NOT parsed";
+        return false;
+    }
+}
+
 bool dis::DBController::parseByteArray(const QByteArray &array){
-    //TODO: make list of words
+    QString strArray = QString(array);
+    if(strArray.size() <= 0) return false;
+
+    words.clear();
+    words = strArray.split('_'); // CONFIG TOKEN
+    if(words.size() <= 0) return false;
+
+    return true;
 }
 
 dis::User dis::DBController::getUserFromWords(){
-    // TODO: getUserFromWords
+    dis::User usr;
+    usr.fillByList(words);
+    return usr;
 }
 
 bool dis::DBController::parseQuery(){
+    if(!connected){
+        qDebug() << "Base NOT connected";
+        return false;
+    }
+
     if(words.at(0) == "POST"){
         if(words.at(1) == "User"){
             dis::User usr = getUserFromWords();
-            userAPI.addUser(dataBase, usr); // TODO: implement
+            if(userAPI.addUser(dataBase, usr)) return true;
+            else{
+                qDebug() << "User NOT added";
+                return false;
+            }
         }
         if(words.at(1) == "Discussion"){
             discussionAPI.addDiscussion();
@@ -76,7 +118,7 @@ bool dis::DBController::parseQuery(){
         }
     }
     else{
-        // TODO:
+        // TODO: default parseQuery
     }
 }
 

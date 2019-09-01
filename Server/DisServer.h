@@ -2,6 +2,7 @@
 #define DISSERVER_H
 
 #include <QTcpServer>
+#include <QTcpSocket>
 
 #define OK                  200
 #define ERR_CREATED         201 // (PUT || POST) CREATED GOOD

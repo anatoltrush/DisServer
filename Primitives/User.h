@@ -21,12 +21,15 @@ public:
     QString uuid = QUuid::createUuid().toString();
     QString name;
     QString surname;
+
     QString country;
+    QString city;
+
     QString email;
     QList<QString> IPs;
 
     QDate time_birth;
-    int sex = 0;
+    int sex = 0;    
 
     // SPECIAL PROPERTY
     QString nickName;
@@ -50,4 +53,4 @@ private:
 
 #endif // USER_H
 
-// TODO: validations
+// TODO: validations some parameters
