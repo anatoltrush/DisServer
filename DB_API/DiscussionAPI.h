@@ -10,6 +10,7 @@ class DiscussionAPI
 {
 public:
     DiscussionAPI();
+    ~DiscussionAPI();
 
     bool addDiscussion();
     bool deleteDiscussion();

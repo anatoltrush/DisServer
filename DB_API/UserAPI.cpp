@@ -2,6 +2,8 @@
 
 dis::UserAPI::UserAPI(){}
 
+dis::UserAPI::~UserAPI(){}
+
 bool dis::UserAPI::addUser(const QSqlDatabase &db, const User &user){
     QSqlQuery query(db);
     query.prepare("INSERT INTO Users (UUID, Name, Surname, Country) "

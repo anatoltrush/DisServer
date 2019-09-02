@@ -2,6 +2,8 @@
 
 dis::User::User(){}
 
+dis::User::~User(){}
+
 void dis::User::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf("UUID")).toString();
     this->name = query.value(rec.indexOf("Name")).toString();

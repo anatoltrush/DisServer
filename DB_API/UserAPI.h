@@ -8,6 +8,7 @@ class UserAPI
 {
 public:
     UserAPI();
+    ~UserAPI();
 
     bool addUser(const QSqlDatabase& db, const dis::User &user);
     bool deleteUser(const QSqlDatabase& db, const QString &uuid);

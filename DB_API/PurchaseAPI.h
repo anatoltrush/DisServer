@@ -10,6 +10,7 @@ class PurchaseAPI
 {
 public:
     PurchaseAPI();
+    ~PurchaseAPI();
 
     bool addPurchase();
     bool deletePurchase();

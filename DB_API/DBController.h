@@ -10,19 +10,21 @@ class DBController
 {
 public:
     DBController();
+    ~DBController();
 
     QSqlDatabase dataBase;
 
     bool connect(const QString& connectString);
     void disconnect();
 
+    //! from ByteArray
     bool doQuery(const QByteArray& array);
+    //! from JSON file
+    bool doQuery();
 
     UserAPI userAPI;
     DiscussionAPI discussionAPI;
     PurchaseAPI purchaseAPI;
-
-    ~DBController();
 
 private:    
     bool connected = false;

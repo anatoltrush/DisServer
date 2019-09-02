@@ -9,6 +9,7 @@ class Discussion
 {
 public:
     Discussion();
+    ~Discussion();
 
     QString uuid = QUuid::createUuid().toString();
     QString section;

@@ -7,9 +7,7 @@
 #include "Server/DisServer.h"
 
 int main(){
-    QTcpServer server;
-
-    dis::DisServer serv;
+    dis::DisServer disServ;
 
     dis::DBController dbcntrl;
     dbcntrl.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");

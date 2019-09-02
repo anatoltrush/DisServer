@@ -9,6 +9,7 @@ class Purchase
 {
 public:
     Purchase();
+    ~Purchase();
 
     QString uuid = QUuid::createUuid().toString();
     int cost = 0;

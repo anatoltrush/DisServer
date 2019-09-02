@@ -20,6 +20,10 @@ bool dis::DBController::connect(const QString &connectString){
     }
 }
 
+dis::DBController::~DBController(){
+    disconnect();
+}
+
 void dis::DBController::disconnect(){
     dataBase.close();
 }
@@ -36,6 +40,10 @@ bool dis::DBController::doQuery(const QByteArray &array){
         qDebug() << "QByteArray NOT parsed";
         return false;
     }
+}
+
+bool dis::DBController::doQuery(){
+
 }
 
 bool dis::DBController::parseByteArray(const QByteArray &array){
@@ -120,8 +128,4 @@ bool dis::DBController::parseQuery(){
     else{
         // TODO: default parseQuery
     }
-}
-
-dis::DBController::~DBController(){
-    disconnect();
 }

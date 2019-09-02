@@ -1,21 +1,11 @@
 #include "PurchaseAPI.h"
 
-dis::PurchaseAPI::PurchaseAPI()
-{
+dis::PurchaseAPI::PurchaseAPI(){}
 
-}
+dis::PurchaseAPI::~PurchaseAPI(){}
 
-bool dis::PurchaseAPI::addPurchase()
-{
+bool dis::PurchaseAPI::addPurchase(){}
 
-}
+bool dis::PurchaseAPI::deletePurchase(){}
 
-bool dis::PurchaseAPI::deletePurchase()
-{
-
-}
-
-bool dis::PurchaseAPI::redactPurchase()
-{
-
-}
+bool dis::PurchaseAPI::redactPurchase(){}
