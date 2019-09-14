@@ -26,7 +26,9 @@ public:
     DiscussionAPI discussionAPI;
     PurchaseAPI purchaseAPI;
 
-private:    
+private:
+    char separToken = '_';
+
     bool connected = false;
     QString connString;
 

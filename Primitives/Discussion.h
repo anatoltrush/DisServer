@@ -16,7 +16,7 @@ public:
     QString topic;
     QString author;
     QDate time_create;
-    int type = -1;
+    int type = -1; // type of discussion
     int level = 0;
     int reward = 0;
     QString languageRegion;

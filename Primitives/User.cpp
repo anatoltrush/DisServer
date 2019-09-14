@@ -12,8 +12,8 @@ void dis::User::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     // FILL ALL FIELDS
 }
 
-void dis::User::fillByList(const QList<QString> &words){
-    int startInd = 2;
+void dis::User::fillByList(const QList<QString> &words, bool isFromParse){
+    int startInd = (isFromParse) ? 2 : 0;
     for(int i = startInd; i < words.size(); i++){
         if(words[i] == "Name") this->name = words[i + 1];
         if(words[i] == "Surname") this->surname = words[i + 1];

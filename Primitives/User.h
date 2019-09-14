@@ -36,17 +36,21 @@ public:
     QString nickName;
     QString login;
     QString password;
+    int role = -1;
+    int status = -1; // confirmed, banned or else
     int score = 0;
     int level = 0;
     QDate time_registration;
-    QDate last_active;
+    QDate time_last_active;
 
     std::vector<dis::Discussion> discsGood;
     std::vector<dis::Discussion> discsBad;
     std::vector<dis::Purchase> purchases;
 
+    bool isAuthorized = false;
+
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
-    void fillByList(const QList<QString> &words);
+    void fillByList(const QList<QString> &words, bool isFromParse = false);
 
 private:
 };

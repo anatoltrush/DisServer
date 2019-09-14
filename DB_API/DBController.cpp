@@ -51,7 +51,7 @@ bool dis::DBController::parseByteArray(const QByteArray &array){
     if(strArray.size() <= 0) return false;
 
     words.clear();
-    words = strArray.split('_'); // CONFIG TOKEN
+    words = strArray.split(separToken); // CONFIG TOKEN
     if(words.size() <= 0) return false;
 
     return true;

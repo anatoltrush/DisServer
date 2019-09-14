@@ -10,11 +10,11 @@ int main(){
     dis::DisServer disServ;
 
     dis::DBController dbcntrl;
-    dbcntrl.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
-    QByteArray arrQuery("POST_User_Name_Vitya one_Surname_Dude_Country_Country for life");
-    if(dbcntrl.doQuery(arrQuery)) qDebug() << "User added!";
+//    dbcntrl.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+//    QByteArray arrQuery("POST_User_Name_Vitya one_Surname_Dude_Country_Country for life");
+//    if(dbcntrl.doQuery(arrQuery)) qDebug() << "User added!";
 
-//    std::cout << "Hello SERV!" << std::endl;
+    std::cout << "SIZE: " << sizeof(dis::User) << std::endl;
 
     system("pause");
     return 0;
