@@ -15,8 +15,6 @@ public:
     //! short constructor
     User(); // PHOTO?
     ~User();
-    //! full constructor
-    //TODO: implement constructor if need
 
     // COMMON PROPERTY
     QString uuid = QUuid::createUuid().toString();

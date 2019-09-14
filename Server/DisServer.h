@@ -41,3 +41,6 @@ public slots:
 }
 
 #endif // DISSERVER_H
+
+// TODO: make URL connect
+// TODO: QRequest
