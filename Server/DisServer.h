@@ -32,6 +32,8 @@ public:
 
     int errorStatus = 0;
 
+    void incomingConnection(qintptr socketDescriptor);
+
 public slots:
     void slotNewConnection();
     void slotTextMessage(QString message);
@@ -44,3 +46,4 @@ public slots:
 
 // TODO: make URL connect
 // TODO: QRequest
+// TODO: last request

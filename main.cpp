@@ -14,7 +14,8 @@ int main(){
 //    QByteArray arrQuery("POST_User_Name_Vitya one_Surname_Dude_Country_Country for life");
 //    if(dbcntrl.doQuery(arrQuery)) qDebug() << "User added!";
 
-    std::cout << "SIZE: " << sizeof(dis::User) << std::endl;
+    std::cout << "SIZE U: " << sizeof(dis::User) << std::endl;
+    std::cout << "SIZE D: " << sizeof(dis::Discussion) << std::endl;
 
     system("pause");
     return 0;

@@ -12,6 +12,10 @@ dis::DisServer::~DisServer(){
         delete cl.websocket;
 }
 
+void dis::DisServer::incomingConnection(qintptr socketDescriptor){
+    std::cout << "!!!: " << socketDescriptor << std::endl;
+}
+
 void dis::DisServer::slotNewConnection(){
     dis::Client newClient;
     newClient.websocket = webServer->nextPendingConnection();

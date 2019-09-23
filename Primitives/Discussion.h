@@ -14,7 +14,7 @@ public:
     QString uuid = QUuid::createUuid().toString();
     QString section;
     QString topic;
-    QString author;
+    QString author; // uuid
     QDate time_create;
     int type = -1; // type of discussion
     int level = 0;
