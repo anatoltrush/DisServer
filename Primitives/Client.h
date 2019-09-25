@@ -7,14 +7,15 @@
 #include "User.h"
 
 namespace dis{
+
 //! Will be used in chats
-class Client : public User
+class Client
 {
 public:
     Client();
     ~Client();
 
-    QDate time_last_request;
+    QDateTime connection_time;
     QTcpSocket *socket;
 };
 }

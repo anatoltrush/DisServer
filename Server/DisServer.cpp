@@ -12,6 +12,7 @@ dis::DisServer::~DisServer(){}
 void dis::DisServer::slotNewConnection(){
     dis::Client newClient;
     newClient.socket = tcpServer->nextPendingConnection();
+    newClient.connection_time = QDateTime::currentDateTime();
 
     connect(newClient.socket, &QTcpSocket::readyRead, this, &DisServer::slotReadyRead);
     connect(newClient.socket, &QTcpSocket::disconnected, this, &DisServer::slotClientDisconnected);
@@ -23,16 +24,33 @@ void dis::DisServer::slotNewConnection(){
 void dis::DisServer::slotReadyRead(){
     QTcpSocket *socket = qobject_cast<QTcpSocket*>(sender());
 
-    qDebug() << socket->readAll();
+    QString reqst(socket->readAll());
+    qDebug() << reqst;
+    QStringList fullWords = reqst.split("\r\n");
+    QStringList infoWords = fullWords.front().split("/");
 
-    QString resp = "HTTP/1.1 200 OK\r\n\r\n";
-
+    QString resp;
     resp += "<b>DISPUTE CONNECTED!</b>";
-    resp += "<hr noshade>";
+    resp += "<hr size=5; color=FF0000>";
     resp += "<br>";
-    resp += "<a href= /users HTTP/1.1>USERS</a>";
-    resp += "<br>";
-    resp += "<a href= /discussions >DISCUSSIONS</a>";
+
+    if(infoWords[1].contains("discussion")){
+        dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+        QList<dis::Discussion>discs;
+        dbcntr.discussionAPI.getDiscussions(dbcntr.dataBase, discs);
+        dbcntr.disconnect();
+
+        for(const auto &disc : discs){
+            resp += "<li>";
+            resp += "<b>-----";
+            resp += "-----</b>";
+            resp += "<br>";
+            resp += "<hr>";
+        }
+    }
+    else{
+        resp += "<a href= /discussion >DISCUSSIONS</a>";
+    }
 
     QByteArray arr;
     arr.append(resp);

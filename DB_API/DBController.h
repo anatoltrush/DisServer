@@ -14,6 +14,7 @@ public:
 
     QSqlDatabase dataBase;
 
+    //! string for test "DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;"
     bool connect(const QString& connectString);
     void disconnect();
 
