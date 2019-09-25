@@ -12,12 +12,12 @@ public:
     DiscussionAPI();
     ~DiscussionAPI();
 
-    bool addDiscussion();
-    bool deleteDiscussion();
-    bool redactDiscussion();
+    bool addDiscussion(const QSqlDatabase& db, const dis::Discussion &discuss);
+    bool deleteDiscussion(const QSqlDatabase& db);
+    bool redactDiscussion(const QSqlDatabase& db);
+
+    bool getDiscussions(const QSqlDatabase& db, QList<dis::Discussion>& discussions);
 };
 }
 
 #endif // DISCUSSIONAPI_H
-
-// TODO: add GET

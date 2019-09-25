@@ -55,5 +55,3 @@ private:
 }
 
 #endif // USER_H
-
-// TODO: validations some parameters

@@ -2,11 +2,12 @@
 #define CLIENT_H
 
 #include <QDate>
-#include <QWebSocket>
+#include <QTcpSocket>
 
 #include "User.h"
 
 namespace dis{
+//! Will be used in chats
 class Client : public User
 {
 public:
@@ -14,7 +15,7 @@ public:
     ~Client();
 
     QDate time_last_request;
-    QWebSocket *websocket;
+    QTcpSocket *socket;
 };
 }
 

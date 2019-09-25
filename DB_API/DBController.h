@@ -17,10 +17,11 @@ public:
     bool connect(const QString& connectString);
     void disconnect();
 
-    //! from ByteArray
+    //! from ByteArray (start method)
     bool doQuery(const QByteArray& array);
-    //! from JSON file
-    bool doQuery();
+
+    //! from string (if got string)
+    bool doQuery(const QString& string);
 
     UserAPI userAPI;
     DiscussionAPI discussionAPI;

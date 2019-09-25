@@ -42,8 +42,14 @@ bool dis::DBController::doQuery(const QByteArray &array){
     }
 }
 
-bool dis::DBController::doQuery(){
+bool dis::DBController::doQuery(const QString &string){
+    words = string.split(separToken); // CONFIG TOKEN
 
+    if(parseQuery()) return true;
+    else{
+        qDebug() << "Query NOT done";
+        return false;
+    }
 }
 
 bool dis::DBController::parseByteArray(const QByteArray &array){
@@ -79,7 +85,8 @@ bool dis::DBController::parseQuery(){
             }
         }
         if(words.at(1) == "Discussion"){
-            discussionAPI.addDiscussion();
+            dis::Discussion disc; // get by words
+            discussionAPI.addDiscussion(dataBase, disc);
         }
         if(words.at(1) == "Purchase"){
             purchaseAPI.addPurchase();
@@ -107,7 +114,7 @@ bool dis::DBController::parseQuery(){
             userAPI.deleteUser(dataBase, usUUID);
         }
         if(words.at(1) == "Discussion"){
-            discussionAPI.deleteDiscussion();
+            discussionAPI.deleteDiscussion(dataBase);
         }
         if(words.at(1) == "Purchase"){
             purchaseAPI.deletePurchase();

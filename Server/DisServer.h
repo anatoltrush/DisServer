@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include <QWebSocketServer>
+#include <QTcpServer>
 
 #include "../DB_API/DBController.h"
 #include "../QDisput/Primitives/Client.h"
@@ -25,25 +25,25 @@ public:
     DisServer();
     ~DisServer();
 
-    QWebSocketServer *webServer;
+    QTcpServer *tcpServer;
     dis::DBController dbcntr;
 
     QList<dis::Client> clients;
 
     int errorStatus = 0;
 
-    void incomingConnection(qintptr socketDescriptor);
-
 public slots:
     void slotNewConnection();
-    void slotTextMessage(QString message);
-    void slotBinaryMessage(QByteArray message);
+    void slotReadyRead();
     void slotClientDisconnected();
+
+    void slotSocketDeleted();
+
+signals:
+
 };
 }
 
 #endif // DISSERVER_H
 
-// TODO: make URL connect
-// TODO: QRequest
-// TODO: last request
+// TODO: SEND MESSAGE TO ALL

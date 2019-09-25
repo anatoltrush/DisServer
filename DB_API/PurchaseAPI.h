@@ -19,5 +19,3 @@ public:
 }
 
 #endif // PURCHASEAPI_H
-
-// TODO: add GET
