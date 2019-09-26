@@ -30,8 +30,9 @@ void dis::DisServer::slotReadyRead(){
     QStringList infoWords = fullWords.front().split("/");
 
     QString resp;
+    resp += "HTTP/1.1 200 OK\r\n\r\n";
     resp += "<b>DISPUTE CONNECTED!</b>";
-    resp += "<hr size=5; color=FF0000>";
+    resp += "<hr size=8; color=FF0000>";
     resp += "<br>";
 
     if(infoWords[1].contains("discussion")){
@@ -40,10 +41,19 @@ void dis::DisServer::slotReadyRead(){
         dbcntr.discussionAPI.getDiscussions(dbcntr.dataBase, discs);
         dbcntr.disconnect();
 
+        resp += "<b>ID\tSection\tTopic\tReward\tCreated\tLang</b><br><hr>";
         for(const auto &disc : discs){
             resp += "<li>";
-            resp += "<b>-----";
-            resp += "-----</b>";
+            resp += "<b>";
+
+            resp += disc.uuid + "\t";
+            resp += disc.section + "\t";
+            resp += disc.topic + "\t";
+            resp += QString::number(disc.reward) + "\t";
+            resp += disc.time_create + "\t";
+            resp += disc.languageRegion;
+
+            resp += "</b>";
             resp += "<br>";
             resp += "<hr>";
         }

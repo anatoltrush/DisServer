@@ -6,7 +6,7 @@
 #include <QTcpServer>
 
 #include "../DB_API/DBController.h"
-#include "../QDisput/Primitives/Client.h"
+#include "SystemAPI.h"
 
 #define OK                  200
 #define ERR_CREATED         201 // (PUT || POST) CREATED GOOD

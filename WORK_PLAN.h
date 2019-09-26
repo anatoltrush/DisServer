@@ -6,8 +6,6 @@
 // --- 1 ---
 
 // TODO: see all request
-// TODO: HTML answer
-// TODO: HTML to DATA_BASE
 // TODO: don't close socket if user chatting
 
 // --- 2 --- PARSE
@@ -19,3 +17,8 @@
 
 // TODO: think of BASE (make queries)
 // TODO: Make keys in tables
+
+// --- 4 --- IMG
+// load image
+
+// TODO:!!! PARSER OF REQUEST AND HOW TO RETURN OBJECT
