@@ -10,6 +10,7 @@ public:
     SystemAPI();
 
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
+    void kickByTime(QList<dis::Client> &clients);
 };
 }
 

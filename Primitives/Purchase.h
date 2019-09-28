@@ -11,8 +11,7 @@ public:
     Purchase();
     ~Purchase();
 
-    QString uuid = QUuid::createUuid().toString();
-    int cost = 0;
+    QString uuid; // USER UUID
     QString purch_name;
     QDate time_paid;
     QDate time_exp;

@@ -7,18 +7,22 @@
 
 // TODO: see all request
 // TODO: don't close socket if user chatting
-
-// --- 2 --- PARSE
-
-// TODO: create abstract PARSE
 // TODO: make PARSE CLASS
+
+// --- 2 --- PROTOCOL
+
+// TODO:!!! LEARN HTTP PROTOCOL
 
 // --- 3 --- BASE
 
 // TODO: think of BASE (make queries)
 // TODO: Make keys in tables
 
-// --- 4 --- IMG
-// load image
+/*SQL PURCHASES TABLE
+ * uuid user
+ * purch_name
+ * time_paid
+ * time_exp
+*/
 
-// TODO:!!! PARSER OF REQUEST AND HOW TO RETURN OBJECT
+// TODO: IMG SIZE SSAVE IN DB

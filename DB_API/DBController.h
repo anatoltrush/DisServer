@@ -4,6 +4,8 @@
 #include "UserAPI.h"
 #include "DiscussionAPI.h"
 #include "PurchaseAPI.h"
+#include "CommentAPI.h"
+#include "ImageAPI.h"
 
 namespace dis{
 class DBController
@@ -27,6 +29,8 @@ public:
     UserAPI userAPI;
     DiscussionAPI discussionAPI;
     PurchaseAPI purchaseAPI;
+    CommentAPI commentAPI;
+    ImageAPI imageAPI;
 
 private:
     char separToken = '_';

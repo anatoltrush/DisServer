@@ -4,7 +4,8 @@ dis::DisServer::DisServer(){
     tcpServer = new QTcpServer;
 
     connect(tcpServer, &QTcpServer::newConnection, this, &DisServer::slotNewConnection);
-//    connect(this, SIGNAL(socketDeleted()), this, SLOT(slotSocketDeleted()));
+
+    dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
 }
 
 dis::DisServer::~DisServer(){}
@@ -35,23 +36,22 @@ void dis::DisServer::slotReadyRead(){
     resp += "<hr size=8; color=FF0000>";
     resp += "<br>";
 
-    if(infoWords[1].contains("discussion")){
-        dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+    if(infoWords[1].contains("discussion")){        
         QList<dis::Discussion>discs;
         dbcntr.discussionAPI.getDiscussions(dbcntr.dataBase, discs);
         dbcntr.disconnect();
 
-        resp += "<b>ID\tSection\tTopic\tReward\tCreated\tLang</b><br><hr>";
+        resp += "<b>&emsp;&emsp;ID&emsp; &brvbar;Section&emsp; &brvbar;Topic&emsp; &brvbar;Reward&emsp; &brvbar;Created&emsp; &brvbar;Lang</b><br><hr>";
         for(const auto &disc : discs){
             resp += "<li>";
             resp += "<b>";
 
-            resp += disc.uuid + "\t";
-            resp += disc.section + "\t";
-            resp += disc.topic + "\t";
-            resp += QString::number(disc.reward) + "\t";
-            resp += disc.time_create + "\t";
-            resp += disc.languageRegion;
+            resp += disc.uuid + "&nbsp; &brvbar;";
+            resp += "&nbsp" + disc.section + "&nbsp; &brvbar;";
+            resp += "&nbsp" + disc.topic + "&nbsp; &brvbar;";
+            resp += "&nbsp" + QString::number(disc.reward) + "&nbsp; &brvbar;";
+            resp += "&nbsp" + disc.time_create + "&nbsp; &brvbar;";
+            resp += "&nbsp" + disc.languageRegion;
 
             resp += "</b>";
             resp += "<br>";
