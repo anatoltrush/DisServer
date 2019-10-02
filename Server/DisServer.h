@@ -7,6 +7,9 @@
 
 #include "../DB_API/DBController.h"
 #include "SystemAPI.h"
+#include "HttpParser.h"
+#include "HttpResponse.h"
+#include "HttpHandler.h"
 
 #define OK                  200
 #define ERR_CREATED         201 // (PUT || POST) CREATED GOOD

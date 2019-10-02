@@ -27,7 +27,7 @@ public:
     QString email;
     QList<QString> IPs;
 
-    QDate time_birth;
+    QString time_birth;
     int sex = 0;    
 
     // SPECIAL PROPERTY
@@ -38,8 +38,8 @@ public:
     int status = -1; // confirmed, banned or else
     int score = 0;
     int level = 0;
-    QDate time_registration;
-    QDate time_last_active;
+    QString time_registration;
+    QString time_last_active;
 
     std::vector<dis::Discussion> discsGood;
     std::vector<dis::Discussion> discsBad;

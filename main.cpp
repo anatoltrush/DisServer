@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
     dbcntrl.imageAPI.getImageByOwnerUuid(dbcntrl.dataBase, "asdasdasd", oImg);
     //
 
-    QImage iimmgg(reinterpret_cast<const unsigned char *>(oImg.img_data.data()), 400, 453, QImage::Format_RGB32);
+    QImage iimmgg(reinterpret_cast<const unsigned char *>(oImg.img_data.data()), oImg.width, oImg.height, QImage::Format_RGB32);
 
     QLabel myLabel;
     myLabel.setPixmap(QPixmap::fromImage(iimmgg));

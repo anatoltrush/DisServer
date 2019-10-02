@@ -41,13 +41,13 @@ private:
     QStringList words;
 
     //!make right query
-    bool parseQuery();
+    bool parseQuery(); // FIXME: no need, delete later
 
     //! fill "words"
-    bool parseByteArray(const QByteArray& array);
+    bool parseByteArray(const QByteArray& array); // FIXME: no need, delete later
 
     //! make User from ByteArray
-    dis::User getUserFromWords();
+    dis::User getUserFromWords(); // FIXME: no need, delete later
 };
 }
 

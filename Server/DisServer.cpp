@@ -8,7 +8,9 @@ dis::DisServer::DisServer(){
     dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
 }
 
-dis::DisServer::~DisServer(){}
+dis::DisServer::~DisServer(){
+    dbcntr.disconnect();
+}
 
 void dis::DisServer::slotNewConnection(){
     dis::Client newClient;
@@ -25,46 +27,73 @@ void dis::DisServer::slotNewConnection(){
 void dis::DisServer::slotReadyRead(){
     QTcpSocket *socket = qobject_cast<QTcpSocket*>(sender());
 
-    QString reqst(socket->readAll());
+    QByteArray readAll = socket->readAll();
+    QString reqst(readAll);
+
+    HttpParser httpParser;
+    httpParser.parse(readAll);
+
+    HttpHandler httpHandler;
+    httpHandler.handle(httpParser, dbcntr);
+
+    HttpResponse httpResponse;
+    httpResponse.createResponse(httpHandler);
+
+    //--------------------------
+//    QByteArray httpHeaders = readAll;
+//    QMap<QByteArray, QByteArray> headers;
+
+//    // Discard the first line
+//    httpHeaders = httpHeaders.mid(httpHeaders.indexOf('\n') + 1).trimmed();
+
+//    foreach(QByteArray line, httpHeaders.split('\n')) {
+//        int colon = line.indexOf(':');
+//        QByteArray headerName = line.left(colon).trimmed();
+//        QByteArray headerValue = line.mid(colon + 1).trimmed();
+
+//        headers.insertMulti(headerName, headerValue);
+//    }
+    //--------------------------
+
     qDebug() << reqst;
-    QStringList fullWords = reqst.split("\r\n");
-    QStringList infoWords = fullWords.front().split("/");
+//    QStringList fullWords = reqst.split("\r\n");
+//    QStringList infoWords = fullWords.front().split("/");
 
-    QString resp;
-    resp += "HTTP/1.1 200 OK\r\n\r\n";
-    resp += "<b>DISPUTE CONNECTED!</b>";
-    resp += "<hr size=8; color=FF0000>";
-    resp += "<br>";
+//    QString resp;
+//    resp += "HTTP/1.1 200 OK\r\n\r\n";
+//    resp += "<b>DISPUTE CONNECTED!</b>";
+//    resp += "<hr size=8; color=FF0000>";
+//    resp += "<br>";
 
-    if(infoWords[1].contains("discussion")){        
-        QList<dis::Discussion>discs;
-        dbcntr.discussionAPI.getDiscussions(dbcntr.dataBase, discs);
-        dbcntr.disconnect();
+//    if(infoWords[1].contains("discussion")){
+//        QList<dis::Discussion>discs;
+//        dbcntr.discussionAPI.getDiscussions(dbcntr.dataBase, discs);
 
-        resp += "<b>&emsp;&emsp;ID&emsp; &brvbar;Section&emsp; &brvbar;Topic&emsp; &brvbar;Reward&emsp; &brvbar;Created&emsp; &brvbar;Lang</b><br><hr>";
-        for(const auto &disc : discs){
-            resp += "<li>";
-            resp += "<b>";
+//        resp += "<b>&emsp;&emsp;ID&emsp; &brvbar;Section&emsp; &brvbar;Topic&emsp; &brvbar;Reward&emsp; &brvbar;Created&emsp; &brvbar;Lang</b><br><hr>";
+//        for(const auto &disc : discs){
+//            resp += "<li>";
+//            resp += "<b>";
 
-            resp += disc.uuid + "&nbsp; &brvbar;";
-            resp += "&nbsp" + disc.section + "&nbsp; &brvbar;";
-            resp += "&nbsp" + disc.topic + "&nbsp; &brvbar;";
-            resp += "&nbsp" + QString::number(disc.reward) + "&nbsp; &brvbar;";
-            resp += "&nbsp" + disc.time_create + "&nbsp; &brvbar;";
-            resp += "&nbsp" + disc.languageRegion;
+//            resp += disc.uuid + "&nbsp; &brvbar;";
+//            resp += "&nbsp" + disc.section + "&nbsp; &brvbar;";
+//            resp += "&nbsp" + disc.topic + "&nbsp; &brvbar;";
+//            resp += "&nbsp" + QString::number(disc.reward) + "&nbsp; &brvbar;";
+//            resp += "&nbsp" + disc.time_create + "&nbsp; &brvbar;";
+//            resp += "&nbsp" + disc.languageRegion;
 
-            resp += "</b>";
-            resp += "<br>";
-            resp += "<hr>";
-        }
-    }
-    else{
-        resp += "<a href= /discussion >DISCUSSIONS</a>";
-    }
+//            resp += "</b>";
+//            resp += "<br>";
+//            resp += "<hr>";
+//        }
+//    }
+//    else{
+//        resp += "<a href= /discussion >DISCUSSIONS</a>";
+//    }
 
-    QByteArray arr;
-    arr.append(resp);
-    socket->write(arr);
+//    QByteArray arr;
+//    arr.append(resp);
+
+    socket->write(httpResponse.toQByteArray());
 
     socket->disconnectFromHost();
 }

@@ -12,10 +12,13 @@ public:
     //! uuid of owner
     QString uuid;
 
+    int width;
+    int height;
+
     QByteArray img_data;
 
     //! avatar OR album OR comment OR else
-    int type;
+    QString type;
 
     QString time_create;
 
