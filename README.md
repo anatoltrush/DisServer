@@ -1,6 +1,6 @@
 # DisServer
 
-custom http server working with SQL database with QT framework
+Another custom http server working with SQL database with QT framework
 using:
 - QHttpServer
 - QTcpSocket
