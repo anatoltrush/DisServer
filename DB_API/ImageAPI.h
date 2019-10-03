@@ -11,7 +11,7 @@ public:
 
     bool addImage(const QSqlDatabase& db, const dis::Image &img);
 
-    bool getImageByOwnerUuid(const QSqlDatabase& db, const QString &uuid, dis::Image &img, int type = -1, const QString &geo = "na");
+    bool getImageByUuid(const QSqlDatabase& db, const QString &uuid, dis::Image &img, const QString &geo = "na");  // FIXME: no need, delete later
 };
 }
 

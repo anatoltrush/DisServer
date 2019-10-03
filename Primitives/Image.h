@@ -2,6 +2,8 @@
 #define IMAGE_H
 
 #include <QtSql>
+#include <QDateTime>
+#include <QDate>
 
 namespace dis{
 class Image
@@ -9,18 +11,17 @@ class Image
 public:
     Image();
 
-    //! uuid of owner
-    QString uuid;
+    QString uuid = QUuid::createUuid().toString();
+    QString uuid_author;
+    //! can be dispute OR album OR comment OR userID(if avatar)
+    QString uuid_post;
 
     int width;
     int height;
 
     QByteArray img_data;
 
-    //! avatar OR album OR comment OR else
-    QString type;
-
-    QString time_create;
+    QDateTime time_created;
 
     //! if has
     QString geo_data;

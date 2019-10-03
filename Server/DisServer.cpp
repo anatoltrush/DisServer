@@ -39,31 +39,9 @@ void dis::DisServer::slotReadyRead(){
     HttpResponse httpResponse;
     httpResponse.createResponse(httpHandler);
 
-    //--------------------------
-//    QByteArray httpHeaders = readAll;
-//    QMap<QByteArray, QByteArray> headers;
-
-//    // Discard the first line
-//    httpHeaders = httpHeaders.mid(httpHeaders.indexOf('\n') + 1).trimmed();
-
-//    foreach(QByteArray line, httpHeaders.split('\n')) {
-//        int colon = line.indexOf(':');
-//        QByteArray headerName = line.left(colon).trimmed();
-//        QByteArray headerValue = line.mid(colon + 1).trimmed();
-
-//        headers.insertMulti(headerName, headerValue);
-//    }
-    //--------------------------
-
     qDebug() << reqst;
 //    QStringList fullWords = reqst.split("\r\n");
 //    QStringList infoWords = fullWords.front().split("/");
-
-//    QString resp;
-//    resp += "HTTP/1.1 200 OK\r\n\r\n";
-//    resp += "<b>DISPUTE CONNECTED!</b>";
-//    resp += "<hr size=8; color=FF0000>";
-//    resp += "<br>";
 
 //    if(infoWords[1].contains("discussion")){
 //        QList<dis::Discussion>discs;
@@ -78,7 +56,7 @@ void dis::DisServer::slotReadyRead(){
 //            resp += "&nbsp" + disc.section + "&nbsp; &brvbar;";
 //            resp += "&nbsp" + disc.topic + "&nbsp; &brvbar;";
 //            resp += "&nbsp" + QString::number(disc.reward) + "&nbsp; &brvbar;";
-//            resp += "&nbsp" + disc.time_create + "&nbsp; &brvbar;";
+//            resp += "&nbsp" + disc.time_created + "&nbsp; &brvbar;";
 //            resp += "&nbsp" + disc.languageRegion;
 
 //            resp += "</b>";

@@ -1,7 +1,7 @@
 #ifndef PURCHASE_H
 #define PURCHASE_H
 
-#include <QDate>
+#include <QDateTime>
 #include <QUuid>
 
 namespace dis{
@@ -13,8 +13,8 @@ public:
 
     QString uuid; // USER UUID
     QString purch_name;
-    QDate time_paid;
-    QDate time_exp;
+    QDateTime time_paid;
+    QDateTime time_exp;
 };
 }
 

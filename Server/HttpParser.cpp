@@ -23,4 +23,10 @@ void dis::HttpParser::parse(const QByteArray &data){
         QStringList hdrLst = hdrs[i].split(": ");
         this->headers.insert(hdrLst.front(), hdrLst.back());
     }
+
+    // 3) first string
+    QStringList startWrds = this->starting_line.split(" ");
+    this->method = startWrds[0];
+    this->address = startWrds[1];
+    this->httpVer = startWrds[2];
 }

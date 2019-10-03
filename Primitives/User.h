@@ -1,7 +1,7 @@
 #ifndef USER_H
 #define USER_H
 
-#include <QDate>
+#include <QDateTime>
 #include <QUuid>
 #include <QtSql>
 
@@ -27,7 +27,7 @@ public:
     QString email;
     QList<QString> IPs;
 
-    QString time_birth;
+    QDateTime time_birth;
     int sex = 0;    
 
     // SPECIAL PROPERTY
@@ -38,8 +38,8 @@ public:
     int status = -1; // confirmed, banned or else
     int score = 0;
     int level = 0;
-    QString time_registration;
-    QString time_last_active;
+    QDateTime time_registration;
+    QDateTime time_last_active;
 
     std::vector<dis::Discussion> discsGood;
     std::vector<dis::Discussion> discsBad;

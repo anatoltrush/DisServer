@@ -2,3 +2,5 @@
 !.gitignore
 !*.h
 !*.cpp
+main.cpp
+WORK_PLAN.h

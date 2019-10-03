@@ -13,6 +13,8 @@ class HttpParser
 public:
     HttpParser();
 
+    QString method, address, httpVer;
+
     QString starting_line;
 
     using QStringMap = QMap<QString, QString>;

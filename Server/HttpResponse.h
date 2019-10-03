@@ -16,7 +16,20 @@ public:
     const QByteArray &toQByteArray();
 
 private:
+    QString starting_line;
+    using QStringMap = QMap<QString, QString>;
+//    typedef QMap<QString, QString> QStringMap;
+    QStringMap headers;
+    QString message_body;
+
+    QString responseQSTR;
     QByteArray responseQBA;
+
+    void createStartLine(int status, const QString &reasonPhrase, const QString ver = "HTTP/1.1");
+    void createHeaders();
+    void createMessage();
+
+    void collectRespQstr();
 };
 }
 

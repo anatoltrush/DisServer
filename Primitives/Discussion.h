@@ -13,15 +13,15 @@ public:
     ~Discussion();
 
     QString uuid = QUuid::createUuid().toString();
+    QString uuid_author;
     QString section;
-    QString topic;
-    QString author_uuid;
-    QString time_create;
-    QImage icon;
+    QString topic;    
+    QDateTime time_created;
     int type = -1; // type of discussion
     int step = 0;
     int reward = 0;
-    QString languageRegion;    
+    QString languageRegion;
+    QString text;
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
 };
