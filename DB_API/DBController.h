@@ -21,9 +21,6 @@ public:
     bool connect(const QString& connectString);
     void disconnect();
 
-    //! from ByteArray (start method)
-    bool doQuery(const QByteArray& array);
-
     //! from string (if got string)
     bool doQuery(const QString& string);
 
@@ -45,11 +42,9 @@ private:
     //!make right query
     bool parseQuery(); // FIXME: no need, delete later
 
-    //! fill "words"
-    bool parseByteArray(const QByteArray& array); // FIXME: no need, delete later
-
     //! make User from ByteArray
-    dis::User getUserFromWords(); // FIXME: no need, delete later
+    //! EXAMPLE!!!
+    dis::User getUserFromWords();
 };
 }
 

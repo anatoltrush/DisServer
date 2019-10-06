@@ -12,6 +12,9 @@ public:
     bool addComment(const QSqlDatabase& db, const dis::Comment &comment);
 
     bool getCommByUuid(const QSqlDatabase& db, const QString &uuid, dis::Comment &comment);
+
+private:
+    QString tableName = "Comments";
 };
 }
 

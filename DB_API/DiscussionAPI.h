@@ -11,12 +11,18 @@ class DiscussionAPI
 public:
     DiscussionAPI();
 
-    bool addDiscussion(const QSqlDatabase& db, const dis::Discussion &discuss);
-    bool deleteDiscussion(const QSqlDatabase& db);
-    bool redactDiscussion(const QSqlDatabase& db);
+    bool addDispute(const QSqlDatabase& db, const dis::Discussion &discuss);
+    bool deleteDisputeByUuid(const QSqlDatabase& db, const QString &uuid);
+    bool updDisputeByUuid(const QSqlDatabase& db, const QString &uuid);
 
+    bool getDisputeCount(const QSqlDatabase& db, int& count);
     bool getDisputeByUuid(const QSqlDatabase& db, const QString &uuid, dis::Discussion &disp);
-    bool getDiscussions(const QSqlDatabase& db, QList<dis::Discussion>& discussions); // FIXME: delete later ???
+
+    //! will be added other type of sorting
+    bool getDisputesRange(const QSqlDatabase& db, QList<dis::Discussion>& discussions, int from, int batch);
+
+private:
+    QString tableName = "Disputes";
 
 };
 }

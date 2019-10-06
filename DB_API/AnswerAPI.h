@@ -12,6 +12,9 @@ public:
     bool addAnswer(const QSqlDatabase& db, const dis::Answer &answer);
 
     bool getAnswersByDisputeUuid(const QSqlDatabase& db, const QString& dispUuid, QList<dis::Answer>& answers);
+
+private:
+    QString tableName = "Answers";
 };
 }
 

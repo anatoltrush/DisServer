@@ -6,7 +6,7 @@ dis::UserAPI::~UserAPI(){}
 
 bool dis::UserAPI::addUser(const QSqlDatabase &db, const dis::User &user){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO Users (UUID, Name, Surname, Country) "
+    query.prepare("INSERT INTO " + tableName + " (UUID, Name, Surname, Country) "
                   "VALUES (?, ?, ?, ?)");
     query.addBindValue(user.uuid);
     query.addBindValue(user.name);
@@ -22,7 +22,7 @@ bool dis::UserAPI::addUser(const QSqlDatabase &db, const dis::User &user){
 
 bool dis::UserAPI::deleteUser(const QSqlDatabase& db, const QString &uuid){
     QSqlQuery query(db);
-    query.prepare("DELETE FROM Users WHERE UUID = ?");
+    query.prepare("DELETE FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
     if(query.exec()) return true;
     else{
@@ -33,7 +33,7 @@ bool dis::UserAPI::deleteUser(const QSqlDatabase& db, const QString &uuid){
 
 bool dis::UserAPI::updateUser(const QSqlDatabase &db, const QString& uuid, const dis::User &newData){
     QSqlQuery query(db);
-    query.prepare("UPDATE Users SET Name = ?, Surname = ?, Country = ? WHERE UUID = ?");
+    query.prepare("UPDATE " + tableName + " SET Name = ?, Surname = ?, Country = ? WHERE UUID = ?");
     query.addBindValue(newData.name);
     query.addBindValue(newData.surname);
     query.addBindValue(newData.country);
@@ -48,7 +48,7 @@ bool dis::UserAPI::updateUser(const QSqlDatabase &db, const QString& uuid, const
 
 bool dis::UserAPI::getUserByUuid(const QSqlDatabase& db, const QString &uuid, dis::User &user){
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM Users WHERE UUID = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
     if(query.exec()){
         QSqlRecord record = query.record();
@@ -64,7 +64,7 @@ bool dis::UserAPI::getUserByUuid(const QSqlDatabase& db, const QString &uuid, di
 bool dis::UserAPI::getUsers(const QSqlDatabase& db, QList<dis::User> &users){
     users.clear();
     QSqlQuery query(db);
-    QString strQuery = "SELECT * FROM Users";
+    QString strQuery = "SELECT * FROM " + tableName;
     if(query.exec(strQuery)){
         QSqlRecord record = query.record();
         while(query.next()) {

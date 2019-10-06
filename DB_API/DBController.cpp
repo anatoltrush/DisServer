@@ -26,20 +26,7 @@ dis::DBController::~DBController(){
 
 void dis::DBController::disconnect(){
     dataBase.close();
-}
-
-bool dis::DBController::doQuery(const QByteArray &array){
-    if(parseByteArray(array)){
-        if(parseQuery()) return true;
-        else{
-            qDebug() << "Query NOT done";
-            return false;
-        }
-    }
-    else{
-        qDebug() << "QByteArray NOT parsed";
-        return false;
-    }
+    qDebug() << "DISCONNECTED FROM DATABASE";
 }
 
 bool dis::DBController::doQuery(const QString &string){
@@ -50,17 +37,6 @@ bool dis::DBController::doQuery(const QString &string){
         qDebug() << "Query NOT done";
         return false;
     }
-}
-
-bool dis::DBController::parseByteArray(const QByteArray &array){
-    QString strArray = QString(array);
-    if(strArray.size() <= 0) return false;
-
-    words.clear();
-    words = strArray.split(separToken); // CONFIG TOKEN
-    if(words.size() <= 0) return false;
-
-    return true;
 }
 
 dis::User dis::DBController::getUserFromWords(){
@@ -86,7 +62,7 @@ bool dis::DBController::parseQuery(){
         }
         if(words.at(1) == "Discussion"){
             dis::Discussion disc; // get by words
-            discussionAPI.addDiscussion(dataBase, disc);
+            discussionAPI.addDispute(dataBase, disc);
         }
         if(words.at(1) == "Purchase"){
             purchaseAPI.addPurchase();
@@ -114,7 +90,7 @@ bool dis::DBController::parseQuery(){
             userAPI.deleteUser(dataBase, usUUID);
         }
         if(words.at(1) == "Discussion"){
-            discussionAPI.deleteDiscussion(dataBase);
+            discussionAPI.deleteDisputeByUuid(dataBase, "test");
         }
         if(words.at(1) == "Purchase"){
             purchaseAPI.deletePurchase();

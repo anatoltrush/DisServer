@@ -29,4 +29,9 @@ void dis::HttpParser::parse(const QByteArray &data){
     this->method = startWrds[0];
     this->address = startWrds[1];
     this->httpVer = startWrds[2];
+
+    // 4) entity & function
+    QStringList entFunc = this->address.split("/");
+    if(entFunc.size() > 0) this->entity = entFunc[0];
+    if(entFunc.size() > 1) this->function = entFunc[1];
 }

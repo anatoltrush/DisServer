@@ -16,6 +16,9 @@ public:
     bool getUserByUuid(const QSqlDatabase& db, const QString &uuid, dis::User &user);
 
     bool getUsers(const QSqlDatabase& db, QList<dis::User>& users);
+
+private:
+    QString tableName = "Users";
 };
 }
 

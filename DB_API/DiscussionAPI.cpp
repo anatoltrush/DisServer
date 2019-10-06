@@ -2,9 +2,9 @@
 
 dis::DiscussionAPI::DiscussionAPI(){}
 
-bool dis::DiscussionAPI::addDiscussion(const QSqlDatabase &db, const dis::Discussion &discuss){
+bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussion &discuss){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO Disputes (UUID, UUID_author, Section, Topic, Time_created,"
+    query.prepare("INSERT INTO " + tableName + " (UUID, UUID_author, Section, Topic, Time_created,"
                   "Type, Step, Reward, Lang_region, Text_data, Voted, MaxVoters, Icon_data, Img_width, Img_height)"
                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(discuss.uuid);
@@ -30,24 +30,28 @@ bool dis::DiscussionAPI::addDiscussion(const QSqlDatabase &db, const dis::Discus
     }
 }
 
-bool dis::DiscussionAPI::deleteDiscussion(const QSqlDatabase &db){}
-
-bool dis::DiscussionAPI::redactDiscussion(const QSqlDatabase& db){}
-
-bool dis::DiscussionAPI::getDisputeByUuid(const QSqlDatabase &db, const QString &uuid, dis::Discussion &disp){
+bool dis::DiscussionAPI::deleteDisputeByUuid(const QSqlDatabase &db, const QString &uuid){
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM Disputes WHERE UUID = ?");
+    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
+    query.prepare(strQuery);
     query.addBindValue(uuid);
+    if(query.exec()) return true;
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::DiscussionAPI::updDisputeByUuid(const QSqlDatabase& db, const QString &uuid){}
+
+bool dis::DiscussionAPI::getDisputeCount(const QSqlDatabase &db, int &count){
+    QSqlQuery query(db);
+    QString strQuery = "SELECT count(*) FROM " + tableName;
+    query.prepare(strQuery);
     if(query.exec()){
-        if(query.first()){
-            QSqlRecord record = query.record();
-            disp.fillBySQL(query, record);
-            return true;
-        }
-        else{
-            qDebug() << db.lastError().text();
-            return false;
-        }
+        query.next();
+        count = query.value(0).toInt();
+        return true;
     }
     else{
         qDebug() << db.lastError().text();
@@ -55,10 +59,29 @@ bool dis::DiscussionAPI::getDisputeByUuid(const QSqlDatabase &db, const QString 
     }
 }
 
-bool dis::DiscussionAPI::getDiscussions(const QSqlDatabase &db, QList<dis::Discussion> &discussions){
+bool dis::DiscussionAPI::getDisputeByUuid(const QSqlDatabase &db, const QString &uuid, dis::Discussion &disp){
+    QSqlQuery query(db);
+    query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
+    query.addBindValue(uuid);
+    if(query.exec()){
+        QSqlRecord record = query.record();
+        disp.fillBySQL(query, record);
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::DiscussionAPI::getDisputesRange(const QSqlDatabase &db, QList<dis::Discussion> &discussions, int from, int batch){
     discussions.clear();
     QSqlQuery query(db);
-    QString strQuery = "SELECT * FROM Discussions";
+    QString strQuery = "SELECT * FROM " + tableName +
+            " ORDER BY Time_created DESC"
+            " offset " + QString::number(from) +
+            " rows fetch next " + QString::number(batch) +
+            " rows only";
     if(query.exec(strQuery)){
         QSqlRecord record = query.record();
         while(query.next()) {

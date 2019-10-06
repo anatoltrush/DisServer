@@ -4,7 +4,7 @@ dis::ImageAPI::ImageAPI(){}
 
 bool dis::ImageAPI::addImage(const QSqlDatabase &db, const Image &img){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO Images (UUID, UUID_author, UUID_post, Width, Height, Image_data, Time_created, Geo_data) "
+    query.prepare("INSERT INTO " + tableName + " (UUID, UUID_author, UUID_post, Width, Height, Image_data, Time_created, Geo_data) "
                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(img.uuid);
     query.addBindValue(img.uuid_author);
@@ -22,10 +22,9 @@ bool dis::ImageAPI::addImage(const QSqlDatabase &db, const Image &img){
     }
 }
 
-bool dis::ImageAPI::getImageByUuid(const QSqlDatabase &db, const QString &uuid, dis::Image &img, const QString &geo){
-    // TODO: GEO & TYPE
+bool dis::ImageAPI::getImageByUuid(const QSqlDatabase &db, const QString &uuid, dis::Image &img){
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM Images WHERE UUID = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
     if(query.exec()){
         if(query.first()){
@@ -47,7 +46,7 @@ bool dis::ImageAPI::getImageByUuid(const QSqlDatabase &db, const QString &uuid, 
 bool dis::ImageAPI::getImagesByPostUuid(const QSqlDatabase &db, const QString &postUuid, QList<Image> &images){
     images.clear();
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM Images WHERE UUID_post = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE UUID_post = ?");
     query.addBindValue(postUuid);
     if(query.exec()){
         QSqlRecord record = query.record();

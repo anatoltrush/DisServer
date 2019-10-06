@@ -4,7 +4,7 @@ dis::AnswerAPI::AnswerAPI(){}
 
 bool dis::AnswerAPI::addAnswer(const QSqlDatabase &db, const dis::Answer &answer){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO Answers (UUID_dispute, Text_data, Score) "
+    query.prepare("INSERT INTO " + tableName + " (UUID_dispute, Text_data, Score) "
                   "VALUES (?, ?, ?)");
     query.addBindValue(answer.uuid_dispute);
     query.addBindValue(answer.text);
@@ -20,7 +20,7 @@ bool dis::AnswerAPI::addAnswer(const QSqlDatabase &db, const dis::Answer &answer
 bool dis::AnswerAPI::getAnswersByDisputeUuid(const QSqlDatabase &db, const QString &dispUuid, QList<dis::Answer> &answers){
     answers.clear();
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM Answers WHERE UUID_dispute = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE UUID_dispute = ?");
     query.addBindValue(dispUuid);
     if(query.exec()){
         QSqlRecord record = query.record();

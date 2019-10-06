@@ -15,6 +15,9 @@ public:
     bool addPurchase();
     bool deletePurchase();
     bool redactPurchase();
+
+private:
+    QString tableName = "Purchases";
 };
 }
 
