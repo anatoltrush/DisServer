@@ -4,17 +4,21 @@
 #include <QDateTime>
 #include <QUuid>
 
+#include "IPrimitives.h"
+
 namespace dis{
-class Purchase
+class Purchase : public IPrimitives
 {
 public:
     Purchase();
-    ~Purchase();
+    ~Purchase() override;
 
     QString uuid; // USER UUID
     QString purch_name;
     QDateTime time_paid;
     QDateTime time_exp;
+
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
 };
 }
 

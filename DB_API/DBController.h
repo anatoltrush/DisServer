@@ -6,6 +6,7 @@
 #include "PurchaseAPI.h"
 #include "CommentAPI.h"
 #include "ImageAPI.h"
+#include "AnswerAPI.h"
 
 namespace dis{
 class DBController
@@ -26,6 +27,7 @@ public:
     //! from string (if got string)
     bool doQuery(const QString& string);
 
+    AnswerAPI answerAPI;
     UserAPI userAPI;
     DiscussionAPI discussionAPI;
     PurchaseAPI purchaseAPI;

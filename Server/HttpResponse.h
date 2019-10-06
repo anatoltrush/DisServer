@@ -11,7 +11,7 @@ class HttpResponse
 public:
     HttpResponse();
 
-    void createResponse(const HttpHandler &handler);
+    void createResponse(const HttpHandler &handler, const HttpParser &parser);
 
     const QByteArray &toQByteArray();
 

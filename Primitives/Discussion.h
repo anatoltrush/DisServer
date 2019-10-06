@@ -5,12 +5,14 @@
 #include <QImage>
 #include <QtSql>
 
+#include "IPrimitives.h"
+
 namespace dis{
-class Discussion
+class Discussion : public IPrimitives
 {
 public:
     Discussion();
-    ~Discussion();
+    ~Discussion() override;
 
     QString uuid = QUuid::createUuid().toString();
     QString uuid_author;
@@ -22,8 +24,14 @@ public:
     int reward = 0;
     QString languageRegion;
     QString text;
+    int voted;
+    int maxVoters;
+    QByteArray icon_data;
+    int img_w;
+    int img_h;
+    // 15
 
-    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
 };
 }
 

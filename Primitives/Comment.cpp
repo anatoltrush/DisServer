@@ -2,6 +2,8 @@
 
 dis::Comment::Comment(){}
 
+dis::Comment::~Comment(){}
+
 void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf("UUID")).toString();
     this->uuid_post = query.value(rec.indexOf("UUID_post")).toString();

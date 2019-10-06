@@ -2,7 +2,7 @@
 
 dis::HttpResponse::HttpResponse(){}
 
-void dis::HttpResponse::createResponse(const dis::HttpHandler &handler){
+void dis::HttpResponse::createResponse(const dis::HttpHandler &handler, const dis::HttpParser &parser){
     responseQSTR += "HTTP/1.1 200 OK\r\n\r\n";
     responseQSTR += "<b>DISPUTE CONNECTED!</b>";
     responseQSTR += "<hr size=8; color=FF0000>";

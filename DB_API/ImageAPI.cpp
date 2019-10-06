@@ -43,3 +43,23 @@ bool dis::ImageAPI::getImageByUuid(const QSqlDatabase &db, const QString &uuid, 
         return false;
     }
 }
+
+bool dis::ImageAPI::getImagesByPostUuid(const QSqlDatabase &db, const QString &postUuid, QList<Image> &images){
+    images.clear();
+    QSqlQuery query(db);
+    query.prepare("SELECT * FROM Images WHERE UUID_post = ?");
+    query.addBindValue(postUuid);
+    if(query.exec()){
+        QSqlRecord record = query.record();
+        while(query.next()) {
+            dis::Image img;
+            img.fillBySQL(query, record);
+            images.push_back(img);
+        }
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}

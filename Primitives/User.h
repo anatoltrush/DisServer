@@ -7,14 +7,15 @@
 
 #include "Discussion.h"
 #include "Purchase.h"
+#include "IPrimitives.h"
 
 namespace dis{
-class User
+class User : public IPrimitives
 {
 public:
     //! short constructor
     User(); // PHOTO?
-    ~User();
+    ~User() override;
 
     // COMMON PROPERTY
     QString uuid = QUuid::createUuid().toString();
@@ -47,7 +48,7 @@ public:
 
     bool isAuthorized = false;
 
-    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByList(const QList<QString> &words, bool isFromParse = false);
 
 private:

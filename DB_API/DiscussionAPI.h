@@ -10,13 +10,14 @@ class DiscussionAPI
 {
 public:
     DiscussionAPI();
-    ~DiscussionAPI();
 
     bool addDiscussion(const QSqlDatabase& db, const dis::Discussion &discuss);
     bool deleteDiscussion(const QSqlDatabase& db);
     bool redactDiscussion(const QSqlDatabase& db);
 
-    bool getDiscussions(const QSqlDatabase& db, QList<dis::Discussion>& discussions);
+    bool getDisputeByUuid(const QSqlDatabase& db, const QString &uuid, dis::Discussion &disp);
+    bool getDiscussions(const QSqlDatabase& db, QList<dis::Discussion>& discussions); // FIXME: delete later ???
+
 };
 }
 

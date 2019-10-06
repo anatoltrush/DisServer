@@ -5,14 +5,17 @@
 #include <QDateTime>
 #include <QDate>
 
+#include "IPrimitives.h"
+
 namespace dis{
-class Image
+class Image : IPrimitives
 {
 public:
     Image();
 
     QString uuid = QUuid::createUuid().toString();
     QString uuid_author;
+
     //! can be dispute OR album OR comment OR userID(if avatar)
     QString uuid_post;
 
@@ -26,7 +29,7 @@ public:
     //! if has
     QString geo_data;
 
-    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
 };
 }
 

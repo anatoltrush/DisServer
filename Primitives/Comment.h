@@ -3,11 +3,14 @@
 
 #include <QtSql>
 
+#include "IPrimitives.h"
+
 namespace dis{
-class Comment
+class Comment : public IPrimitives
 {
 public:
     Comment();
+    ~Comment() override;
 
     QString uuid = QUuid::createUuid().toString();
     //! dispute OR foto OR other comment
@@ -20,7 +23,7 @@ public:
 
     QString text;
 
-    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec);
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
 };
 }
 
