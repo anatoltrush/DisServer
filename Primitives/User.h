@@ -48,6 +48,8 @@ public:
 
     bool isAuthorized = false;
 
+    int money = 0;
+
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByList(const QList<QString> &words, bool isFromParse = false);
 

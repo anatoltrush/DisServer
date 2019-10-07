@@ -2,26 +2,26 @@
 
 dis::DiscussionAPI::DiscussionAPI(){}
 
-bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussion &discuss){
+bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussion &dispute){
     QSqlQuery query(db);
     query.prepare("INSERT INTO " + tableName + " (UUID, UUID_author, Section, Topic, Time_created,"
                   "Type, Step, Reward, Lang_region, Text_data, Voted, MaxVoters, Icon_data, Img_width, Img_height)"
                   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    query.addBindValue(discuss.uuid);
-    query.addBindValue(discuss.uuid_author);
-    query.addBindValue(discuss.section);
-    query.addBindValue(discuss.topic);
-    query.addBindValue(discuss.time_created);
-    query.addBindValue(discuss.type);
-    query.addBindValue(discuss.step);
-    query.addBindValue(discuss.reward);
-    query.addBindValue(discuss.languageRegion);
-    query.addBindValue(discuss.text);
-    query.addBindValue(discuss.voted);
-    query.addBindValue(discuss.maxVoters);
-    query.addBindValue(discuss.icon_data);
-    query.addBindValue(discuss.img_w);
-    query.addBindValue(discuss.img_h);
+    query.addBindValue(dispute.uuid);
+    query.addBindValue(dispute.uuid_author);
+    query.addBindValue(dispute.section);
+    query.addBindValue(dispute.topic);
+    query.addBindValue(dispute.time_created);
+    query.addBindValue(dispute.type);
+    query.addBindValue(dispute.step);
+    query.addBindValue(dispute.reward);
+    query.addBindValue(dispute.languageRegion);
+    query.addBindValue(dispute.text);
+    query.addBindValue(dispute.voted);
+    query.addBindValue(dispute.maxVoters);
+    query.addBindValue(dispute.icon_data);
+    query.addBindValue(dispute.img_w);
+    query.addBindValue(dispute.img_h);
 
     if(query.exec()) return true;
     else{
