@@ -1,6 +1,6 @@
 #include "PurchaseAPI.h"
 
-dis::PurchaseAPI::PurchaseAPI(){}
+dis::PurchaseAPI::PurchaseAPI() : IdbAPI ("Purchases"){}
 
 dis::PurchaseAPI::~PurchaseAPI(){}
 

@@ -1,6 +1,6 @@
 #include "AnswerAPI.h"
 
-dis::AnswerAPI::AnswerAPI(){}
+dis::AnswerAPI::AnswerAPI() : IdbAPI ("Answers"){}
 
 bool dis::AnswerAPI::addAnswer(const QSqlDatabase &db, const dis::Answer &answer){
     QSqlQuery query(db);

@@ -9,6 +9,10 @@
 #include "AnswerAPI.h"
 
 namespace dis{
+
+//! @addtogroup database_api
+//! @{
+
 class DBController
 {
 public:
@@ -22,7 +26,7 @@ public:
     void disconnect();
 
     //! from string (if got string)
-    bool doQuery(const QString& string);
+    bool doQuery(const QString& string); // FIXME: no need, delete later
 
     AnswerAPI answerAPI;
     UserAPI userAPI;
@@ -46,6 +50,9 @@ private:
     //! EXAMPLE!!!
     dis::User getUserFromWords();
 };
+
+//! @} database_api
+
 }
 
 #endif // DBCONTROLLER_H

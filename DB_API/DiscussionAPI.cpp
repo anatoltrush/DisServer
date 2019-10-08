@@ -1,6 +1,6 @@
 #include "DiscussionAPI.h"
 
-dis::DiscussionAPI::DiscussionAPI(){}
+dis::DiscussionAPI::DiscussionAPI() : IdbAPI ("Disputes"){}
 
 bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussion &dispute){
     QSqlQuery query(db);

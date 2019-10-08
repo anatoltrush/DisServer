@@ -8,6 +8,10 @@
 // TODO: define errors and statuses
 
 namespace dis{
+
+//! @addtogroup server_part
+//! @{
+
 class HttpParser
 {
 public:
@@ -27,6 +31,9 @@ public:
     void parse(const QByteArray &data);
 
 };
+
+//! @} server_part
+
 }
 
 #endif // HTTPPARSER_H

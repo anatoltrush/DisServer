@@ -1,6 +1,7 @@
 #ifndef IMAGEAPI_H
 #define IMAGEAPI_H
 
+#include "IdbAPI.h"
 #include "../QDisput/Primitives/Image.h"
 
 namespace dis{
@@ -11,7 +12,7 @@ namespace dis{
 /**
  * @brief The ImageAPI class working with "Images" table in database
  */
-class ImageAPI
+class ImageAPI : public IdbAPI
 {
 public:
     ImageAPI();
@@ -42,9 +43,6 @@ public:
      * @return true if query executed otherwise false
      */
     bool getImagesByPostUuid(const QSqlDatabase& db, const QString &postUuid, QList<dis::Image>& images);
-
-private:
-    QString tableName = "Images";
 };
 
 //! @} database_api

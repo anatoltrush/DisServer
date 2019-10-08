@@ -1,6 +1,7 @@
 #ifndef ANSWERAPI_H
 #define ANSWERAPI_H
 
+#include "IdbAPI.h"
 #include "../QDisput/Primitives/Answer.h"
 
 namespace dis{
@@ -11,7 +12,7 @@ namespace dis{
 /**
  * @brief The AnswerAPI class working with "Answers" table in database
  */
-class AnswerAPI
+class AnswerAPI : public IdbAPI
 {
 public:
     AnswerAPI();
@@ -32,9 +33,6 @@ public:
      * @return true if query executed otherwise false
      */
     bool getAnswersByDisputeUuid(const QSqlDatabase& db, const QString& dispUuid, QList<dis::Answer>& answers);
-
-private:
-    QString tableName = "Answers";
 };
 
 //! @} database_api

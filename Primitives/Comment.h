@@ -6,6 +6,8 @@
 #include "IPrimitives.h"
 
 namespace dis{
+//! @addtogroup entities
+//! @{
 class Comment : public IPrimitives
 {
 public:
@@ -13,9 +15,12 @@ public:
     ~Comment() override;
 
     QString uuid = QUuid::createUuid().toString();
+
     //! dispute OR foto OR other comment
     QString uuid_post;
+
     QString uuid_author;
+
     //! can be empty if first comment at all
     QString uuid_receiver;
 
@@ -24,7 +29,13 @@ public:
     QString text;
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
+
+    QString getMessageBody() override;
+
+private:
+    void createMessageBody() override;
 };
+//! @} entities
 }
 
 #endif // COMMENT_H

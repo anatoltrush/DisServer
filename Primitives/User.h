@@ -10,6 +10,8 @@
 #include "IPrimitives.h"
 
 namespace dis{
+//! @addtogroup entities
+//! @{
 class User : public IPrimitives
 {
 public:
@@ -53,8 +55,12 @@ public:
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByList(const QList<QString> &words, bool isFromParse = false);
 
+    QString getMessageBody() override;
+
 private:
+    void createMessageBody() override;
 };
+//! @} entities
 }
 
 #endif // USER_H

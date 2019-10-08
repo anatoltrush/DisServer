@@ -12,3 +12,11 @@ void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->time_created = query.value(rec.indexOf("Time_created")).toDateTime();
     this->text = query.value(rec.indexOf("Text_data")).toString();
 }
+
+QString dis::Comment::getMessageBody(){
+
+}
+
+void dis::Comment::createMessageBody(){
+
+}

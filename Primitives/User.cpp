@@ -20,3 +20,11 @@ void dis::User::fillByList(const QList<QString> &words, bool isFromParse){
         if(words[i] == "Country") this->country = words[i + 1];
     }
 }
+
+QString dis::User::getMessageBody(){
+
+}
+
+void dis::User::createMessageBody(){
+
+}

@@ -1,17 +1,25 @@
 #ifndef HTTPRESPONSE_H
 #define HTTPRESPONSE_H
 
-#include "HttpHandler.h"
+#include "HttpParser.h"
+#include "../Primitives/IPrimitives.h"
 
 // TODO: define errors and statuses
 
 namespace dis{
+
+//! @addtogroup server_part
+//! @{
+
 class HttpResponse
 {
 public:
     HttpResponse();
 
-    void createResponse(const HttpHandler &handler, const HttpParser &parser);
+    void createResponse(const HttpParser &parser);
+
+    void admitResult(const QList<QString> &uuid);
+    void admitResult(const QList<IPrimitives> &entities);
 
     const QByteArray &toQByteArray();
 
@@ -31,6 +39,9 @@ private:
 
     void collectRespQstr();
 };
+
+//! @} server_part
+
 }
 
 #endif // HTTPRESPONSE_H

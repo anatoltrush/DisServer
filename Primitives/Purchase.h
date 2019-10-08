@@ -7,6 +7,8 @@
 #include "IPrimitives.h"
 
 namespace dis{
+//! @addtogroup entities
+//! @{
 class Purchase : public IPrimitives
 {
 public:
@@ -19,7 +21,13 @@ public:
     QDateTime time_exp;
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
+
+    QString getMessageBody() override;
+
+private:
+    void createMessageBody() override;
 };
+//! @} entities
 }
 
 #endif // PURCHASE_H

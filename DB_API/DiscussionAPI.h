@@ -1,8 +1,7 @@
 #ifndef DISCUSSIONAPI_H
 #define DISCUSSIONAPI_H
 
-#include <QtSql>
-
+#include "IdbAPI.h"
 #include "../QDisput/Primitives/Discussion.h"
 
 namespace dis{
@@ -13,7 +12,7 @@ namespace dis{
 /**
  * @brief The DiscussionAPI class working with "Disputes" table in database
  */
-class DiscussionAPI
+class DiscussionAPI : public IdbAPI
 {
 public:
     DiscussionAPI();
@@ -74,9 +73,6 @@ public:
      * @todo sorting by topic and other...
      */
     bool getDisputesRange(const QSqlDatabase& db, QList<dis::Discussion>& discussions, int from, int batch);
-
-private:
-    QString tableName = "Disputes";
 
 };
 

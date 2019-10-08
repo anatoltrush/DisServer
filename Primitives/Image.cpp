@@ -12,3 +12,11 @@ void dis::Image::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->time_created = query.value(rec.indexOf("Time_created")).toDateTime();
     this->geo_data = query.value(rec.indexOf("Geo_data")).toString();
 }
+
+QString dis::Image::getMessageBody(){
+
+}
+
+void dis::Image::createMessageBody(){
+
+}

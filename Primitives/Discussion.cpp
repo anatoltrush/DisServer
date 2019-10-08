@@ -21,3 +21,11 @@ void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->img_w = query.value(rec.indexOf("Img_width")).toInt();
     this->img_h = query.value(rec.indexOf("Img_height")).toInt();
 }
+
+QString dis::Discussion::getMessageBody(){
+
+}
+
+void dis::Discussion::createMessageBody(){
+
+}

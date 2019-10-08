@@ -11,6 +11,10 @@
 #include "HttpHandler.h"
 
 namespace dis{
+
+//! @addtogroup server_part
+//! @{
+
 class DisServer : public QObject
 {
     Q_OBJECT
@@ -32,9 +36,10 @@ public slots:
 
     void slotSocketDeleted();
 
-signals:
-
 };
+
+//! @} server_part
+
 }
 
 #endif // DISSERVER_H

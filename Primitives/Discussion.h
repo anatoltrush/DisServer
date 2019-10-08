@@ -8,6 +8,8 @@
 #include "IPrimitives.h"
 
 namespace dis{
+//! @addtogroup entities
+//! @{
 class Discussion : public IPrimitives
 {
 public:
@@ -32,7 +34,13 @@ public:
     // 15
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
+
+    QString getMessageBody() override;
+
+private:
+    void createMessageBody() override;
 };
+//! @} entities
 }
 
 #endif // DISCUSSION_H

@@ -1,6 +1,6 @@
 #include "CommentAPI.h"
 
-dis::CommentAPI::CommentAPI(){}
+dis::CommentAPI::CommentAPI() : IdbAPI ("Comments"){}
 
 bool dis::CommentAPI::addComment(const QSqlDatabase &db, const dis::Comment &comment){
     QSqlQuery query(db);

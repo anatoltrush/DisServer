@@ -33,11 +33,12 @@ void dis::DisServer::slotReadyRead(){
     HttpParser httpParser;
     httpParser.parse(readAll);
 
-    HttpHandler httpHandler;
-    httpHandler.handle(httpParser, dbcntr);
-
     HttpResponse httpResponse;
-    httpResponse.createResponse(httpHandler, httpParser);
+
+    HttpHandler httpHandler;
+    httpHandler.handle(httpParser, dbcntr, httpResponse);
+
+    httpResponse.createResponse(httpParser);
 
     qDebug() << reqst;
 //    QStringList fullWords = reqst.split("\r\n");

@@ -1,12 +1,15 @@
 #ifndef PURCHASEAPI_H
 #define PURCHASEAPI_H
 
-#include <QtSql>
-
+#include "IdbAPI.h"
 #include "../QDisput/Primitives/Purchase.h"
 
 namespace dis{
-class PurchaseAPI
+
+//! @addtogroup database_api
+//! @{
+
+class PurchaseAPI : public IdbAPI
 {
 public:
     PurchaseAPI();
@@ -15,10 +18,10 @@ public:
     bool addPurchase();
     bool deletePurchase();
     bool redactPurchase();
-
-private:
-    QString tableName = "Purchases";
 };
+
+//! @} database_api
+
 }
 
 #endif // PURCHASEAPI_H

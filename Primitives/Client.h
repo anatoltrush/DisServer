@@ -8,6 +8,9 @@
 
 namespace dis{
 
+//! @addtogroup entities
+//! @{
+
 //! Will be used in chats
 class Client
 {
@@ -18,6 +21,7 @@ public:
     QDateTime connection_time;
     QTcpSocket *socket;
 };
+//! @} entities
 }
 
 #endif // CLIENT_H

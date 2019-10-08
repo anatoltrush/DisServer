@@ -1,10 +1,15 @@
 #ifndef USERAPI_H
 #define USERAPI_H
 
+#include "IdbAPI.h"
 #include "../QDisput/Primitives/User.h"
 
 namespace dis{
-class UserAPI
+
+//! @addtogroup database_api
+//! @{
+
+class UserAPI : public IdbAPI
 {
 public:
     UserAPI();
@@ -18,8 +23,10 @@ public:
     bool getUsers(const QSqlDatabase& db, QList<dis::User>& users);
 
 private:
-    QString tableName = "Users";
 };
+
+//! @} database_api
+
 }
 
 #endif // USERAPI_H

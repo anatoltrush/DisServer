@@ -8,6 +8,10 @@
 #include "IPrimitives.h"
 
 namespace dis{
+
+//! @addtogroup entities
+//! @{
+
 class Image : IPrimitives
 {
 public:
@@ -30,7 +34,15 @@ public:
     QString geo_data;
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
+
+    QString getMessageBody() override;
+
+private:
+    void createMessageBody() override;
 };
+
+//! @} entities
+
 }
 
 #endif // IMAGE_H

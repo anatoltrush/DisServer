@@ -1,6 +1,6 @@
 #include "ImageAPI.h"
 
-dis::ImageAPI::ImageAPI(){}
+dis::ImageAPI::ImageAPI() : IdbAPI ("Images"){}
 
 bool dis::ImageAPI::addImage(const QSqlDatabase &db, const Image &img){
     QSqlQuery query(db);
