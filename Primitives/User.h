@@ -16,7 +16,7 @@ class User : public IPrimitives
 {
 public:
     //! short constructor
-    User(); // PHOTO?
+    User();
     ~User() override;
 
     // COMMON PROPERTY

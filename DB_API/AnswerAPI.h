@@ -16,6 +16,7 @@ class AnswerAPI : public IdbAPI
 {
 public:
     AnswerAPI();
+    ~AnswerAPI() override;
 
     /**
      * @brief Add answer to database
@@ -33,6 +34,8 @@ public:
      * @return true if query executed otherwise false
      */
     bool getAnswersByDisputeUuid(const QSqlDatabase& db, const QString& dispUuid, QList<dis::Answer>& answers);
+
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
 };
 
 //! @} database_api

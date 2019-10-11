@@ -19,7 +19,7 @@ public:
     void createResponse(const HttpParser &parser);
 
     void admitResult(const QList<QString> &uuid);
-    void admitResult(const QList<IPrimitives> &entities);
+    void admitResult(const std::vector<std::unique_ptr<IPrimitives>> &entities);
 
     const QByteArray &toQByteArray();
 

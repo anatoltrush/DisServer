@@ -1,6 +1,8 @@
 #include "CommentAPI.h"
 
-dis::CommentAPI::CommentAPI() : IdbAPI ("Comments"){}
+dis::CommentAPI::CommentAPI() : IdbAPI ("Comments", "comments"){}
+
+dis::CommentAPI::~CommentAPI(){}
 
 bool dis::CommentAPI::addComment(const QSqlDatabase &db, const dis::Comment &comment){
     QSqlQuery query(db);
@@ -39,4 +41,10 @@ bool dis::CommentAPI::getCommByUuid(const QSqlDatabase &db, const QString &uuid,
         qDebug() << db.lastError().text();
         return false;
     }
+}
+
+int dis::CommentAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+    primitives.clear();
+    uuids.clear();
+    // -----
 }

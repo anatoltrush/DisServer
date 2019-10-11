@@ -13,7 +13,7 @@ void dis::HttpResponse::admitResult(const QList<QString> &uuid){
 
 }
 
-void dis::HttpResponse::admitResult(const QList<dis::IPrimitives> &entities){
+void dis::HttpResponse::admitResult(const std::vector<std::unique_ptr<IPrimitives>> &entities){
 
 }
 

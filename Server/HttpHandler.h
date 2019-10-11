@@ -1,6 +1,7 @@
 #ifndef HTTPHANDLER_H
 #define HTTPHANDLER_H
 
+#include "Constants.h"
 #include "HttpParser.h"
 #include "HttpResponse.h"
 #include "../DB_API/DBController.h"

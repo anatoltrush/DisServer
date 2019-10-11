@@ -1,6 +1,6 @@
 #include "UserAPI.h"
 
-dis::UserAPI::UserAPI() : IdbAPI ("Users"){}
+dis::UserAPI::UserAPI() : IdbAPI ("Users", "users"){}
 
 dis::UserAPI::~UserAPI(){}
 
@@ -78,4 +78,10 @@ bool dis::UserAPI::getUsers(const QSqlDatabase& db, QList<dis::User> &users){
         qDebug() << db.lastError().text();
         return false;
     }
+}
+
+int dis::UserAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+    primitives.clear();
+    uuids.clear();
+    // -----
 }

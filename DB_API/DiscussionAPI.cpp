@@ -1,6 +1,8 @@
 #include "DiscussionAPI.h"
 
-dis::DiscussionAPI::DiscussionAPI() : IdbAPI ("Disputes"){}
+dis::DiscussionAPI::DiscussionAPI() : IdbAPI ("Disputes", "disputes"){}
+
+dis::DiscussionAPI::~DiscussionAPI(){}
 
 bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussion &dispute){
     QSqlQuery query(db);
@@ -95,4 +97,10 @@ bool dis::DiscussionAPI::getDisputesRange(const QSqlDatabase &db, QList<dis::Dis
         qDebug() << db.lastError().text();
         return false;
     }
+}
+
+int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+    primitives.clear();
+    uuids.clear();
+    // -----
 }

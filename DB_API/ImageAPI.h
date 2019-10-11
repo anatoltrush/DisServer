@@ -16,6 +16,7 @@ class ImageAPI : public IdbAPI
 {
 public:
     ImageAPI();
+    ~ImageAPI() override;
 
     /**
      * @brief Add image to database
@@ -43,6 +44,8 @@ public:
      * @return true if query executed otherwise false
      */
     bool getImagesByPostUuid(const QSqlDatabase& db, const QString &postUuid, QList<dis::Image>& images);
+
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
 };
 
 //! @} database_api

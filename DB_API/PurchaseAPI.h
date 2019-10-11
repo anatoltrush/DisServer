@@ -13,11 +13,13 @@ class PurchaseAPI : public IdbAPI
 {
 public:
     PurchaseAPI();
-    ~PurchaseAPI();
+    ~PurchaseAPI() override;
 
     bool addPurchase();
     bool deletePurchase();
     bool redactPurchase();
+
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
 };
 
 //! @} database_api

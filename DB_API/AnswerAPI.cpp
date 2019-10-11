@@ -1,6 +1,8 @@
 #include "AnswerAPI.h"
 
-dis::AnswerAPI::AnswerAPI() : IdbAPI ("Answers"){}
+dis::AnswerAPI::AnswerAPI() : IdbAPI ("Answers", "answers"){}
+
+dis::AnswerAPI::~AnswerAPI(){}
 
 bool dis::AnswerAPI::addAnswer(const QSqlDatabase &db, const dis::Answer &answer){
     QSqlQuery query(db);
@@ -24,7 +26,7 @@ bool dis::AnswerAPI::getAnswersByDisputeUuid(const QSqlDatabase &db, const QStri
     query.addBindValue(dispUuid);
     if(query.exec()){
         QSqlRecord record = query.record();
-        while(query.next()) {
+        while(query.next()){
             dis::Answer answer;
             answer.fillBySQL(query, record);
             answers.push_back(answer);
@@ -35,4 +37,10 @@ bool dis::AnswerAPI::getAnswersByDisputeUuid(const QSqlDatabase &db, const QStri
         qDebug() << db.lastError().text();
         return false;
     }
+}
+
+int dis::AnswerAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+    primitives.clear();
+    uuids.clear();
+    // -----
 }

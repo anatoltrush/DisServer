@@ -1,6 +1,8 @@
 #include "ImageAPI.h"
 
-dis::ImageAPI::ImageAPI() : IdbAPI ("Images"){}
+dis::ImageAPI::ImageAPI() : IdbAPI ("Images", "images"){}
+
+dis::ImageAPI::~ImageAPI(){}
 
 bool dis::ImageAPI::addImage(const QSqlDatabase &db, const Image &img){
     QSqlQuery query(db);
@@ -61,4 +63,10 @@ bool dis::ImageAPI::getImagesByPostUuid(const QSqlDatabase &db, const QString &p
         qDebug() << db.lastError().text();
         return false;
     }
+}
+
+int dis::ImageAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+    primitives.clear();
+    uuids.clear();
+    // -----
 }

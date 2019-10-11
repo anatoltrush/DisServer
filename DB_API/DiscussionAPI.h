@@ -16,6 +16,7 @@ class DiscussionAPI : public IdbAPI
 {
 public:
     DiscussionAPI();
+    ~DiscussionAPI() override;
 
     /**
      * @brief Add dispute to database
@@ -74,6 +75,7 @@ public:
      */
     bool getDisputesRange(const QSqlDatabase& db, QList<dis::Discussion>& discussions, int from, int batch);
 
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
 };
 
 //! @} database_api
