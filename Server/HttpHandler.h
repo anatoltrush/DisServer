@@ -6,8 +6,6 @@
 #include "HttpResponse.h"
 #include "../DB_API/DBController.h"
 
-// TODO: define errors and statuses
-
 namespace dis{
 
 //! @addtogroup server_part
@@ -17,6 +15,8 @@ class HttpHandler
 {
 public:
     HttpHandler();
+
+    int code = -1;
 
     void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response);
 };

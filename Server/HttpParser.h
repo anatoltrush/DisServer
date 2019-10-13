@@ -17,7 +17,7 @@ class HttpParser
 public:
     HttpParser();
 
-    QString method, address, httpVer;
+    QString method, address, httpVers;
     QString entity, function;
 
     QString starting_line;

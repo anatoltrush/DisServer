@@ -8,9 +8,7 @@ dis::DisServer::DisServer(){
     dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
 }
 
-dis::DisServer::~DisServer(){
-    dbcntr.disconnect();
-}
+dis::DisServer::~DisServer(){}
 
 void dis::DisServer::slotNewConnection(){
     dis::Client newClient;
@@ -38,7 +36,7 @@ void dis::DisServer::slotReadyRead(){
     HttpHandler httpHandler;
     httpHandler.handle(httpParser, dbcntr, httpResponse);
 
-    httpResponse.createResponse(httpParser);
+    httpResponse.createResponse(httpParser, httpHandler.code);
 
     qDebug() << reqst;
 //    QStringList fullWords = reqst.split("\r\n");

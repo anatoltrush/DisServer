@@ -21,6 +21,10 @@ bool dis::DBController::connect(const QString &connectString){
     if(dataBase.open()){
         connected = true;
         connString = connectString;
+        // ---
+        for(const auto &api : dbAPIs)
+            api->setDataBase(dataBase);
+        // ---
         qDebug() << "CONNECTED: "+ connString;
         return true;
     }

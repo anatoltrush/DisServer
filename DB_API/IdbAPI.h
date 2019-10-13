@@ -4,6 +4,7 @@
 #include <QString>
 
 #include "../QDisput/Primitives/IPrimitives.h"
+#include "../QDisput/Server/Constants.h"
 
 namespace dis{
 
@@ -19,11 +20,15 @@ public:
     IdbAPI(const QString &tabName = "\tDEFAULT_TABLE_NAME\t", const QString &typeName = "\tDEFAULT_IdbAPI\t");
     virtual ~IdbAPI();
 
+    QSqlDatabase db;
+
     //! name of the table in database
     QString tableName;
 
     //! name of the current API
     QString typeApi;
+
+    void setDataBase(const QSqlDatabase &dataBase){db = dataBase;}
 
     virtual int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) = 0;
 

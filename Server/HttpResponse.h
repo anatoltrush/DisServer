@@ -1,10 +1,11 @@
 #ifndef HTTPRESPONSE_H
 #define HTTPRESPONSE_H
 
+#include "Constants.h"
 #include "HttpParser.h"
 #include "../Primitives/IPrimitives.h"
 
-// TODO: define errors and statuses
+// TODO: MESSAGE???
 
 namespace dis{
 
@@ -16,14 +17,20 @@ class HttpResponse
 public:
     HttpResponse();
 
-    void createResponse(const HttpParser &parser);
+    void createResponse(const HttpParser &parser, int code);
 
     void admitResult(const QList<QString> &uuid);
-    void admitResult(const std::vector<std::unique_ptr<IPrimitives>> &entities);
+    void admitResult(const std::vector<std::unique_ptr<IPrimitives> > &&ents);
 
     const QByteArray &toQByteArray();
 
 private:
+    static QString serverName;
+    static QString httpVersion;
+
+    QList<QString> uuid;
+    std::vector<std::unique_ptr<IPrimitives>> entities;
+
     QString starting_line;
     using QStringMap = QMap<QString, QString>;
 //    typedef QMap<QString, QString> QStringMap;
@@ -33,8 +40,11 @@ private:
     QString responseQSTR;
     QByteArray responseQBA;
 
-    void createStartLine(int status, const QString &reasonPhrase, const QString ver = "HTTP/1.1");
-    void createHeaders();
+    // 1 step
+    void createStartLine(int status);
+    // 2 step
+    void createHeaders(const HttpParser &parser);
+    // 3 step
     void createMessage();
 
     void collectRespQstr();

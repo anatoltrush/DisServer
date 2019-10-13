@@ -7,28 +7,29 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     QList<QString> uuids;
 
     // GET
-    if(parser.method == HTTP_VERB::HttpVerbGET){
+    if(parser.method == QString(VERB_GET)){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                int result = dbApi->getFunction(parser.method, entities, uuids);
-                if(result == 0){
-                    response.admitResult(entities);
+                int result = dbApi->getFunction(parser.function, entities, uuids);
+                if(result == HTTP_OK){
+                    response.admitResult(std::move(entities));
                     response.admitResult(uuids);
+                    code = result;
                     break;
                 }
             }
         }
     }
     // POST
-    if(parser.method == HTTP_VERB::HttpVerbPOST){
+    if(parser.method == VERB_POST){
 
     }
     // PATCH
-    if(parser.method == HTTP_VERB::HttpVerbPROPPATCH){
+    if(parser.method == VERB_PATCH){
 
     }
     // DELETE
-    if(parser.method == HTTP_VERB::HttpVerbDELETE){
+    if(parser.method == VERB_DELETE){
 
     }
     // else...

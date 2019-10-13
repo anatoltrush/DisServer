@@ -4,7 +4,7 @@ dis::DiscussionAPI::DiscussionAPI() : IdbAPI ("Disputes", "disputes"){}
 
 dis::DiscussionAPI::~DiscussionAPI(){}
 
-bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussion &dispute){
+bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     QSqlQuery query(db);
     query.prepare("INSERT INTO " + tableName + " (UUID, UUID_author, Section, Topic, Time_created,"
                   "Type, Step, Reward, Lang_region, Text_data, Voted, MaxVoters, Icon_data, Img_width, Img_height)"
@@ -32,7 +32,7 @@ bool dis::DiscussionAPI::addDispute(const QSqlDatabase &db, const dis::Discussio
     }
 }
 
-bool dis::DiscussionAPI::deleteDisputeByUuid(const QSqlDatabase &db, const QString &uuid){
+bool dis::DiscussionAPI::deleteDisputeByUuid(const QString &uuid){
     QSqlQuery query(db);
     QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
     query.prepare(strQuery);
@@ -44,9 +44,9 @@ bool dis::DiscussionAPI::deleteDisputeByUuid(const QSqlDatabase &db, const QStri
     }
 }
 
-bool dis::DiscussionAPI::updDisputeByUuid(const QSqlDatabase& db, const QString &uuid){}
+bool dis::DiscussionAPI::updDisputeByUuid(const QString &uuid){}
 
-bool dis::DiscussionAPI::getDisputeCount(const QSqlDatabase &db, int &count){
+bool dis::DiscussionAPI::getDisputeCount(int &count){
     QSqlQuery query(db);
     QString strQuery = "SELECT count(*) FROM " + tableName;
     query.prepare(strQuery);
@@ -61,7 +61,7 @@ bool dis::DiscussionAPI::getDisputeCount(const QSqlDatabase &db, int &count){
     }
 }
 
-bool dis::DiscussionAPI::getDisputeByUuid(const QSqlDatabase &db, const QString &uuid, dis::Discussion &disp){
+bool dis::DiscussionAPI::getDisputeByUuid(const QString &uuid, dis::Discussion &disp){
     QSqlQuery query(db);
     query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
@@ -76,7 +76,7 @@ bool dis::DiscussionAPI::getDisputeByUuid(const QSqlDatabase &db, const QString 
     }
 }
 
-bool dis::DiscussionAPI::getDisputesRange(const QSqlDatabase &db, QList<dis::Discussion> &discussions, int from, int batch){
+bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, int from, int batch){
     discussions.clear();
     QSqlQuery query(db);
     QString strQuery = "SELECT * FROM " + tableName +
@@ -103,4 +103,17 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
     primitives.clear();
     uuids.clear();
     // -----
+    if(method == "getDisputeCount"){
+        int cnt = -1;
+        getDisputeCount(cnt);
+        uuids.push_back(QString::number(cnt));
+        return HTTP_OK;
+    }
+    if(method == "getDisputeByUuid"){
+        return HTTP_OK;
+    }
+    if(method == "getDisputesRange"){
+        return HTTP_OK;
+    }
+    else return HTTP_NOT_IMPLEMENTED;
 }
