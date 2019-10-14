@@ -10,11 +10,10 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == QString(VERB_GET)){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                int result = dbApi->getFunction(parser.function, entities, uuids);
-                if(result == HTTP_OK){
+                code = dbApi->getFunction(parser.function, entities, uuids);
+                if(code == HTTP_OK){
                     response.admitResult(std::move(entities));
                     response.admitResult(uuids);
-                    code = result;
                     break;
                 }
             }

@@ -32,10 +32,6 @@ public:
 private:
     bool connected = false;
     QString connString;
-
-    //! make User from ByteArray
-    //! EXAMPLE!!!
-    dis::User getUserFromWords(); // FIXME: delete
 };
 
 //! @} database_api

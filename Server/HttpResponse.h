@@ -1,11 +1,10 @@
 #ifndef HTTPRESPONSE_H
 #define HTTPRESPONSE_H
 
-#include "Constants.h"
-#include "HttpParser.h"
-#include "../Primitives/IPrimitives.h"
+#define IS_HTML
 
-// TODO: MESSAGE???
+#include "Constants.h"
+#include "../Primitives/IPrimitives.h"
 
 namespace dis{
 
@@ -17,37 +16,36 @@ class HttpResponse
 public:
     HttpResponse();
 
-    void createResponse(const HttpParser &parser, int code);
+    QByteArray responseQBA;
 
-    void admitResult(const QList<QString> &uuid);
+    void createResponse(int code);
+
+    void admitResult(const QList<QString> &uuids);
     void admitResult(const std::vector<std::unique_ptr<IPrimitives> > &&ents);
-
-    const QByteArray &toQByteArray();
 
 private:
     static QString serverName;
     static QString httpVersion;
+    static QString nextLn;
 
-    QList<QString> uuid;
+    QList<QString> uuids;
     std::vector<std::unique_ptr<IPrimitives>> entities;
 
-    QString starting_line;
-    using QStringMap = QMap<QString, QString>;
+//    QString starting_line;
+//    using QStringMap = QMap<QString, QString>;
 //    typedef QMap<QString, QString> QStringMap;
-    QStringMap headers;
-    QString message_body;
-
-    QString responseQSTR;
-    QByteArray responseQBA;
+//    QStringMap headers;
+//    QList<QString> headers;
+//    QVariantMap message_body;
 
     // 1 step
     void createStartLine(int status);
     // 2 step
-    void createHeaders(const HttpParser &parser);
+    void createHeaders();
     // 3 step
     void createMessage();
 
-    void collectRespQstr();
+    QString bound = "separator";
 };
 
 //! @} server_part

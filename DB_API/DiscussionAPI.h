@@ -47,7 +47,6 @@ public:
     /**
      * @brief (GET) Get disputes in range.
      * Now sorting by time of creation
-     * @param db DataBase
      * @param discussions List of received disputes
      * @param from Start index
      * @param batch Size of package

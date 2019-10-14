@@ -4,7 +4,7 @@ dis::CommentAPI::CommentAPI() : IdbAPI ("Comments", "comments"){}
 
 dis::CommentAPI::~CommentAPI(){}
 
-bool dis::CommentAPI::addComment(const QSqlDatabase &db, const dis::Comment &comment){
+bool dis::CommentAPI::addComment(const dis::Comment &comment){
     QSqlQuery query(db);
     query.prepare("INSERT INTO " + tableName + " (UUID, UUID_post, UUID_author, UUID_receiver, Time_created, Text_data) "
                   "VALUES (?, ?, ?, ?, ?, ?)");
@@ -22,7 +22,7 @@ bool dis::CommentAPI::addComment(const QSqlDatabase &db, const dis::Comment &com
     }
 }
 
-bool dis::CommentAPI::getCommByUuid(const QSqlDatabase &db, const QString &uuid, dis::Comment &comment){
+bool dis::CommentAPI::getCommByUuid(const QString &uuid, dis::Comment &comment){
     QSqlQuery query(db);
     query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);

@@ -17,6 +17,10 @@ QString dis::Comment::getMessageBody(){
 
 }
 
-void dis::Comment::createMessageBody(){
+QByteArray dis::Comment::createMessageBody(const QString &separ){
+
+}
+
+QByteArray dis::Comment::createMessageBodyHtml(){
 
 }

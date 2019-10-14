@@ -39,9 +39,3 @@ void dis::DBController::disconnect(){
     dataBase.close();
     qDebug() << "DISCONNECTED FROM DATABASE";
 }
-
-dis::User dis::DBController::getUserFromWords(){
-    dis::User usr;
-//    usr.fillByList(words);
-    return usr;
-}

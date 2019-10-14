@@ -24,6 +24,8 @@
 #define VERB_POST       "POST"
 #define VERB_PATCH      "PATCH"
 #define VERB_DELETE     "DELETE"
+#define VERB_PUT        "PUT"
+#define VERB_OPTION     "OPTION"
 //! @} server_status
 
 namespace dis {

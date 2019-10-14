@@ -29,13 +29,18 @@ public:
      */
     virtual QString getMessageBody() = 0;
 
-private:
-    QVariantMap msgBody;
+    static QString nextLn;
+    static QByteArray createMessageBody(const QList<QString> &uuids, const QString &separ);
+    static QByteArray createMessageBodyHtml(const QList<QString> &uuids);
 
-    /**
-     * @brief Fills msgBody from object properties
-     */
-    virtual void createMessageBody() = 0;
+private:
+    QByteArray msgBody;
+
+    //! @brief Fills msgBody from object properties
+    virtual QByteArray createMessageBody(const QString &separ) = 0;
+    //! @brief Fills msgBody from object properties for HTML
+    virtual QByteArray createMessageBodyHtml() = 0;
+    // TODO: add method for array of objects
 };
 //! @} entities
 }

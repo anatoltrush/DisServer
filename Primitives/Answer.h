@@ -23,7 +23,8 @@ public:
     QString getMessageBody() override;
 
 private:
-    void createMessageBody() override;
+    QByteArray createMessageBody(const QString &separ) override;
+    QByteArray createMessageBodyHtml() override;
 };
 
 //! @} entities

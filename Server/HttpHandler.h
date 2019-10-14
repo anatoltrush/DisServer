@@ -16,7 +16,7 @@ class HttpHandler
 public:
     HttpHandler();
 
-    int code = -1;
+    int code = -666;
 
     void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response);
 };

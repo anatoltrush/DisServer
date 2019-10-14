@@ -36,9 +36,10 @@ void dis::DisServer::slotReadyRead(){
     HttpHandler httpHandler;
     httpHandler.handle(httpParser, dbcntr, httpResponse);
 
-    httpResponse.createResponse(httpParser, httpHandler.code);
+    httpResponse.createResponse(httpHandler.code);
 
     qDebug() << reqst;
+    qDebug() << httpResponse.responseQBA;
 //    QStringList fullWords = reqst.split("\r\n");
 //    QStringList infoWords = fullWords.front().split("/");
 
@@ -70,7 +71,7 @@ void dis::DisServer::slotReadyRead(){
 //    QByteArray arr;
 //    arr.append(resp);
 
-    socket->write(httpResponse.toQByteArray());
+    socket->write(httpResponse.responseQBA);
 
     socket->disconnectFromHost();
 }

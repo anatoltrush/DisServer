@@ -12,6 +12,10 @@ QString dis::Purchase::getMessageBody(){
 
 }
 
-void dis::Purchase::createMessageBody(){
+QByteArray dis::Purchase::createMessageBody(const QString &separ){
+
+}
+
+QByteArray dis::Purchase::createMessageBodyHtml(){
 
 }

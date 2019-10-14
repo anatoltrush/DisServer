@@ -17,6 +17,10 @@ QString dis::Image::getMessageBody(){
 
 }
 
-void dis::Image::createMessageBody(){
+QByteArray dis::Image::createMessageBody(const QString &separ){
+
+}
+
+QByteArray dis::Image::createMessageBodyHtml(){
 
 }

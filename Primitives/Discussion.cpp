@@ -26,6 +26,10 @@ QString dis::Discussion::getMessageBody(){
 
 }
 
-void dis::Discussion::createMessageBody(){
+QByteArray dis::Discussion::createMessageBody(const QString &separ){
+
+}
+
+QByteArray dis::Discussion::createMessageBodyHtml(){
 
 }

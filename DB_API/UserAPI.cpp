@@ -4,7 +4,7 @@ dis::UserAPI::UserAPI() : IdbAPI ("Users", "users"){}
 
 dis::UserAPI::~UserAPI(){}
 
-bool dis::UserAPI::addUser(const QSqlDatabase &db, const dis::User &user){
+bool dis::UserAPI::addUser(const dis::User &user){
     QSqlQuery query(db);
     query.prepare("INSERT INTO " + tableName + " (UUID, Name, Surname, Country) "
                   "VALUES (?, ?, ?, ?)");
@@ -20,7 +20,7 @@ bool dis::UserAPI::addUser(const QSqlDatabase &db, const dis::User &user){
     }
 }
 
-bool dis::UserAPI::deleteUser(const QSqlDatabase& db, const QString &uuid){
+bool dis::UserAPI::deleteUser(const QString &uuid){
     QSqlQuery query(db);
     query.prepare("DELETE FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
@@ -31,7 +31,7 @@ bool dis::UserAPI::deleteUser(const QSqlDatabase& db, const QString &uuid){
     }
 }
 
-bool dis::UserAPI::updateUser(const QSqlDatabase &db, const QString& uuid, const dis::User &newData){
+bool dis::UserAPI::updateUser(const QString& uuid, const dis::User &newData){
     QSqlQuery query(db);
     query.prepare("UPDATE " + tableName + " SET Name = ?, Surname = ?, Country = ? WHERE UUID = ?");
     query.addBindValue(newData.name);
@@ -46,7 +46,7 @@ bool dis::UserAPI::updateUser(const QSqlDatabase &db, const QString& uuid, const
     }
 }
 
-bool dis::UserAPI::getUserByUuid(const QSqlDatabase& db, const QString &uuid, dis::User &user){
+bool dis::UserAPI::getUserByUuid(const QString &uuid, dis::User &user){
     QSqlQuery query(db);
     query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
@@ -61,7 +61,7 @@ bool dis::UserAPI::getUserByUuid(const QSqlDatabase& db, const QString &uuid, di
     }
 }
 
-bool dis::UserAPI::getUsers(const QSqlDatabase& db, QList<dis::User> &users){
+bool dis::UserAPI::getUsers(QList<dis::User> &users){
     users.clear();
     QSqlQuery query(db);
     QString strQuery = "SELECT * FROM " + tableName;

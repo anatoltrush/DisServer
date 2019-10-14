@@ -20,11 +20,10 @@ public:
 
     /**
      * @brief Add answer to database
-     * @param db DataBase
      * @param answer New answer
      * @return true if query executed otherwise false
      */
-    bool addAnswer(const QSqlDatabase& db, const dis::Answer &answer);
+    bool addAnswer(const dis::Answer &answer);
 
     /**
      * @brief Get answers by dispute Id
@@ -33,7 +32,7 @@ public:
      * @param answers List of received answers
      * @return true if query executed otherwise false
      */
-    bool getAnswersByDisputeUuid(const QSqlDatabase& db, const QString& dispUuid, QList<dis::Answer>& answers);
+    bool getAnswersByDisputeUuid(const QString& dispUuid, QList<dis::Answer>& answers);
 
     int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
 };

@@ -105,7 +105,7 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
     // -----
     if(method == "getDisputeCount"){
         int cnt = -1;
-        getDisputeCount(cnt);
+        getDisputeCount(cnt); // check error
         uuids.push_back(QString::number(cnt));
         return HTTP_OK;
     }
@@ -115,5 +115,6 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
     if(method == "getDisputesRange"){
         return HTTP_OK;
     }
-    else return HTTP_NOT_IMPLEMENTED;
+    else
+        return HTTP_NOT_IMPLEMENTED;
 }

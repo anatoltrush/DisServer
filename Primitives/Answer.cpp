@@ -14,6 +14,10 @@ QString dis::Answer::getMessageBody(){
 
 }
 
-void dis::Answer::createMessageBody(){
+QByteArray dis::Answer::createMessageBody(const QString &separ){
+
+}
+
+QByteArray dis::Answer::createMessageBodyHtml(){
 
 }

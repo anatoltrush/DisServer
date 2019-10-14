@@ -6,7 +6,7 @@ void dis::HttpParser::parse(const QByteArray &data){
     QString allData(data);
     // TODO: check errors
 
-    // 1) separate into two parts (st+heds and message)
+    // 1) separate into two parts (st+headers and message)
     QStringList startHdrs_Msg = allData.split("\r\n\r\n");
     // TODO: check errors
     QString startHdrs = startHdrs_Msg.front();
