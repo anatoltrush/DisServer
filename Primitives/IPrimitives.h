@@ -33,14 +33,11 @@ public:
     static QByteArray createMessageBody(const QList<QString> &uuids, const QString &separ);
     static QByteArray createMessageBodyHtml(const QList<QString> &uuids);
 
-private:
-    QByteArray msgBody;
-
     //! @brief Fills msgBody from object properties
-    virtual QByteArray createMessageBody(const QString &separ) = 0;
+    virtual QByteArray createMessageBody(const std::vector<std::unique_ptr<IPrimitives>> &entities, const QString &separ) = 0;
+
     //! @brief Fills msgBody from object properties for HTML
     virtual QByteArray createMessageBodyHtml() = 0;
-    // TODO: add method for array of objects
 };
 //! @} entities
 }

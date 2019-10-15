@@ -14,7 +14,7 @@ QString dis::Answer::getMessageBody(){
 
 }
 
-QByteArray dis::Answer::createMessageBody(const QString &separ){
+QByteArray dis::Answer::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
 
 }
 

@@ -58,7 +58,8 @@ public:
      */
     bool getDisputesRange(QList<dis::Discussion>& discussions, int from, int batch);
 
-    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
+                    QList<QString> &uuids, const QList<QVariant> &params) override;
 };
 
 //! @} database_api

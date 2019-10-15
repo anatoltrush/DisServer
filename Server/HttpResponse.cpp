@@ -6,7 +6,14 @@ QString dis::HttpResponse::nextLn = "\r\n";
 
 dis::HttpResponse::HttpResponse(){}
 
-void dis::HttpResponse::createResponse(int code){
+void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
+#ifdef IS_HTML
+    if(parser.entity.isEmpty() && parser.function.isEmpty()){
+        Deploy_HTML html(true);
+        responseQBA = html.startQBA;
+        return;
+    }
+#endif
     responseQBA.clear();
     // -----
     if(code >= 100 && code < 400){
@@ -16,6 +23,7 @@ void dis::HttpResponse::createResponse(int code){
     }
     else{
         createStartLine(code);
+        // TODO: create header if BAD
     }
 }
 
@@ -23,10 +31,10 @@ void dis::HttpResponse::admitResult(const QList<QString> &uuids){
     this->uuids = uuids;
 }
 
-void dis::HttpResponse::admitResult(const std::vector<std::unique_ptr<IPrimitives>> &&ents){
-//    this->entities = entities;
-//    entities = (std::move(ents));
-    // TODO: important
+void dis::HttpResponse::admitResult(std::vector<std::unique_ptr<IPrimitives> > &ents){
+    entities.clear();
+    for(auto &ent : ents)
+        entities.push_back(std::move(ent));
 }
 
 void dis::HttpResponse::createStartLine(int status){

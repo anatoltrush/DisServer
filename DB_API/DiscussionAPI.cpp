@@ -99,7 +99,8 @@ bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, i
     }
 }
 
-int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
+                                    QList<QString> &uuids, const QList<QVariant> &params){
     primitives.clear();
     uuids.clear();
     // -----
@@ -116,5 +117,5 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
         return HTTP_OK;
     }
     else
-        return HTTP_NOT_IMPLEMENTED;
+        return HTTP_METHOD_NOT_ALLOWED;
 }

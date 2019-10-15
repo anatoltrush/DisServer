@@ -16,7 +16,7 @@ class HttpHandler
 public:
     HttpHandler();
 
-    int code = -666;
+    int status = HTTP_WEB_SERVER_IS_DOWN;
 
     void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response);
 };

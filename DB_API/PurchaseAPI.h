@@ -19,7 +19,8 @@ public:
     bool deletePurchase();
     bool redactPurchase();
 
-    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives, QList<QString> &uuids) override;
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
+                    QList<QString> &uuids, const QList<QVariant> &params) override;
 };
 
 //! @} database_api

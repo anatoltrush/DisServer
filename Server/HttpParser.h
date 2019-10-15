@@ -4,8 +4,9 @@
 #include <QString>
 #include <QByteArray>
 #include <QMap>
+#include <QVariant>
 
-// TODO: define errors and statuses
+#include "Constants.h"
 
 namespace dis{
 
@@ -17,6 +18,8 @@ class HttpParser
 public:
     HttpParser();
 
+    int status = HTTP_BAD_REQUEST;
+
     QString method, address, httpVers;
     QString entity, function;
 
@@ -27,6 +30,8 @@ public:
     QStringMap headers;
 
     QString message_body;
+
+    QList<QVariant> params;
 
     void parse(const QByteArray &data);
 

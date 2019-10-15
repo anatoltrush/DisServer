@@ -33,7 +33,7 @@ public:
     QString getMessageBody() override;
 
 private:
-    QByteArray createMessageBody(const QString &separ) override;
+    QByteArray createMessageBody(const std::vector<std::unique_ptr<IPrimitives>> &entities, const QString &separ) override;
     QByteArray createMessageBodyHtml() override;
 };
 //! @} entities

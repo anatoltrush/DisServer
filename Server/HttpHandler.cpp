@@ -10,12 +10,15 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == QString(VERB_GET)){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                code = dbApi->getFunction(parser.function, entities, uuids);
-                if(code == HTTP_OK){
-                    response.admitResult(std::move(entities));
+                status = dbApi->getFunction(parser.function, entities, uuids, parser.params);
+                if(status == HTTP_OK){
+                    response.admitResult(entities);
                     response.admitResult(uuids);
-                    break;
                 }
+                break;
+            }
+            else{
+                status = HTTP_UNPROCESSABLE_ENTITY;
             }
         }
     }

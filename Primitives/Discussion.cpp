@@ -26,7 +26,7 @@ QString dis::Discussion::getMessageBody(){
 
 }
 
-QByteArray dis::Discussion::createMessageBody(const QString &separ){
+QByteArray dis::Discussion::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
 
 }
 

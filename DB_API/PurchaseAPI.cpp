@@ -16,9 +16,10 @@ bool dis::PurchaseAPI::redactPurchase(){
     return 1;
 }
 
-int dis::PurchaseAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives, QList<QString> &uuids){
+int dis::PurchaseAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
+                                  QList<QString> &uuids, const QList<QVariant> &params){
     primitives.clear();
     uuids.clear();
     // -----
-    return 1;
+    return HTTP_METHOD_NOT_ALLOWED;
 }

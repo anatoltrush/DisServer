@@ -5,17 +5,19 @@
 
 //! @group server_status
 //! @{
-#define HTTP_OK                      200
-#define HTTP_CREATED                 201 // (PUT || POST) CREATED GOOD
+#define HTTP_OK                     200
+#define HTTP_CREATED                201 // (PUT || POST) CREATED GOOD
 
-#define HTTP_BAD_REQUEST             400 // (PUT || POST) BAD FORMAT OR LOST
-#define HTTP_UNAUTHORIZED            401
-#define HTTP_NOT_FOUND               404 // BAD URL
-#define HTTP_METHOD_NOT_ALLOWED      405 // BAD API
-#define HTTP_CONFLICT                409 // REPEATED RECORD
+#define HTTP_BAD_REQUEST            400 // (PUT || POST) BAD FORMAT OR LOST
+#define HTTP_UNAUTHORIZED           401
+#define HTTP_NOT_FOUND              404 // BAD URL
+#define HTTP_METHOD_NOT_ALLOWED     405 // BAD API
+#define HTTP_CONFLICT               409 // REPEATED RECORD
+#define HTTP_UNPROCESSABLE_ENTITY   422 // Unprocessable Entity
 
-#define HTTP_INTERNAL_SERVER_ERROR   500 // UNDEFINED
-#define HTTP_NOT_IMPLEMENTED         501
+#define HTTP_INTERNAL_SERVER_ERROR  500 // UNDEFINED
+#define HTTP_NOT_IMPLEMENTED        501
+#define HTTP_WEB_SERVER_IS_DOWN     521
 //! @} server_status
 
 //! @group server_status

@@ -17,7 +17,7 @@ QString dis::Image::getMessageBody(){
 
 }
 
-QByteArray dis::Image::createMessageBody(const QString &separ){
+QByteArray dis::Image::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
 
 }
 

@@ -36,7 +36,7 @@ void dis::DisServer::slotReadyRead(){
     HttpHandler httpHandler;
     httpHandler.handle(httpParser, dbcntr, httpResponse);
 
-    httpResponse.createResponse(httpHandler.code);
+    httpResponse.createResponse(httpParser, httpHandler.status);
 
     qDebug() << reqst;
     qDebug() << httpResponse.responseQBA;
