@@ -3,8 +3,8 @@
 
 #include <QString>
 
-#include "../QDisput/Primitives/IPrimitives.h"
-#include "../QDisput/Server/Constants.h"
+#include "../Primitives/IPrimitives.h"
+#include "../Server/Constants.h"
 
 namespace dis{
 

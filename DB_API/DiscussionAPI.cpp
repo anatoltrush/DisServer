@@ -106,9 +106,12 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
     // -----
     if(method == "getDisputeCount"){
         int cnt = -1;
-        getDisputeCount(cnt); // check error
-        uuids.push_back(QString::number(cnt));
-        return HTTP_OK;
+        bool isExec = getDisputeCount(cnt); // check error
+        if(isExec){
+            uuids.push_back(QString::number(cnt));
+            return HTTP_OK;
+        }
+        else return HTTP_INTERNAL_SERVER_ERROR;
     }
     if(method == "getDisputeByUuid"){
         return HTTP_OK;

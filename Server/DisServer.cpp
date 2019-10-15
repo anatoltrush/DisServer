@@ -23,6 +23,8 @@ void dis::DisServer::slotNewConnection(){
 }
 
 void dis::DisServer::slotReadyRead(){
+    auto begin = std::chrono::steady_clock::now();
+
     QTcpSocket *socket = qobject_cast<QTcpSocket*>(sender());
 
     QByteArray readAll = socket->readAll();
@@ -40,40 +42,13 @@ void dis::DisServer::slotReadyRead(){
 
     qDebug() << reqst;
     qDebug() << httpResponse.responseQBA;
-//    QStringList fullWords = reqst.split("\r\n");
-//    QStringList infoWords = fullWords.front().split("/");
-
-//    if(infoWords[1].contains("discussion")){
-//        QList<dis::Discussion>discs;
-//        dbcntr.discussionAPI.getDiscussions(dbcntr.dataBase, discs);
-
-//        resp += "<b>&emsp;&emsp;ID&emsp; &brvbar;Section&emsp; &brvbar;Topic&emsp; &brvbar;Reward&emsp; &brvbar;Created&emsp; &brvbar;Lang</b><br><hr>";
-//        for(const auto &disc : discs){
-//            resp += "<li>";
-//            resp += "<b>";
-
-//            resp += disc.uuid + "&nbsp; &brvbar;";
-//            resp += "&nbsp" + disc.section + "&nbsp; &brvbar;";
-//            resp += "&nbsp" + disc.topic + "&nbsp; &brvbar;";
-//            resp += "&nbsp" + QString::number(disc.reward) + "&nbsp; &brvbar;";
-//            resp += "&nbsp" + disc.time_created + "&nbsp; &brvbar;";
-//            resp += "&nbsp" + disc.languageRegion;
-
-//            resp += "</b>";
-//            resp += "<br>";
-//            resp += "<hr>";
-//        }
-//    }
-//    else{
-//        resp += "<a href= /discussion >DISCUSSIONS</a>";
-//    }
-
-//    QByteArray arr;
-//    arr.append(resp);
 
     socket->write(httpResponse.responseQBA);
-
     socket->disconnectFromHost();
+
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+    qDebug() << "-----> Time: " << elapsed_ms.count() << " ms\n";
 }
 
 void dis::DisServer::slotClientDisconnected(){
