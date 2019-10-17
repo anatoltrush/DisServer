@@ -5,7 +5,6 @@
 
 #include "Constants.h"
 #include "../DB_API/DBController.h"
-#include "SystemAPI.h"
 #include "HttpParser.h"
 #include "HttpResponse.h"
 #include "HttpHandler.h"
@@ -23,9 +22,11 @@ public:
     ~DisServer();
 
     QTcpServer *tcpServer;
-    dis::DBController dbcntr;
+    DBController dbcntr;
 
-    QList<dis::Client> clients;
+    QList<Client> clients;
+
+    std::vector<QString> authorTokens; // keys of authorized users
 
     int errorStatus = 0;
 

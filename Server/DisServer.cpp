@@ -13,7 +13,7 @@ dis::DisServer::~DisServer(){}
 void dis::DisServer::slotNewConnection(){
     dis::Client newClient;
     newClient.socket = tcpServer->nextPendingConnection();
-    newClient.connection_time = QDateTime::currentDateTime();
+    newClient.connection_time = QDateTime::currentDateTimeUtc();
 
     connect(newClient.socket, &QTcpSocket::readyRead, this, &DisServer::slotReadyRead);
     connect(newClient.socket, &QTcpSocket::disconnected, this, &DisServer::slotClientDisconnected);
@@ -36,9 +36,9 @@ void dis::DisServer::slotReadyRead(){
     HttpResponse httpResponse;
 
     HttpHandler httpHandler;
-    httpHandler.handle(httpParser, dbcntr, httpResponse);
+    httpHandler.handle(httpParser, dbcntr, httpResponse, authorTokens);
 
-    httpResponse.createResponse(httpParser, httpHandler.status);
+    httpResponse.createResponse(httpParser, httpHandler.status /*, userToken*/);
 
     qDebug() << reqst;
     qDebug() << httpResponse.responseQBA;

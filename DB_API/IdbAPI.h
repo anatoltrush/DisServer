@@ -31,7 +31,7 @@ public:
     void setDataBase(const QSqlDatabase &dataBase){db = dataBase;}
 
     virtual int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
-                            QList<QString> &uuids, const QList<QVariant> &params) = 0;
+                            QList<QString> &uuids, const QList<QVariantMap> &params) = 0;
 
 //    virtual void postFunction() = 0;
 

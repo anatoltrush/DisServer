@@ -13,10 +13,6 @@ void dis::Image::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->geo_data = query.value(rec.indexOf("Geo_data")).toString();
 }
 
-QString dis::Image::getMessageBody(){
-
-}
-
 QByteArray dis::Image::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
 
 }

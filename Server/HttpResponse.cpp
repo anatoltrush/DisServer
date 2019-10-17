@@ -50,6 +50,7 @@ void dis::HttpResponse::createStartLine(int status){
 }
 
 void dis::HttpResponse::createHeaders(){
+    // if(method == )... several cases
     QList<QString> headers;
     headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
     headers.push_back("Server: " + serverName);
@@ -73,6 +74,7 @@ void dis::HttpResponse::createHeaders(){
 }
 
 void dis::HttpResponse::createMessage(){
+    // if(method == )... several cases
     if(uuids.size() > 0){
 #ifdef IS_HTML
         QByteArray messQBA = IPrimitives::createMessageBodyHtml(uuids);

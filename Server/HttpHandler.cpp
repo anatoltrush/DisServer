@@ -2,7 +2,28 @@
 
 dis::HttpHandler::HttpHandler(){}
 
-void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response){
+void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, std::vector<QString> &authorTokens){
+    // if LOG OUT
+//    sysAPI.logOut(authorTokens, parser.authorToken);
+
+    QString regWord = "registr"; // FIXME: registr keyword
+    if(parser.authorToken == regWord){ // here you can only registrate, nothing more
+        // checks
+        UserAPI userApi;
+//        userApi.addUser(/**/);
+        // if all ok - registr, write in response key & out
+        // else - error & out
+        return;
+    }
+
+    if(parser.authorToken != "godOfPhp"){ // FIXME: delete later
+        bool isAuth = sysAPI.isAuthorized(authorTokens, parser.authorToken);
+        if(!isAuth){
+            status = HTTP_UNAUTHORIZED;
+            return;
+        }
+    }
+
     std::vector<std::unique_ptr<IPrimitives>> entities;
     QList<QString> uuids;
 
@@ -24,15 +45,15 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     }
     // POST
     if(parser.method == VERB_POST){
-
+        // use parser.object
     }
     // PATCH
     if(parser.method == VERB_PATCH){
-
+        // use parser.object
     }
     // DELETE
     if(parser.method == VERB_DELETE){
-
+        // use parser.params
     }
-    // else...
+    // else... (OPTIONS, PUT and other)
 }

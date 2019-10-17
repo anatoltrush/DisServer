@@ -3,6 +3,7 @@
 
 #include <QDate>
 #include <QTcpSocket>
+#include <QHostAddress>
 
 #include "User.h"
 

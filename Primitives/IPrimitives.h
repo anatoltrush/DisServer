@@ -23,12 +23,6 @@ public:
      */
     virtual void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) = 0;
 
-    /**
-     * @brief Transforms QVariantMap in single string
-     * @return string filled by properties of object
-     */
-    virtual QString getMessageBody() = 0;
-
     static QString nextLn;
     static QByteArray createMessageBody(const QList<QString> &uuids, const QString &separ);
     static QByteArray createMessageBodyHtml(const QList<QString> &uuids);

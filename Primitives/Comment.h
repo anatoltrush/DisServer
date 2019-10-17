@@ -30,8 +30,6 @@ public:
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
 
-    QString getMessageBody() override;
-
 private:
     QByteArray createMessageBody(const std::vector<std::unique_ptr<IPrimitives>> &entities, const QString &separ) override;
     QByteArray createMessageBodyHtml() override;

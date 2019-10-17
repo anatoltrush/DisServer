@@ -22,10 +22,6 @@ void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->img_h = query.value(rec.indexOf("Img_height")).toInt();
 }
 
-QString dis::Discussion::getMessageBody(){
-
-}
-
 QByteArray dis::Discussion::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
 
 }

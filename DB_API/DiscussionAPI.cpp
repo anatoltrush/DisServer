@@ -100,7 +100,7 @@ bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, i
 }
 
 int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
-                                    QList<QString> &uuids, const QList<QVariant> &params){
+                                    QList<QString> &uuids, const QList<QVariantMap> &params){
     primitives.clear();
     uuids.clear();
     // -----
@@ -114,6 +114,7 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
         else return HTTP_INTERNAL_SERVER_ERROR;
     }
     if(method == "getDisputeByUuid"){
+        // TODO: impl "getDisputeByUuid"
         return HTTP_OK;
     }
     if(method == "getDisputesRange"){

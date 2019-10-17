@@ -10,7 +10,9 @@ void dis::HttpParser::parse(const QByteArray &data){
     QStringList startHdrs_Msg = allData.split("\r\n\r\n");
     // TODO: check errors
     QString startHdrs = startHdrs_Msg.front();
-    this->message_body = startHdrs_Msg.back();
+    this->message_body.clear();
+    for(int i = 1; i < startHdrs_Msg.size(); i++)
+        this->message_body.append(startHdrs_Msg[i]);
 
     // 2) separate into two parts (start line and headers)
     QStringList hdrs = startHdrs.split("\r\n");
@@ -34,4 +36,10 @@ void dis::HttpParser::parse(const QByteArray &data){
     QStringList entFunc = this->address.split("/");
     if(entFunc.size() > 1) this->entity = entFunc[1];
     if(entFunc.size() > 2) this->function = entFunc[2];
+
+    // Authorization
+    for(int i = 0; i < headers.size(); i++){
+        if(headers.keys()[i] == "Authorization")
+            this->authorToken = headers.values()[i];
+    }
 }

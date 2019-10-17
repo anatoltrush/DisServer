@@ -23,7 +23,7 @@ public:
     bool getUsers(QList<dis::User>& users);
 
     int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
-                    QList<QString> &uuids, const QList<QVariant> &params) override;
+                    QList<QString> &uuids, const QList<QVariantMap> &params) override;
 
 private:
 };

@@ -1,6 +1,7 @@
 #ifndef HTTPHANDLER_H
 #define HTTPHANDLER_H
 
+#include "SystemAPI.h"
 #include "Constants.h"
 #include "HttpParser.h"
 #include "HttpResponse.h"
@@ -18,7 +19,9 @@ public:
 
     int status = HTTP_WEB_SERVER_IS_DOWN;
 
-    void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response);
+    SystemAPI sysAPI;
+
+    void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, std::vector<QString> &authorTokens);
 };
 
 //! @} server_part

@@ -66,7 +66,7 @@ bool dis::ImageAPI::getImagesByPostUuid(const QString &postUuid, QList<Image> &i
 }
 
 int dis::ImageAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
-                               QList<QString> &uuids, const QList<QVariant> &params){
+                               QList<QString> &uuids, const QList<QVariantMap> &params){
     primitives.clear();
     uuids.clear();
     // -----

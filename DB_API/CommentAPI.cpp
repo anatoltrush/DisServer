@@ -44,7 +44,7 @@ bool dis::CommentAPI::getCommByUuid(const QString &uuid, dis::Comment &comment){
 }
 
 int dis::CommentAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
-                                 QList<QString> &uuids, const QList<QVariant> &params){
+                                 QList<QString> &uuids, const QList<QVariantMap> &params){
     primitives.clear();
     uuids.clear();
     // -----

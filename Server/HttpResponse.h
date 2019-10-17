@@ -20,6 +20,8 @@ public:
 
     QByteArray responseQBA;
 
+    QString registrKey;
+
     void createResponse(const HttpParser &parser, int code);
 
     void admitResult(const QList<QString> &uuids);
@@ -46,6 +48,13 @@ private:
     void createHeaders();
     // 3 step
     void createMessage();
+
+    // for GET
+    // for POST
+    // for PATCH
+    // for DELETE
+
+    // if BAD
 
     QString bound = "separator";
 };
