@@ -13,7 +13,7 @@ void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->text = query.value(rec.indexOf("Text_data")).toString();
 }
 
-QByteArray dis::Comment::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
+QByteArray dis::Comment::createMessageBody(const QString &separ){
 
 }
 

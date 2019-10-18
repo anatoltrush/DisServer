@@ -20,3 +20,12 @@ void dis::Deploy_HTML::loadStartPage(const QString &address){
         qDebug() << "Error while start page loading";
     }
 }
+
+QByteArray dis::Deploy_HTML::errorHtml(int code, const QString &servName){
+    QByteArray res;
+    QString rsnPhr = getReasonPhrase(code);
+    res.append("<h2 style=\"text-align: center;\">" + QString::number(code) + " " + rsnPhr + "</h2>");
+    res.append("<hr size=8; color=FF0000>");
+    res.append("<p style=\"text-align: center;\">" + servName + "</p>");
+    return res;
+}

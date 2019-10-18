@@ -47,14 +47,7 @@ private:
     // 2 step
     void createHeaders();
     // 3 step
-    void createMessage();
-
-    // for GET
-    // for POST
-    // for PATCH
-    // for DELETE
-
-    // if BAD
+    void createMessage(const HttpParser &parser);
 
     QString bound = "separator";
 };

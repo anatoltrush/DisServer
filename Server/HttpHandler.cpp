@@ -2,7 +2,7 @@
 
 dis::HttpHandler::HttpHandler(){}
 
-void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, std::vector<QString> &authorTokens){
+void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QStringMap &authorTokens){
     // if LOG OUT
 //    sysAPI.logOut(authorTokens, parser.authorToken);
 

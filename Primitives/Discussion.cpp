@@ -8,7 +8,7 @@ void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf("UUID")).toString();
     this->uuid_author = query.value(rec.indexOf("UUID_author")).toString();
     this->section = query.value(rec.indexOf("Section")).toString();
-    this->topic = query.value(rec.indexOf("Topic")).toString();    
+    this->topic = query.value(rec.indexOf("Topic")).toString();
     this->time_created = query.value(rec.indexOf("Time_created")).toDateTime();
     this->type = query.value(rec.indexOf("Type")).toInt();
     this->step = query.value(rec.indexOf("Step")).toInt();
@@ -22,10 +22,12 @@ void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->img_h = query.value(rec.indexOf("Img_height")).toInt();
 }
 
-QByteArray dis::Discussion::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
-
+QByteArray dis::Discussion::createMessageBody(const QString &separ){
+    QByteArray res;
+    return res;
 }
 
 QByteArray dis::Discussion::createMessageBodyHtml(){
-
+    QByteArray res;
+    return res;
 }

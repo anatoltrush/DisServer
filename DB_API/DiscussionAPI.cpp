@@ -51,9 +51,11 @@ bool dis::DiscussionAPI::getDisputeCount(int &count){
     QString strQuery = "SELECT count(*) FROM " + tableName;
     query.prepare(strQuery);
     if(query.exec()){
-        query.next();
-        count = query.value(0).toInt();
-        return true;
+        if(query.first()){
+            count = query.value(0).toInt();
+            return true;
+        }
+        else return false;
     }
     else{
         qDebug() << db.lastError().text();
@@ -66,9 +68,12 @@ bool dis::DiscussionAPI::getDisputeByUuid(const QString &uuid, dis::Discussion &
     query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
     if(query.exec()){
-        QSqlRecord record = query.record();
-        disp.fillBySQL(query, record);
-        return true;
+        if(query.first()){
+            QSqlRecord record = query.record();
+            disp.fillBySQL(query, record);
+            return true;
+        }
+        else return false;
     }
     else{
         qDebug() << db.lastError().text();
@@ -99,27 +104,47 @@ bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, i
     }
 }
 
-int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
-                                    QList<QString> &uuids, const QList<QVariantMap> &params){
+int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
+                                    QList<QString> &primitives, const QVariantMap &params){
+    entities.clear();
     primitives.clear();
-    uuids.clear();
     // -----
     if(method == "getDisputeCount"){
         int cnt = -1;
         bool isExec = getDisputeCount(cnt); // check error
         if(isExec){
-            uuids.push_back(QString::number(cnt));
+            primitives.push_back(QString::number(cnt));
             return HTTP_OK;
         }
-        else return HTTP_INTERNAL_SERVER_ERROR;
+        else return HTTP_BAD_REQUEST;
     }
-    if(method == "getDisputeByUuid"){
-        // TODO: impl "getDisputeByUuid"
-        return HTTP_OK;
+    // -----
+    if(method == "getDisputeByUuid"){        
+        QString searchUuid;
+        for(int i = 0; i < params.size(); i++){
+            if(params.keys()[i] == "uuid")
+                searchUuid = params.values()[i].toString();
+        }
+        if(searchUuid.isEmpty()) return HTTP_BAD_REQUEST;
+        std::unique_ptr<Discussion> disResult = std::make_unique<Discussion>();
+        bool isExec = getDisputeByUuid(searchUuid, *disResult.get());
+        if(isExec){
+            entities.push_back(std::move(disResult));
+            return HTTP_OK;
+        }
+        else return HTTP_BAD_REQUEST;
     }
+    // -----
     if(method == "getDisputesRange"){
         return HTTP_OK;
     }
+    // -----
     else
         return HTTP_METHOD_NOT_ALLOWED;
 }
+
+// Authorization
+//for(int i = 0; i < headers.size(); i++){
+//    if(headers.keys()[i] == "Authorization")
+//        this->authorToken = headers.values()[i];
+//}

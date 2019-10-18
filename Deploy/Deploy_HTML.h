@@ -5,6 +5,8 @@
 #include <QFile>
 #include <QDebug>
 
+#include "../Server/Constants.h"
+
 namespace dis{
 class Deploy_HTML
 {
@@ -14,10 +16,13 @@ public:
 
     QByteArray startQBA;
 
+    static QByteArray errorHtml(int code, const QString &servName);
+
 private:
     QFile startFile;
 
     void loadStartPage(const QString &address = "D:/CODE/DISPUT/QDisput/Deploy/Index.html");
+
 };
 }
 

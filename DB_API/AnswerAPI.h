@@ -34,8 +34,8 @@ public:
      */
     bool getAnswersByDisputeUuid(const QString& dispUuid, QList<dis::Answer>& answers);
 
-    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
-                    QList<QString> &uuids, const QList<QVariantMap> &params) override;
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &entities,
+                    QList<QString> &primitives, const QVariantMap &params) override;
 };
 
 //! @} database_api

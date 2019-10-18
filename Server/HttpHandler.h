@@ -1,6 +1,7 @@
 #ifndef HTTPHANDLER_H
 #define HTTPHANDLER_H
 
+#include "../Common/disDefines.h"
 #include "SystemAPI.h"
 #include "Constants.h"
 #include "HttpParser.h"
@@ -21,7 +22,7 @@ public:
 
     SystemAPI sysAPI;
 
-    void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, std::vector<QString> &authorTokens);
+    void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QStringMap &authorTokens);
 };
 
 //! @} server_part

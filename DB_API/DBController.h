@@ -1,8 +1,6 @@
 #ifndef DBCONTROLLER_H
 #define DBCONTROLLER_H
 
-#include "../QDisput/Common/unique.h"
-
 #include "UserAPI.h"
 #include "DiscussionAPI.h"
 #include "PurchaseAPI.h"

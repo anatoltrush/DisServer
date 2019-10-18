@@ -1,7 +1,8 @@
 #ifndef SYSTEMAPI_H
 #define SYSTEMAPI_H
 
-#include "../QDisput/Primitives/Client.h"
+#include "../Common/disDefines.h"
+#include "../Primitives/Client.h"
 
 namespace dis{
 class SystemAPI
@@ -15,9 +16,9 @@ public:
     void registration(/**/);
 
     void logIn(/**/);
-    void logOut(std::vector<QString> &allTokens, const QString &userToken);
+    void logOut(QStringMap &allTokens, const QString &userToken);
 
-    bool isAuthorized(const std::vector<QString> &allTokens, const QString &userToken);
+    bool isAuthorized(const QStringMap &allTokens, const QString &userToken);
 };
 }
 

@@ -1,6 +1,6 @@
 #include "HttpResponse.h"
 
-QString dis::HttpResponse::serverName = "DisServer";
+QString dis::HttpResponse::serverName = "DisServer/1.0";
 QString dis::HttpResponse::httpVersion = "HTTP/1.1";
 QString dis::HttpResponse::nextLn = "\r\n";
 
@@ -19,11 +19,14 @@ void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
     if(code >= 100 && code < 400){
         createStartLine(code);
         createHeaders();
-        createMessage();
+        createMessage(parser);
     }
     else{
         createStartLine(code);
-        // TODO: create header if BAD
+        createHeaders();
+#ifdef IS_HTML
+        responseQBA.append(Deploy_HTML::errorHtml(code, serverName));
+#endif
     }
 }
 
@@ -51,6 +54,7 @@ void dis::HttpResponse::createStartLine(int status){
 
 void dis::HttpResponse::createHeaders(){
     // if(method == )... several cases
+
     QList<QString> headers;
     headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
     headers.push_back("Server: " + serverName);
@@ -65,6 +69,13 @@ void dis::HttpResponse::createHeaders(){
 #else
     if(entities.size() > 0) headers.push_back("Content-Type: multipart/mixed; boundary=\"" + bound + "\"");
 #endif
+
+#ifdef IS_HTML
+    if(uuids.size() == 0 && entities.size() == 0)
+        headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
+#endif
+
+
     // to QBA
     for(const auto &hdr : headers){
         QString newHdr = hdr + nextLn;
@@ -73,7 +84,7 @@ void dis::HttpResponse::createHeaders(){
     responseQBA.append(nextLn);
 }
 
-void dis::HttpResponse::createMessage(){
+void dis::HttpResponse::createMessage(const HttpParser &parser){
     // if(method == )... several cases
     if(uuids.size() > 0){
 #ifdef IS_HTML
@@ -86,14 +97,18 @@ void dis::HttpResponse::createMessage(){
     }
     if(entities.size() > 0){
 #ifdef IS_HTML
+        if(parser.method == QString(VERB_GET)){
+            entities.front()->createMessageBodyHtml();
+        }
 #else
+        if(parser.method == QString(VERB_GET)){
+            entities.front()->createMessageBody(parser.bound);
+        }
 #endif
-// HTML ???
     }
-    // use uuids
-    // use entities
 
 //    responseQSTR += "<b>DISPUTE CONNECTED!</b>";
 //    responseQSTR += "<hr size=8; color=FF0000>";
-//    responseQSTR += "<br>";
+    //    responseQSTR += "<br>";
 }
+

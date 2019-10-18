@@ -2,7 +2,7 @@
 #define DISCUSSIONAPI_H
 
 #include "IdbAPI.h"
-#include "../QDisput/Primitives/Discussion.h"
+#include "../Primitives/Discussion.h"
 
 
 namespace dis{
@@ -58,8 +58,8 @@ public:
      */
     bool getDisputesRange(QList<dis::Discussion>& discussions, int from, int batch);
 
-    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
-                    QList<QString> &uuids, const QList<QVariantMap> &params) override;
+    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &entities,
+                    QList<QString> &primitives, const QVariantMap &params) override;
 };
 
 //! @} database_api

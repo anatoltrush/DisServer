@@ -36,7 +36,7 @@ void dis::DisServer::slotReadyRead(){
     HttpResponse httpResponse;
 
     HttpHandler httpHandler;
-    httpHandler.handle(httpParser, dbcntr, httpResponse, authorTokens);
+    httpHandler.handle(httpParser, dbcntr, httpResponse, Uuid_Token);
 
     httpResponse.createResponse(httpParser, httpHandler.status /*, userToken*/);
 

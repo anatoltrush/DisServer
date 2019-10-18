@@ -3,6 +3,7 @@
 
 #include <QString>
 
+#include "../Common/unique.h"
 #include "../Primitives/IPrimitives.h"
 #include "../Server/Constants.h"
 
@@ -30,8 +31,8 @@ public:
 
     void setDataBase(const QSqlDatabase &dataBase){db = dataBase;}
 
-    virtual int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &primitives,
-                            QList<QString> &uuids, const QList<QVariantMap> &params) = 0;
+    virtual int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &entities,
+                            QList<QString> &primitives, const QVariantMap &params) = 0;
 
 //    virtual void postFunction() = 0;
 

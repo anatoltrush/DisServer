@@ -10,7 +10,7 @@ void dis::Answer::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->score = query.value(rec.indexOf("Score")).toInt();
 }
 
-QByteArray dis::Answer::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
+QByteArray dis::Answer::createMessageBody(const QString &separ){
 
 }
 

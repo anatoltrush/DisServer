@@ -65,10 +65,10 @@ bool dis::ImageAPI::getImagesByPostUuid(const QString &postUuid, QList<Image> &i
     }
 }
 
-int dis::ImageAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &primitives,
-                               QList<QString> &uuids, const QList<QVariantMap> &params){
+int dis::ImageAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
+                               QList<QString> &primitives, const QVariantMap &params){
+    entities.clear();
     primitives.clear();
-    uuids.clear();
     // -----
     return HTTP_METHOD_NOT_ALLOWED;
 }

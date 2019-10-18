@@ -20,7 +20,7 @@ void dis::User::fillByList(const QList<QString> &words, bool isFromParse){
     }
 }
 
-QByteArray dis::User::createMessageBody(const std::vector<std::unique_ptr<IPrimitives> > &entities, const QString &separ){
+QByteArray dis::User::createMessageBody(const QString &separ){
 
 }
 

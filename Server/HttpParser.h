@@ -3,11 +3,11 @@
 
 #include <QString>
 #include <QByteArray>
-#include <QMap>
 #include <QVariant>
 
 #include "Constants.h"
 #include "../Common/unique.h"
+#include "../Common/disDefines.h"
 #include "../Primitives/IPrimitives.h"
 
 // TODO: QString to QBA!!! important
@@ -29,8 +29,6 @@ public:
     QString entity, function, bound;
 
     QString starting_line;
-    using QStringMap = QMap<QString, QString>;
-//    typedef QMap<QString, QString> QStringMap;
     QStringMap headers;
     QByteArray message_body;
 //}
@@ -38,18 +36,20 @@ public:
 
 //{ output data
     QString authorToken; // for authorization
-    QList<QVariantMap> params; // for GET or DELETE requests
+    QVariantMap params; // for GET or DELETE requests
+    std::vector<QByteArray> blocks;
     std::unique_ptr<IPrimitives> object; // for POST or PATCH requests
 //}
 
     void parse(const QByteArray &data);
 
-    // parse if GET
-    // parse if POST
-    // parse if PATCH
-    // parse if DELETE
-
 private:
+    void basicParse(const QByteArray &data);
+
+    void getParse();
+    void postParse();
+    void patchParse();
+    void deleteParse();
 };
 
 //! @} server_part

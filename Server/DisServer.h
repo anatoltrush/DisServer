@@ -3,6 +3,7 @@
 
 #include <QTcpServer>
 
+#include "../Common/disDefines.h"
 #include "Constants.h"
 #include "../DB_API/DBController.h"
 #include "HttpParser.h"
@@ -26,7 +27,8 @@ public:
 
     QList<Client> clients;
 
-    std::vector<QString> authorTokens; // keys of authorized users
+//    std::vector<QString> authorTokens; // keys of authorized users
+    QStringMap Uuid_Token; // <uuid, token> of authorized users
 
     int errorStatus = 0;
 

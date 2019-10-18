@@ -3,6 +3,16 @@
 dis::HttpParser::HttpParser(){}
 
 void dis::HttpParser::parse(const QByteArray &data){
+    basicParse(data);
+
+    if(method == QString(VERB_GET)) getParse();
+    if(method == QString(VERB_POST)) postParse();
+    if(method == QString(VERB_PATCH)) patchParse();
+    if(method == QString(VERB_DELETE)) deleteParse();
+    // to be continue...
+}
+
+void dis::HttpParser::basicParse(const QByteArray &data){
     QString allData(data);
     // TODO: check errors
 
@@ -43,3 +53,15 @@ void dis::HttpParser::parse(const QByteArray &data){
             this->authorToken = headers.values()[i];
     }
 }
+
+void dis::HttpParser::getParse(){
+    // just cap
+    params.insertMulti("uuid", "{a82a706e-913a-4a32-a1e1-b26d6306edda}");
+    // FIXME: do right parse
+}
+
+void dis::HttpParser::postParse(){}
+
+void dis::HttpParser::patchParse(){}
+
+void dis::HttpParser::deleteParse(){}

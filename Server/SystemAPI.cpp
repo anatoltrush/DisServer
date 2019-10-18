@@ -7,15 +7,15 @@ void dis::SystemAPI::sendToAll(const QList<dis::Client> &clients, const QByteArr
 
 void dis::SystemAPI::kickByTime(QList<dis::Client> &clients){}
 
-void dis::SystemAPI::logOut(std::vector<QString> &allTokens, const QString &userToken){
-    for(size_t i = 0; i < allTokens.size(); i++)
-        if(allTokens[i] == userToken)
-            allTokens.erase(allTokens.begin() + i);
+void dis::SystemAPI::logOut(QStringMap &allTokens, const QString &userToken){
+//    for(size_t i = 0; i < allTokens.size(); i++)
+//        if(allTokens[i] == userToken)
+//            allTokens.erase(allTokens.begin() + i);
 }
 
-bool dis::SystemAPI::isAuthorized(const std::vector<QString> &allTokens, const QString &userToken){
-    for(const auto &tkn : allTokens)
-        if(tkn == userToken)
-            return true;
-    return false;
+bool dis::SystemAPI::isAuthorized(const QStringMap &allTokens, const QString &userToken){
+//    for(const auto &tkn : allTokens)
+//        if(tkn == userToken)
+//            return true;
+//    return false;
 }
