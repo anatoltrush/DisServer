@@ -9,9 +9,7 @@
 #include "../Common/unique.h"
 #include "../Common/disDefines.h"
 #include "../Primitives/IPrimitives.h"
-
-// TODO: QString to QBA!!! important
-
+// TODO: выцепить bound
 namespace dis{
 
 //! @addtogroup server_part
@@ -37,7 +35,7 @@ public:
 //{ output data
     QString authorToken; // for authorization
     QVariantMap params; // for GET or DELETE requests
-    std::vector<QByteArray> blocks;
+    std::vector<QByteArray> blocks; // when POST got
     std::unique_ptr<IPrimitives> object; // for POST or PATCH requests
 //}
 
@@ -50,6 +48,7 @@ private:
     void postParse();
     void patchParse();
     void deleteParse();
+    void optionParse();
 };
 
 //! @} server_part

@@ -18,7 +18,8 @@ class HttpHandler
 public:
     HttpHandler();
 
-    int status = HTTP_WEB_SERVER_IS_DOWN;
+    int status = HTTP_BAD_REQUEST;
+    QString currentUser;
 
     SystemAPI sysAPI;
 

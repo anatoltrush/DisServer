@@ -116,13 +116,13 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
             primitives.push_back(QString::number(cnt));
             return HTTP_OK;
         }
-        else return HTTP_BAD_REQUEST;
+        else return HTTP_INTERNAL_SERVER_ERROR;
     }
     // -----
     if(method == "getDisputeByUuid"){        
         QString searchUuid;
         for(int i = 0; i < params.size(); i++){
-            if(params.keys()[i] == "uuid")
+            if(params.keys()[i] == "uuid") // NOTE: param_name "uuid"
                 searchUuid = params.values()[i].toString();
         }
         if(searchUuid.isEmpty()) return HTTP_BAD_REQUEST;
@@ -132,19 +132,13 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
             entities.push_back(std::move(disResult));
             return HTTP_OK;
         }
-        else return HTTP_BAD_REQUEST;
+        else return HTTP_INTERNAL_SERVER_ERROR;
     }
     // -----
     if(method == "getDisputesRange"){
-        return HTTP_OK;
+        return HTTP_METHOD_NOT_ALLOWED;
     }
     // -----
     else
         return HTTP_METHOD_NOT_ALLOWED;
 }
-
-// Authorization
-//for(int i = 0; i < headers.size(); i++){
-//    if(headers.keys()[i] == "Authorization")
-//        this->authorToken = headers.values()[i];
-//}

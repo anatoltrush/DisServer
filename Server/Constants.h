@@ -28,6 +28,7 @@
 #define VERB_DELETE     "DELETE"
 #define VERB_PUT        "PUT"
 #define VERB_OPTION     "OPTION"
+#define VERB_HEAD       "HEAD"
 //! @} server_status
 
 namespace dis {

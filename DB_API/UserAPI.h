@@ -15,6 +15,7 @@ public:
     UserAPI();
     ~UserAPI() override;
 
+    //! WARNING: use only for registration, not use in "postFunction"
     bool addUser(const dis::User &user);
     bool deleteUser(const QString &uuid);
     bool updateUser(const QString &uuid, const dis::User &newData);

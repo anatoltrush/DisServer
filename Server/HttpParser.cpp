@@ -9,6 +9,7 @@ void dis::HttpParser::parse(const QByteArray &data){
     if(method == QString(VERB_POST)) postParse();
     if(method == QString(VERB_PATCH)) patchParse();
     if(method == QString(VERB_DELETE)) deleteParse();
+    if(method == QString(VERB_OPTION)) optionParse();
     // to be continue...
 }
 
@@ -65,3 +66,5 @@ void dis::HttpParser::postParse(){}
 void dis::HttpParser::patchParse(){}
 
 void dis::HttpParser::deleteParse(){}
+
+void dis::HttpParser::optionParse(){}

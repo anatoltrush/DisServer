@@ -56,8 +56,9 @@ void dis::HttpResponse::createHeaders(){
     // if(method == )... several cases
 
     QList<QString> headers;
-    headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
     headers.push_back("Server: " + serverName);
+    headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
+
 #ifdef IS_HTML
     if(uuids.size() > 0) headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
 #else
@@ -106,9 +107,5 @@ void dis::HttpResponse::createMessage(const HttpParser &parser){
         }
 #endif
     }
-
-//    responseQSTR += "<b>DISPUTE CONNECTED!</b>";
-//    responseQSTR += "<hr size=8; color=FF0000>";
-    //    responseQSTR += "<br>";
 }
 

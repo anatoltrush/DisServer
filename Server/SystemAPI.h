@@ -13,12 +13,11 @@ public:
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
     void kickByTime(QList<dis::Client> &clients);
 
-    void registration(/**/);
+    void logOut(QStringMap &allTokens, const QString &userToken); // OPTION
+    bool isAuthorized(const QStringMap &allTokens, const QString &userToken, QString &currUsr);
 
-    void logIn(/**/);
-    void logOut(QStringMap &allTokens, const QString &userToken);
-
-    bool isAuthorized(const QStringMap &allTokens, const QString &userToken);
+    bool checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid);
+    bool isEmailExsist(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist);
 };
 }
 

@@ -20,7 +20,7 @@ public:
 
     QByteArray responseQBA;
 
-    QString registrKey;
+    QString authToken;
 
     void createResponse(const HttpParser &parser, int code);
 
