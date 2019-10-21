@@ -122,7 +122,7 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
     if(method == "getDisputeByUuid"){        
         QString searchUuid;
         for(int i = 0; i < params.size(); i++){
-            if(params.keys()[i] == "uuid") // NOTE: param_name "uuid"
+            if(params.keys()[i] == KW_UUID_DISPUTE)
                 searchUuid = params.values()[i].toString();
         }
         if(searchUuid.isEmpty()) return HTTP_BAD_REQUEST;

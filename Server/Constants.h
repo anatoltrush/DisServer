@@ -35,15 +35,15 @@ namespace dis {
     QString getReasonPhrase(int code);
 }
 
-// //! @group entities
-// //! @{
-//#define Answer      answers
-//#define Comment     comments
+//! @group key_words
+//! @{
+#define KW_REGISTRATION "registration"
+#define KW_LOGIN        "login"
+#define KW_LOGOUT       "logout"
+#define KW_UUID_DISPUTE "uuid_dispute"
 //#define Answer  answers
 //#define Answer  answers
-//#define Answer  answers
-//#define Answer  answers
-// //! @} entities
+//! @} entities
 
 //typedef enum _HTTP_VERB {
 //  HttpVerbUnparsed = 0,

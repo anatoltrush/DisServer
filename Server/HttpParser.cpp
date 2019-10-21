@@ -57,7 +57,7 @@ void dis::HttpParser::basicParse(const QByteArray &data){
 
 void dis::HttpParser::getParse(){
     // just cap
-    params.insertMulti("uuid", "{a82a706e-913a-4a32-a1e1-b26d6306edda}");
+    params.insertMulti(KW_UUID_DISPUTE, "{a82a706e-913a-4a32-a1e1-b26d6306edda}");
     // FIXME: do right parse
 }
 

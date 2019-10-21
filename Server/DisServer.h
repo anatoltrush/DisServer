@@ -28,7 +28,7 @@ public:
     QList<Client> clients;
 
 //    std::vector<QString> authorTokens; // keys of authorized users
-    QStringMap Uuid_Token; // <uuid, token> of authorized users
+    QStringMap Uuid_Token; // <uuid, token> of authorized users // TODO: добавить время авторизации/логина
 
     int errorStatus = 0;
 

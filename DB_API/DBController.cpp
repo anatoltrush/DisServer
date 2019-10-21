@@ -37,5 +37,6 @@ bool dis::DBController::connect(const QString &connectString){
 
 void dis::DBController::disconnect(){
     dataBase.close();
+    dataBase.removeDatabase(dataBase.connectionName());
     qDebug() << "DISCONNECTED FROM DATABASE";
 }
