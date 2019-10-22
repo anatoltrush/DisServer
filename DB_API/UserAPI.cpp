@@ -51,9 +51,12 @@ bool dis::UserAPI::getUserByUuid(const QString &uuid, dis::User &user){
     query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
     if(query.exec()){
-        QSqlRecord record = query.record();
-        user.fillBySQL(query, record);
-        return true;
+        if(query.first()){
+            QSqlRecord record = query.record();
+            user.fillBySQL(query, record);
+            return true;
+        }
+        else return false;
     }
     else{
         qDebug() << db.lastError().text();

@@ -10,10 +10,12 @@ void dis::HttpParser::parse(const QByteArray &data){
     if(method == QString(VERB_PATCH)) patchParse();
     if(method == QString(VERB_DELETE)) deleteParse();
     if(method == QString(VERB_OPTION)) optionParse();
-    // to be continue...
+    if(method == QString(VERB_PUT)) optionPut();
+    if(method == QString(VERB_HEAD)) optionHead();
 }
 
 void dis::HttpParser::basicParse(const QByteArray &data){
+    QString message_body;
     QString allData(data);
     // TODO: check errors
 
@@ -21,9 +23,9 @@ void dis::HttpParser::basicParse(const QByteArray &data){
     QStringList startHdrs_Msg = allData.split("\r\n\r\n");
     // TODO: check errors
     QString startHdrs = startHdrs_Msg.front();
-    this->message_body.clear();
+    message_body.clear();
     for(int i = 1; i < startHdrs_Msg.size(); i++)
-        this->message_body.append(startHdrs_Msg[i]);
+        message_body.append(startHdrs_Msg[i]);
 
     // 2) separate into two parts (start line and headers)
     QStringList hdrs = startHdrs.split("\r\n");
@@ -31,26 +33,45 @@ void dis::HttpParser::basicParse(const QByteArray &data){
     // 2.1) start line
     this->starting_line = hdrs.front();
 
-    // 2.2) headers
-    for(int i = 1; i < hdrs.size(); i++){
-        QStringList hdrLst = hdrs[i].split(": ");
-        this->headers.insert(hdrLst.front(), hdrLst.back());
-    }
-
-    // 3) first string
+    // 2.2) first string
     QStringList startWrds = this->starting_line.split(" ");
     this->method = startWrds[0];
     this->address = startWrds[1];
     this->httpVers = startWrds[2];
 
-    // 4) entity & function
+    // 2.3) entity & function
     QStringList entFunc = this->address.split("/");
     if(entFunc.size() > 1) this->entity = entFunc[1];
     if(entFunc.size() > 2) this->function = entFunc[2];
 
-    // Authorization
+    // 3) headers
+    for(int i = 1; i < hdrs.size(); i++){
+        QStringList hdrLst = hdrs[i].split(": ");
+        this->headers.insert(hdrLst.front(), hdrLst.back());
+    }
+
+    // 4) Content-type
     for(int i = 0; i < headers.size(); i++){
-        if(headers.keys()[i] == "Authorization")
+        if(headers.keys()[i] == KW_CONTENT_TYPE){
+            QStringList cntp = headers.values()[i].split("\"");
+            this->bound = cntp[1]; // check, may be out of range
+        }
+    }
+
+    // 5) Separate on blocks
+    for(int i = 0; i < headers.size(); i++)
+        if(headers.keys()[i] == KW_CONTENT_TYPE)
+            blocks = message_body.split("--" + this->bound);
+    // DELETE EMPTY BLOCKS
+    for(int i = 0; i < blocks.size(); i++)
+        if(blocks[i].size() == 0 || blocks[i] == "--"){
+            blocks.erase(blocks.begin() + i);
+            --i;
+        }
+
+    // 6) Authorization
+    for(int i = 0; i < headers.size(); i++){
+        if(headers.keys()[i] == KW_AUTHORIZATION)
             this->authorToken = headers.values()[i];
     }
 }
@@ -68,3 +89,7 @@ void dis::HttpParser::patchParse(){}
 void dis::HttpParser::deleteParse(){}
 
 void dis::HttpParser::optionParse(){}
+
+void dis::HttpParser::optionPut(){}
+
+void dis::HttpParser::optionHead(){}

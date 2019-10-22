@@ -19,7 +19,9 @@ public:
     Client();
     ~Client();
 
-    QDateTime connection_time;
+    QString uuid;
+    QString authorToken;
+    QDateTime lastRequestTime;
     QTcpSocket *socket;
 };
 //! @} entities

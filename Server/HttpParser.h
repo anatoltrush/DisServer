@@ -9,7 +9,7 @@
 #include "../Common/unique.h"
 #include "../Common/disDefines.h"
 #include "../Primitives/IPrimitives.h"
-// TODO: выцепить bound
+// TODO: ОБРАБОТКА КАЖДОГО БЛОКА В ЗАВИСИМОСТИ ОТ ТИПА ЗАПРОСА
 namespace dis{
 
 //! @addtogroup server_part
@@ -24,18 +24,17 @@ public:
 
 //{ input raw data
     QString method, address, httpVers;
-    QString entity, function, bound;
+    QString entity, function, bound/*if post*/;
 
     QString starting_line;
     QStringMap headers;
-    QByteArray message_body;
 //}
 
 
 //{ output data
     QString authorToken; // for authorization
     QVariantMap params; // for GET or DELETE requests
-    std::vector<QByteArray> blocks; // when POST got
+    QList<QString> blocks; // everywhere
     std::unique_ptr<IPrimitives> object; // for POST or PATCH requests
 //}
 
@@ -49,6 +48,8 @@ private:
     void patchParse();
     void deleteParse();
     void optionParse();
+    void optionPut();
+    void optionHead();
 };
 
 //! @} server_part

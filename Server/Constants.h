@@ -37,12 +37,12 @@ namespace dis {
 
 //! @group key_words
 //! @{
-#define KW_REGISTRATION "registration"
-#define KW_LOGIN        "login"
-#define KW_LOGOUT       "logout"
-#define KW_UUID_DISPUTE "uuid_dispute"
-//#define Answer  answers
-//#define Answer  answers
+#define KW_REGISTRATION     "registration"
+#define KW_LOGIN            "login"
+#define KW_LOGOUT           "logout"
+#define KW_UUID_DISPUTE     "uuid_dispute"
+#define KW_AUTHORIZATION    "Authorization"
+#define KW_CONTENT_TYPE     "Content-Type"
 //! @} entities
 
 //typedef enum _HTTP_VERB {

@@ -99,11 +99,12 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     // PATCH
     if(parser.method == VERB_PATCH){
         // use parser.object
+        // TODO: check WHO CAN PATCH (only owner)
     }
     // DELETE
     if(parser.method == VERB_DELETE){
         // use parser.params
-        // TODO: check WHO CAN DELETE (only owner)?
+        // TODO: check WHO CAN DELETE (only owner)
     }
     // else... (OPTIONS, PUT and other)
 }

@@ -13,7 +13,7 @@ dis::DisServer::~DisServer(){}
 void dis::DisServer::slotNewConnection(){
     dis::Client newClient;
     newClient.socket = tcpServer->nextPendingConnection();
-    newClient.connection_time = QDateTime::currentDateTimeUtc();
+    newClient.lastRequestTime = QDateTime::currentDateTimeUtc();
 
     connect(newClient.socket, &QTcpSocket::readyRead, this, &DisServer::slotReadyRead);
     connect(newClient.socket, &QTcpSocket::disconnected, this, &DisServer::slotClientDisconnected);

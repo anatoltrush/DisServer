@@ -34,10 +34,7 @@ bool dis::ImageAPI::getImageByUuid(const QString &uuid, dis::Image &img){
             img.fillBySQL(query, record);
             return true;
         }
-        else{
-            qDebug() << db.lastError().text();
-            return false;
-        }
+        else return false;
     }
     else{
         qDebug() << db.lastError().text();
