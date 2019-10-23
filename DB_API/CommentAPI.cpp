@@ -43,8 +43,7 @@ bool dis::CommentAPI::getCommByUuid(const QString &uuid, dis::Comment &comment){
     }
 }
 
-int dis::CommentAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
-                                 QList<QString> &primitives, const QVariantMap &params){
+int dis::CommentAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----

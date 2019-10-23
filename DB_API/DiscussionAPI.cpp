@@ -104,12 +104,11 @@ bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, i
     }
 }
 
-int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
-                                    QList<QString> &primitives, const QVariantMap &params){
+int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----
-    if(method == "getDisputeCount"){
+    if(parser.function == "getDisputeCount"){
         int cnt = -1;
         bool isExec = getDisputeCount(cnt); // check error
         if(isExec){
@@ -119,11 +118,11 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
         else return HTTP_INTERNAL_SERVER_ERROR;
     }
     // -----
-    if(method == "getDisputeByUuid"){        
+    if(parser.function == "getDisputeByUuid"){
         QString searchUuid;
-        for(int i = 0; i < params.size(); i++){
-            if(params.keys()[i] == KW_UUID_DISPUTE)
-                searchUuid = params.values()[i].toString();
+        for(int i = 0; i < parser.params.size(); i++){
+            if(parser.params.keys()[i] == "UUID")
+                searchUuid = parser.params.values()[i].toString();
         }
         if(searchUuid.isEmpty()) return HTTP_BAD_REQUEST;
         std::unique_ptr<Discussion> disResult = std::make_unique<Discussion>();
@@ -135,7 +134,7 @@ int dis::DiscussionAPI::getFunction(const QString &method, std::vector<std::uniq
         else return HTTP_INTERNAL_SERVER_ERROR;
     }
     // -----
-    if(method == "getDisputesRange"){
+    if(parser.function == "getDisputesRange"){
         return HTTP_METHOD_NOT_ALLOWED;
     }
     // -----

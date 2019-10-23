@@ -73,16 +73,16 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     }
 
     std::vector<std::unique_ptr<IPrimitives>> entities;
-    QList<QString> uuids;
+    QList<QString> primitives;
 
     // GET
     if(parser.method == VERB_GET){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                status = dbApi->getFunction(parser.function, entities, uuids, parser.params);
+                status = dbApi->getFunction(parser, entities, primitives);
                 if(status == HTTP_OK){
                     response.admitResult(entities);
-                    response.admitResult(uuids);
+                    response.admitResult(primitives);
                 }
                 break;
             }

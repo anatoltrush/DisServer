@@ -9,7 +9,7 @@
 #include "../Common/unique.h"
 #include "../Common/disDefines.h"
 #include "../Primitives/IPrimitives.h"
-// TODO: ОБРАБОТКА КАЖДОГО БЛОКА В ЗАВИСИМОСТИ ОТ ТИПА ЗАПРОСА
+
 namespace dis{
 
 //! @addtogroup server_part
@@ -35,7 +35,7 @@ public:
     QString authorToken; // for authorization
     QVariantMap params; // for GET or DELETE requests
     QList<QString> blocks; // everywhere
-    std::unique_ptr<IPrimitives> object; // for POST or PATCH requests
+    std::unique_ptr<IPrimitives> object; // for POST or PATCH or PUT requests
 //}
 
     void parse(const QByteArray &data);
@@ -50,6 +50,8 @@ private:
     void optionParse();
     void optionPut();
     void optionHead();
+
+    QPair<QString, QVariant> parseBlock(const QString &block);
 };
 
 //! @} server_part

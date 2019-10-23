@@ -83,8 +83,7 @@ bool dis::UserAPI::getUsers(QList<dis::User> &users){
     }
 }
 
-int dis::UserAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
-                              QList<QString> &primitives, const QVariantMap &params){
+int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----

@@ -16,8 +16,7 @@ bool dis::PurchaseAPI::redactPurchase(){
     return 1;
 }
 
-int dis::PurchaseAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
-                                  QList<QString> &primitives, const QVariantMap &params){
+int dis::PurchaseAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----

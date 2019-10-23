@@ -39,8 +39,7 @@ bool dis::AnswerAPI::getAnswersByDisputeUuid(const QString &dispUuid, QList<dis:
     }
 }
 
-int dis::AnswerAPI::getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives> > &entities,
-                                QList<QString> &primitives, const QVariantMap &params){
+int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----

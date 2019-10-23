@@ -24,8 +24,10 @@ void dis::HttpParser::basicParse(const QByteArray &data){
     // TODO: check errors
     QString startHdrs = startHdrs_Msg.front();
     message_body.clear();
-    for(int i = 1; i < startHdrs_Msg.size(); i++)
+    for(int i = 1; i < startHdrs_Msg.size(); i++){
         message_body.append(startHdrs_Msg[i]);
+        message_body.append("\r\n\r\n"); // resurrect deleted
+    }
 
     // 2) separate into two parts (start line and headers)
     QStringList hdrs = startHdrs.split("\r\n");
@@ -64,32 +66,80 @@ void dis::HttpParser::basicParse(const QByteArray &data){
             blocks = message_body.split("--" + this->bound);
     // DELETE EMPTY BLOCKS
     for(int i = 0; i < blocks.size(); i++)
-        if(blocks[i].size() == 0 || blocks[i] == "--"){
+        if(blocks[i].size() == 0 || blocks[i] == "--\r\n\r\n"){
             blocks.erase(blocks.begin() + i);
             --i;
         }
+    // delete begs & ends
+    for(auto &block : blocks){
+        block.remove(0, 2); // begs
+        int bl_sz = block.size();
+        block.remove(bl_sz-2, 2); // ends
+    }
 
     // 6) Authorization
     for(int i = 0; i < headers.size(); i++){
         if(headers.keys()[i] == KW_AUTHORIZATION)
             this->authorToken = headers.values()[i];
     }
+
+    // 7) fill params
+    for(const auto &block : blocks){
+        QPair<QString, QVariant> record = parseBlock(block);
+        params.insertMulti(record.first, record.second);
+    }
 }
 
-void dis::HttpParser::getParse(){
-    // just cap
-    params.insertMulti(KW_UUID_DISPUTE, "{a82a706e-913a-4a32-a1e1-b26d6306edda}");
-    // FIXME: do right parse
+void dis::HttpParser::getParse(){}
+
+void dis::HttpParser::postParse(){
+    // create object with params
 }
 
-void dis::HttpParser::postParse(){}
-
-void dis::HttpParser::patchParse(){}
+void dis::HttpParser::patchParse(){
+    // create object with params
+}
 
 void dis::HttpParser::deleteParse(){}
 
 void dis::HttpParser::optionParse(){}
 
-void dis::HttpParser::optionPut(){}
+void dis::HttpParser::optionPut(){
+    // create object with params
+}
 
 void dis::HttpParser::optionHead(){}
+
+QPair<QString, QVariant> dis::HttpParser::parseBlock(const QString &block){
+    QPair<QString, QVariant> res;
+    // do check (assert)
+    QStringList name_type_data = block.split("\r\n\r\n");
+    QStringList name_type = name_type_data[0].split("\r\n");
+
+    // name
+    QString _n = "name=\"";
+    QString name;
+    int name_pos = name_type[0].indexOf(_n);
+    if(name_pos >= 0){
+        for(int i = name_pos + _n.size(); i < name_type[0].size(); i++){
+            QChar symb = name_type[0][i];
+            if(symb == '"') break;
+            name.append(symb);
+        }
+    }
+
+    // format
+    QStringList type_format = name_type.back().split(": ");
+    QString format_full = type_format.back();
+    QString format_short = format_full.split("/")[0];
+
+    // --- return ---
+    if(format_short == "text")
+        res = qMakePair(name, name_type_data[1]);
+    if(format_short == "image"){
+        QByteArray data;
+        data.append(name_type_data[1]);
+        res = qMakePair(name, data);
+    }
+    return res;
+}

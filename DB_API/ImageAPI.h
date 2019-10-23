@@ -36,8 +36,7 @@ public:
      */
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
 
-    int getFunction(const QString &method, std::vector<std::unique_ptr<IPrimitives>> &entities,
-                    QList<QString> &primitives, const QVariantMap &params) override;
+    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitivess) override;
 };
 
 //! @} database_api
