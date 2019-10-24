@@ -25,7 +25,7 @@ public:
     bool connect(const QString& connectString);
     void disconnect();
 
-    std::vector<std::unique_ptr<IdbAPI>> dbAPIs;
+    std::vector<std::unique_ptr<IdbAPI>> dbAPIs;    
 
 private:
     bool connected = false;

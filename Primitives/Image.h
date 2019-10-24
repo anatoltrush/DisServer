@@ -1,10 +1,6 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include <QtSql>
-#include <QDateTime>
-#include <QDate>
-
 #include "IPrimitives.h"
 
 namespace dis{
@@ -12,10 +8,11 @@ namespace dis{
 //! @addtogroup entities
 //! @{
 
-class Image : IPrimitives
+class Image : public IPrimitives
 {
 public:
     Image();
+    ~Image() override;
 
     QString uuid = QUuid::createUuid().toString();
     QString uuid_author;
@@ -34,6 +31,7 @@ public:
     QString geo_data;
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
+    void fillByParse(const QVariantMap &params) override;
 
 private:
     QByteArray createMessageBody(const QString &separ) override;

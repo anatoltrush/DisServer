@@ -10,6 +10,10 @@ void dis::Answer::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->score = query.value(rec.indexOf("Score")).toInt();
 }
 
+void dis::Answer::fillByParse(const QVariantMap &params){
+
+}
+
 QByteArray dis::Answer::createMessageBody(const QString &separ){
 
 }

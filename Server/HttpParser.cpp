@@ -93,11 +93,13 @@ void dis::HttpParser::basicParse(const QByteArray &data){
 void dis::HttpParser::getParse(){}
 
 void dis::HttpParser::postParse(){
-    // create object with params
+    getPrimitive(object, entity);
+    object->fillByParse(params);
 }
 
 void dis::HttpParser::patchParse(){
-    // create object with params
+    getPrimitive(object, entity);
+    object->fillByParse(params);
 }
 
 void dis::HttpParser::deleteParse(){}
@@ -105,7 +107,8 @@ void dis::HttpParser::deleteParse(){}
 void dis::HttpParser::optionParse(){}
 
 void dis::HttpParser::optionPut(){
-    // create object with params
+    getPrimitive(object, entity);
+    object->fillByParse(params);
 }
 
 void dis::HttpParser::optionHead(){}
@@ -142,4 +145,13 @@ QPair<QString, QVariant> dis::HttpParser::parseBlock(const QString &block){
         res = qMakePair(name, data);
     }
     return res;
+}
+
+void dis::HttpParser::getPrimitive(std::unique_ptr<IPrimitives> &object, const QString &entity){
+    if(entity == API_TYPE_DISPUTES) object = std::make_unique<Discussion>();
+    if(entity == API_TYPE_ANSWERS) object = std::make_unique<Answer>();
+    if(entity == API_TYPE_COMMENTS) object = std::make_unique<Comment>();
+    if(entity == API_TYPE_IMAGES) object = std::make_unique<Image>(); // BUG: WTF???
+    if(entity == API_TYPE_PURCHASES) object = std::make_unique<Purchase>();
+    if(entity == API_TYPE_USERS) object = std::make_unique<User>();
 }

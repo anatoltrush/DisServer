@@ -10,6 +10,13 @@
 #include "../Common/disDefines.h"
 #include "../Primitives/IPrimitives.h"
 
+#include "../Primitives/Discussion.h"
+#include "../Primitives/Answer.h"
+#include "../Primitives/Comment.h"
+#include "../Primitives/Image.h"
+#include "../Primitives/Purchase.h"
+#include "../Primitives/User.h"
+
 namespace dis{
 
 //! @addtogroup server_part
@@ -52,6 +59,8 @@ private:
     void optionHead();
 
     QPair<QString, QVariant> parseBlock(const QString &block);
+
+    static void getPrimitive(std::unique_ptr<IPrimitives> &object, const QString &entity);
 };
 
 //! @} server_part

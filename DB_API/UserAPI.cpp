@@ -1,6 +1,6 @@
 #include "UserAPI.h"
 
-dis::UserAPI::UserAPI() : IdbAPI ("Users", "users"){}
+dis::UserAPI::UserAPI() : IdbAPI ("Users", API_TYPE_USERS){}
 
 dis::UserAPI::~UserAPI(){}
 

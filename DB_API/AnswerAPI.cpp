@@ -1,6 +1,6 @@
 #include "AnswerAPI.h"
 
-dis::AnswerAPI::AnswerAPI() : IdbAPI ("Answers", "answers"){}
+dis::AnswerAPI::AnswerAPI() : IdbAPI ("Answers", API_TYPE_ANSWERS){}
 
 dis::AnswerAPI::~AnswerAPI(){}
 

@@ -9,12 +9,12 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(userAPI.typeApi == parser.entity){
         // REGISTRATION
         if(parser.method == VERB_POST && parser.function == KW_REGISTRATION){
-            User newUser;
-            // TODO: fill user from parser
-            QString email = "_t@tut.by"; // FIXME: change
+            IPrimitives* primit = parser.object.get();
+            User newUser = *static_cast<User*>(primit);
 
             bool isExsist = false;
-            bool checkEmail = sysAPI.isEmailExsist(dbcntr.dataBase, userAPI.tableName, email, isExsist);
+            // NOTE: e-mail check
+            bool checkEmail = sysAPI.isEmailExsist(dbcntr.dataBase, userAPI.tableName, newUser.email, isExsist);
             if(!checkEmail){
                 status = HTTP_INTERNAL_SERVER_ERROR;
                 return;
@@ -93,6 +93,16 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     }
     // POST
     if(parser.method == VERB_POST){
+        for(const auto &dbApi : dbcntr.dbAPIs){
+            if(dbApi->typeApi == parser.entity){
+//                status = dbApi->postF();
+                break;
+            }
+            else{
+                status = HTTP_UNPROCESSABLE_ENTITY;
+            }
+
+        }
         // use parser.object
         // WARNING: not for User
     }

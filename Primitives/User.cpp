@@ -11,13 +11,8 @@ void dis::User::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->country = query.value(rec.indexOf("Country")).toString();
 }
 
-void dis::User::fillByList(const QList<QString> &words, bool isFromParse){
-    int startInd = (isFromParse) ? 2 : 0;
-    for(int i = startInd; i < words.size(); i++){
-        if(words[i] == "Name") this->name = words[i + 1];
-        if(words[i] == "Surname") this->surname = words[i + 1];
-        if(words[i] == "Country") this->country = words[i + 1];
-    }
+void dis::User::fillByParse(const QVariantMap &params){
+
 }
 
 QByteArray dis::User::createMessageBody(const QString &separ){

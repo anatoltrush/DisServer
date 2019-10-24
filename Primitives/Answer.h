@@ -20,6 +20,8 @@ public:
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
 
+    void fillByParse(const QVariantMap &params) override;
+
 private:
     QByteArray createMessageBody(const QString &separ) override;
     QByteArray createMessageBodyHtml() override;

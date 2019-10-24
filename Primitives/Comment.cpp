@@ -13,6 +13,10 @@ void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->text = query.value(rec.indexOf("Text_data")).toString();
 }
 
+void dis::Comment::fillByParse(const QVariantMap &params){
+
+}
+
 QByteArray dis::Comment::createMessageBody(const QString &separ){
 
 }

@@ -1,6 +1,6 @@
 #include "ImageAPI.h"
 
-dis::ImageAPI::ImageAPI() : IdbAPI ("Images", "images"){}
+dis::ImageAPI::ImageAPI() : IdbAPI ("Images", API_TYPE_IMAGES){}
 
 dis::ImageAPI::~ImageAPI(){}
 

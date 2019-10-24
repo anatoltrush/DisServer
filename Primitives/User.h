@@ -9,6 +9,8 @@
 #include "Purchase.h"
 #include "IPrimitives.h"
 
+//#define PROP_USER_UUID"UUID" // example
+
 namespace dis{
 //! @addtogroup entities
 //! @{
@@ -53,7 +55,7 @@ public:
     int money = 0;
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
-    void fillByList(const QList<QString> &words, bool isFromParse = false);
+    void fillByParse(const QVariantMap &params) override;
 
 private:
     QByteArray createMessageBody(const QString &separ) override;
