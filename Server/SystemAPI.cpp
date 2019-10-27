@@ -23,6 +23,7 @@ bool dis::SystemAPI::isAuthorized(const QStringMap &allTokens, const QString &us
 }
 
 bool dis::SystemAPI::checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid){
+    if(pswrd.isEmpty()) return false;
     QSqlQuery query(db);
     query.prepare("SELECT UUID, Password FROM " + tableName + " WHERE Password = ?");
     query.addBindValue(pswrd);

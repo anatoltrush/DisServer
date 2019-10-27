@@ -22,3 +22,5 @@ int dis::PurchaseAPI::getFunction(const HttpParser &parser, std::vector<std::uni
     // -----
     return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::PurchaseAPI::postFunction(const dis::HttpParser &parser){}

@@ -45,3 +45,5 @@ int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::uniqu
     // -----
     return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::AnswerAPI::postFunction(const dis::HttpParser &parser){}

@@ -25,9 +25,8 @@ public:
     QTcpServer *tcpServer;
     DBController dbcntr;
 
-    QList<Client> clients;
+    QList<Client> clients; // FIXME: remove "Uuid_Token"
 
-//    std::vector<QString> authorTokens; // keys of authorized users
     QStringMap Uuid_Token; // <uuid, token> of authorized users // TODO: добавить время авторизации/логина
 
     int errorStatus = 0;
@@ -39,6 +38,9 @@ public slots:
 
     void slotSocketDeleted();
 
+private:
+    // TODO; time for kick
+
 };
 
 //! @} server_part
@@ -48,4 +50,3 @@ public slots:
 #endif // DISSERVER_H
 
 // TODO: SEND MESSAGE TO ALL
-// TODO: SERVER THREADS

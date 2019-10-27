@@ -89,3 +89,5 @@ int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_
     // -----
     return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::UserAPI::postFunction(const dis::HttpParser &parser){/*LEAVE EMPTY*/}

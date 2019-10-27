@@ -37,10 +37,14 @@ namespace dis {
 
 //! @group key_words
 //! @{
-#define KW_REGISTRATION     "registration"
-#define KW_LOGIN            "login"
-#define KW_LOGOUT           "logout"
+// functions names
+#define KW_FUNC_REGISTRATION    "registration"
+#define KW_FUNC_LOGIN           "login"
+#define KW_FUNC_LOGOUT          "logout"
+
+// in headers
 #define KW_AUTHORIZATION    "Authorization"
+#define KW_PSWRD            "Password"
 #define KW_CONTENT_TYPE     "Content-Type"
 //! @} entities
 

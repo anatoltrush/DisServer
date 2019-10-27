@@ -49,3 +49,5 @@ int dis::CommentAPI::getFunction(const HttpParser &parser, std::vector<std::uniq
     // -----
     return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::CommentAPI::postFunction(const dis::HttpParser &parser){}

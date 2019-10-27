@@ -3,13 +3,12 @@
 
 #include <QDateTime>
 #include <QUuid>
-#include <QtSql>
 
 #include "Discussion.h"
 #include "Purchase.h"
 #include "IPrimitives.h"
 
-//#define PROP_USER_UUID"UUID" // example
+// TODO: #define PROP_USER_UUID"UUID" // example
 
 namespace dis{
 //! @addtogroup entities
@@ -46,11 +45,8 @@ public:
     QDateTime time_registration;
     QDateTime time_last_active;
 
-    std::vector<dis::Discussion> discsGood;
-    std::vector<dis::Discussion> discsBad;
+    std::vector<dis::Discussion> createdDisps;
     std::vector<dis::Purchase> purchases;
-
-    bool isAuthorized = false;
 
     int money = 0;
 

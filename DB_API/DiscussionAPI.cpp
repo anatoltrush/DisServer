@@ -141,3 +141,15 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
     else
         return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
+    if(parser.function == "addDispute"){
+        IPrimitives* primit = parser.object.get();
+        Discussion newDisc = *static_cast<Discussion*>(primit);
+
+        bool isExec = addDispute(newDisc);
+        return isExec ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+    }
+    else
+        return HTTP_METHOD_NOT_ALLOWED;
+}

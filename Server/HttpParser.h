@@ -40,6 +40,7 @@ public:
 
 //{ output data
     QString authorToken; // for authorization
+    QString pswrd; // TODO: implement in "void getParse();"
     QVariantMap params; // for GET or DELETE requests
     QList<QString> blocks; // everywhere
     std::unique_ptr<IPrimitives> object; // for POST or PATCH or PUT requests

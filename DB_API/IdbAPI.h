@@ -34,11 +34,11 @@ public:
 
     virtual int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) = 0;
 
-//    virtual void postFunction() = 0;
+    virtual int postFunction(const HttpParser &parser) = 0;
 
-//    virtual void patchFunction() = 0;
+//    virtual int patchFunction() = 0;
 
-//    virtual void deleteFunction() = 0;
+//    virtual int deleteFunction() = 0;
 };
 
 //! @} database_api

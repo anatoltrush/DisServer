@@ -83,7 +83,13 @@ void dis::HttpParser::basicParse(const QByteArray &data){
             this->authorToken = headers.values()[i];
     }
 
-    // 7) fill params
+    // 7) Pswrd
+    for(int i = 0; i < headers.size(); i++){
+        if(headers.keys()[i] == KW_PSWRD)
+            this->pswrd = headers.values()[i];
+    }
+
+    // 8) fill params
     for(const auto &block : blocks){
         QPair<QString, QVariant> record = parseBlock(block);
         params.insertMulti(record.first, record.second);
@@ -151,7 +157,7 @@ void dis::HttpParser::getPrimitive(std::unique_ptr<IPrimitives> &object, const Q
     if(entity == API_TYPE_DISPUTES) object = std::make_unique<Discussion>();
     if(entity == API_TYPE_ANSWERS) object = std::make_unique<Answer>();
     if(entity == API_TYPE_COMMENTS) object = std::make_unique<Comment>();
-    if(entity == API_TYPE_IMAGES) object = std::make_unique<Image>(); // BUG: WTF???
+    if(entity == API_TYPE_IMAGES) object = std::make_unique<Image>();
     if(entity == API_TYPE_PURCHASES) object = std::make_unique<Purchase>();
     if(entity == API_TYPE_USERS) object = std::make_unique<User>();
 }

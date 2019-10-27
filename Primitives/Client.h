@@ -3,9 +3,10 @@
 
 #include <QDate>
 #include <QTcpSocket>
-#include <QHostAddress>
 
 #include "User.h"
+
+// TODO: #define PROP_USER_UUID"UUID" // example
 
 namespace dis{
 
@@ -22,7 +23,7 @@ public:
     QString uuid;
     QString authorToken;
     QDateTime lastRequestTime;
-    QTcpSocket *socket;
+    QTcpSocket *socket; // need for UI
 };
 //! @} entities
 }

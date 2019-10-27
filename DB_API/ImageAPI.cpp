@@ -68,3 +68,5 @@ int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique
     // -----
     return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::ImageAPI::postFunction(const dis::HttpParser &parser){}

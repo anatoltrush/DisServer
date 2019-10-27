@@ -1,9 +1,9 @@
 #ifndef COMMENT_H
 #define COMMENT_H
 
-#include <QtSql>
-
 #include "IPrimitives.h"
+
+// TODO: #define PROP_USER_UUID"UUID" // example
 
 namespace dis{
 //! @addtogroup entities

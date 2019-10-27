@@ -3,7 +3,6 @@
 
 #include <QUuid>
 #include <QImage>
-#include <QtSql>
 
 #include "IPrimitives.h"
 

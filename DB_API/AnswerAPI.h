@@ -35,6 +35,7 @@ public:
     bool getAnswersByDisputeUuid(const QString& dispUuid, QList<dis::Answer>& answers);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) override;
+    int postFunction(const HttpParser &parser) override;
 };
 
 //! @} database_api

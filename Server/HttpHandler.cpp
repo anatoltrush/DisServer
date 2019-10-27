@@ -8,7 +8,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     UserAPI userAPI;
     if(userAPI.typeApi == parser.entity){
         // REGISTRATION
-        if(parser.method == VERB_POST && parser.function == KW_REGISTRATION){
+        if(parser.method == VERB_POST && parser.function == KW_FUNC_REGISTRATION){
             IPrimitives* primit = parser.object.get();
             User newUser = *static_cast<User*>(primit);
 
@@ -38,10 +38,9 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
             }
         }
         // LOG IN
-        if(parser.method == VERB_GET && parser.function == KW_LOGIN){
+        if(parser.method == VERB_GET && parser.function == KW_FUNC_LOGIN){
             QString userUuid;
-            QString pswrd = "fff"; // FIXME: change
-            bool isExsist = sysAPI.checkPswrd(dbcntr.dataBase, userAPI.tableName, pswrd, userUuid);
+            bool isExsist = sysAPI.checkPswrd(dbcntr.dataBase, userAPI.tableName, parser.pswrd, userUuid);
             if(isExsist && !userUuid.isEmpty()){
                 QString token = QUuid::createUuid().toString();
                 response.authToken = token;
@@ -55,7 +54,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
             }
         }
         // LOG OUT
-        if(parser.method == VERB_GET && parser.function == KW_LOGOUT){
+        if(parser.method == VERB_GET && parser.function == KW_FUNC_LOGOUT){
             sysAPI.logOut(authorTokens, parser.authorToken);
             status = HTTP_OK;
             return;
@@ -95,16 +94,14 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_POST){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-//                status = dbApi->postF();
-                break;
+                status = dbApi->postFunction(parser);
+                if(status == HTTP_OK) break;
             }
             else{
                 status = HTTP_UNPROCESSABLE_ENTITY;
             }
 
         }
-        // use parser.object
-        // WARNING: not for User
     }
     // PATCH
     if(parser.method == VERB_PATCH){

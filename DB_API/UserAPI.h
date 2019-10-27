@@ -24,6 +24,7 @@ public:
     bool getUsers(QList<dis::User>& users);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) override;
+    int postFunction(const HttpParser &parser) override;
 
 private:
 };
