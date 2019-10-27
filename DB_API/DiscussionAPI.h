@@ -4,15 +4,14 @@
 #include "IdbAPI.h"
 #include "../Primitives/Discussion.h"
 
+#define API_KW_DISP_FROM    "from"
+#define API_KW_DISP_PACKAGE "package"
 
 namespace dis{
 
 //! @addtogroup database_api
 //! @{
-
-/**
- * @brief The DiscussionAPI class working with "Disputes" table in database
- */
+//! @brief The DiscussionAPI class working with "Disputes" table in database
 class DiscussionAPI : public IdbAPI
 {
 public:
@@ -61,9 +60,7 @@ public:
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;
 };
-
 //! @} database_api
-
 }
 
 #endif // DISCUSSIONAPI_H

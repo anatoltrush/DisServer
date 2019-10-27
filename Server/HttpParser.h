@@ -9,7 +9,6 @@
 #include "../Common/unique.h"
 #include "../Common/disDefines.h"
 #include "../Primitives/IPrimitives.h"
-
 #include "../Primitives/Discussion.h"
 #include "../Primitives/Answer.h"
 #include "../Primitives/Comment.h"
@@ -18,10 +17,9 @@
 #include "../Primitives/User.h"
 
 namespace dis{
-
+// TODO: check input params SQL injections
 //! @addtogroup server_part
 //! @{
-
 class HttpParser
 {
 public:
@@ -37,10 +35,9 @@ public:
     QStringMap headers;
 //}
 
-
 //{ output data
     QString authorToken; // for authorization
-    QString pswrd; // TODO: implement in "void getParse();"
+    QString pswrd; // for logIn
     QVariantMap params; // for GET or DELETE requests
     QList<QString> blocks; // everywhere
     std::unique_ptr<IPrimitives> object; // for POST or PATCH or PUT requests
@@ -63,9 +60,7 @@ private:
 
     static void getPrimitive(std::unique_ptr<IPrimitives> &object, const QString &entity);
 };
-
 //! @} server_part
-
 }
 
 #endif // HTTPPARSER_H

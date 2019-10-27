@@ -31,7 +31,7 @@ void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
 }
 
 void dis::HttpResponse::admitResult(const QList<QString> &uuids){
-    this->uuids = uuids;
+    this->strings = uuids;
 }
 
 void dis::HttpResponse::admitResult(std::vector<std::unique_ptr<IPrimitives> > &ents){
@@ -60,7 +60,7 @@ void dis::HttpResponse::createHeaders(){
     headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
 
 #ifdef IS_HTML
-    if(uuids.size() > 0) headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
+    if(strings.size() > 0) headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
 #else
     if(uuids.size() > 0) headers.push_back("Content-Type: text/plain; boundary=\"" + bound + "\"");
 #endif
@@ -72,7 +72,7 @@ void dis::HttpResponse::createHeaders(){
 #endif
 
 #ifdef IS_HTML
-    if(uuids.size() == 0 && entities.size() == 0)
+    if(strings.size() == 0 && entities.size() == 0)
         headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
 #endif
 
@@ -87,9 +87,9 @@ void dis::HttpResponse::createHeaders(){
 
 void dis::HttpResponse::createMessage(const HttpParser &parser){
     // if(method == )... several cases
-    if(uuids.size() > 0){
+    if(strings.size() > 0){
 #ifdef IS_HTML
-        QByteArray messQBA = IPrimitives::createMessageBodyHtml(uuids);
+        QByteArray messQBA = IPrimitives::createMessageBodyHtml(strings);
         responseQBA.append(messQBA);
 #else
         QByteArray messQBA = IPrimitives::createMessageBody(uuids, bound);

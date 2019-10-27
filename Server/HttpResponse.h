@@ -32,7 +32,7 @@ private:
     static QString httpVersion;
     static QString nextLn;
 
-    QList<QString> uuids;
+    QList<QString> strings;
     std::vector<std::unique_ptr<IPrimitives> > entities;
 
 //    QString starting_line;

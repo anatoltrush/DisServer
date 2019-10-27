@@ -43,9 +43,9 @@ namespace dis {
 #define KW_FUNC_LOGOUT          "logout"
 
 // in headers
-#define KW_AUTHORIZATION    "Authorization"
-#define KW_PSWRD            "Password"
-#define KW_CONTENT_TYPE     "Content-Type"
+#define HDR_KW_AUTHORIZATION    "Authorization"
+#define HDR_KW_PSWRD            "Password"
+#define HDR_KW_CONTENT_TYPE     "Content-Type"
 //! @} entities
 
 //typedef enum _HTTP_VERB {

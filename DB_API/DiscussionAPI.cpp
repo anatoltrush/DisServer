@@ -110,8 +110,8 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
     // -----
     if(parser.function == "getDisputeCount"){
         int cnt = -1;
-        bool isExec = getDisputeCount(cnt); // check error
-        if(isExec){
+        bool isExectd = getDisputeCount(cnt); // check error
+        if(isExectd){
             primitives.push_back(QString::number(cnt));
             return HTTP_OK;
         }
@@ -121,13 +121,14 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
     if(parser.function == "getDisputeByUuid"){
         QString searchUuid;
         for(int i = 0; i < parser.params.size(); i++){
-            if(parser.params.keys()[i] == "UUID")
+            if(parser.params.keys()[i] == PROP_DISP_UUID)
                 searchUuid = parser.params.values()[i].toString();
         }
         if(searchUuid.isEmpty()) return HTTP_BAD_REQUEST;
+
         std::unique_ptr<Discussion> disResult = std::make_unique<Discussion>();
-        bool isExec = getDisputeByUuid(searchUuid, *disResult.get());
-        if(isExec){
+        bool isExectd = getDisputeByUuid(searchUuid, *disResult.get());
+        if(isExectd){
             entities.push_back(std::move(disResult));
             return HTTP_OK;
         }
@@ -135,7 +136,23 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
     }
     // -----
     if(parser.function == "getDisputesRange"){
-        return HTTP_METHOD_NOT_ALLOWED;
+        QString from, package;
+        for(int i = 0; i < parser.params.size(); i++){
+            if(parser.params.keys()[i] == API_KW_DISP_FROM)
+                from = parser.params.values()[i].toString();
+            if(parser.params.keys()[i] == API_KW_DISP_PACKAGE)
+                package = parser.params.values()[i].toString();
+        }
+        if(from.isEmpty() || package.isEmpty()) return HTTP_BAD_REQUEST;
+
+        QList<Discussion> disps;
+        bool isExectd = getDisputesRange(disps, from.toInt(), package.toInt());
+        if(isExectd){
+            for(const auto &dis : disps)
+                primitives.push_back(dis.uuid);
+            return HTTP_OK;
+        }
+        else return HTTP_INTERNAL_SERVER_ERROR;
     }
     // -----
     else

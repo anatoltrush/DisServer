@@ -52,19 +52,19 @@ void dis::HttpParser::basicParse(const QByteArray &data){
         this->headers.insert(hdrLst.front(), hdrLst.back());
     }
 
-    // 4) Content-type
+    // 4) Content-type/bound
     for(int i = 0; i < headers.size(); i++){
-        if(headers.keys()[i] == KW_CONTENT_TYPE){
-            QStringList cntp = headers.values()[i].split("\"");
-            this->bound = cntp[1]; // check, may be out of range
+        if(headers.keys()[i] == HDR_KW_CONTENT_TYPE){ // can use indexOF
+            QStringList cntype = headers.values()[i].split("\"");
+            this->bound = cntype[1]; // check, may be out of range
         }
     }
 
     // 5) Separate on blocks
     for(int i = 0; i < headers.size(); i++)
-        if(headers.keys()[i] == KW_CONTENT_TYPE)
+        if(headers.keys()[i] == HDR_KW_CONTENT_TYPE)
             blocks = message_body.split("--" + this->bound);
-    // DELETE EMPTY BLOCKS
+    // delete empty blocks
     for(int i = 0; i < blocks.size(); i++)
         if(blocks[i].size() == 0 || blocks[i] == "--\r\n\r\n"){
             blocks.erase(blocks.begin() + i);
@@ -79,13 +79,13 @@ void dis::HttpParser::basicParse(const QByteArray &data){
 
     // 6) Authorization
     for(int i = 0; i < headers.size(); i++){
-        if(headers.keys()[i] == KW_AUTHORIZATION)
+        if(headers.keys()[i] == HDR_KW_AUTHORIZATION)
             this->authorToken = headers.values()[i];
     }
 
     // 7) Pswrd
     for(int i = 0; i < headers.size(); i++){
-        if(headers.keys()[i] == KW_PSWRD)
+        if(headers.keys()[i] == HDR_KW_PSWRD)
             this->pswrd = headers.values()[i];
     }
 
