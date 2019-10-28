@@ -1,12 +1,9 @@
 #ifndef HTTPRESPONSE_H
 #define HTTPRESPONSE_H
 
-#define IS_HTML
-
 #include "Constants.h"
 #include "HttpParser.h"
 #include "../Primitives/IPrimitives.h"
-#include "../Deploy/Deploy_HTML.h"
 
 namespace dis{
 
@@ -34,13 +31,6 @@ private:
 
     QList<QString> strings;
     std::vector<std::unique_ptr<IPrimitives> > entities;
-
-//    QString starting_line;
-//    using QStringMap = QMap<QString, QString>;
-//    typedef QMap<QString, QString> QStringMap;
-//    QStringMap headers;
-//    QList<QString> headers;
-//    QVariantMap message_body;
 
     // 1 step
     void createStartLine(int status);

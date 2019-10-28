@@ -7,13 +7,6 @@ QString dis::HttpResponse::nextLn = "\r\n";
 dis::HttpResponse::HttpResponse(){}
 
 void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
-#ifdef IS_HTML
-    if(parser.entity.isEmpty() && parser.function.isEmpty()){
-        Deploy_HTML html(true);
-        responseQBA = html.startQBA;
-        return;
-    }
-#endif
     responseQBA.clear();
     // -----
     if(code >= 100 && code < 400){
@@ -24,14 +17,12 @@ void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
     else{
         createStartLine(code);
         createHeaders();
-#ifdef IS_HTML
-        responseQBA.append(Deploy_HTML::errorHtml(code, serverName));
-#endif
     }
 }
 
 void dis::HttpResponse::admitResult(const QList<QString> &uuids){
-    this->strings = uuids;
+    strings.clear();
+    strings = uuids;
 }
 
 void dis::HttpResponse::admitResult(std::vector<std::unique_ptr<IPrimitives> > &ents){
@@ -59,23 +50,8 @@ void dis::HttpResponse::createHeaders(){
     headers.push_back("Server: " + serverName);
     headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
 
-#ifdef IS_HTML
-    if(strings.size() > 0) headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
-#else
-    if(uuids.size() > 0) headers.push_back("Content-Type: text/plain; boundary=\"" + bound + "\"");
-#endif
-
-#ifdef IS_HTML
-    if(entities.size() > 0) headers.push_back("Content-Type: multipart/form-data; boundary=\"" + bound + "\"");
-#else
+    if(strings.size() > 0) headers.push_back("Content-Type: text/plain; boundary=\"" + bound + "\"");
     if(entities.size() > 0) headers.push_back("Content-Type: multipart/mixed; boundary=\"" + bound + "\"");
-#endif
-
-#ifdef IS_HTML
-    if(strings.size() == 0 && entities.size() == 0)
-        headers.push_back("Content-Type: text/html; boundary=\"" + bound + "\"");
-#endif
-
 
     // to QBA
     for(const auto &hdr : headers){
@@ -88,24 +64,13 @@ void dis::HttpResponse::createHeaders(){
 void dis::HttpResponse::createMessage(const HttpParser &parser){
     // if(method == )... several cases
     if(strings.size() > 0){
-#ifdef IS_HTML
-        QByteArray messQBA = IPrimitives::createMessageBodyHtml(strings);
+        QByteArray messQBA = IPrimitives::createMessageBody(strings, bound);
         responseQBA.append(messQBA);
-#else
-        QByteArray messQBA = IPrimitives::createMessageBody(uuids, bound);
-        responseQBA.append(messQBA);
-#endif
     }
     if(entities.size() > 0){
-#ifdef IS_HTML
-        if(parser.method == QString(VERB_GET)){
-            entities.front()->createMessageBodyHtml();
-        }
-#else
         if(parser.method == QString(VERB_GET)){
             entities.front()->createMessageBody(parser.bound);
         }
-#endif
     }
 }
 

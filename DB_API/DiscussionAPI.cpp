@@ -104,6 +104,28 @@ bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, i
     }
 }
 
+bool dis::DiscussionAPI::getDispUuidsRange(QList<QString> &uuids, int from, int batch){
+    uuids.clear();
+    QSqlQuery query(db);
+    QString strQuery = "SELECT " + QString(PROP_DISP_UUID) + " FROM " + tableName +
+            " ORDER BY Time_created DESC"
+            " offset " + QString::number(from) +
+            " rows fetch next " + QString::number(batch) +
+            " rows only";
+    if(query.exec(strQuery)){
+        QSqlRecord record = query.record();
+        while(query.next()) {
+            QString gotUuid = query.value(record.indexOf(PROP_DISP_UUID)).toString();
+            uuids.push_back(gotUuid);
+        }
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
 int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
@@ -126,7 +148,7 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
         }
         if(searchUuid.isEmpty()) return HTTP_BAD_REQUEST;
 
-        std::unique_ptr<Discussion> disResult = std::make_unique<Discussion>();
+        auto disResult = std::make_unique<Discussion>();
         bool isExectd = getDisputeByUuid(searchUuid, *disResult.get());
         if(isExectd){
             entities.push_back(std::move(disResult));
@@ -148,15 +170,30 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
         QList<Discussion> disps;
         bool isExectd = getDisputesRange(disps, from.toInt(), package.toInt());
         if(isExectd){
-            for(const auto &dis : disps)
-                primitives.push_back(dis.uuid);
+            for(const auto &dis : disps){
+                auto unDis = std::make_unique<Discussion>();
+                *unDis.get() = dis;
+                entities.push_back(std::move(unDis));
+            }
             return HTTP_OK;
         }
         else return HTTP_INTERNAL_SERVER_ERROR;
     }
     // -----
-    else
-        return HTTP_METHOD_NOT_ALLOWED;
+    if(parser.function == "getDispUuidsRange"){
+        QString from, package;
+        for(int i = 0; i < parser.params.size(); i++){
+            if(parser.params.keys()[i] == API_KW_DISP_FROM)
+                from = parser.params.values()[i].toString();
+            if(parser.params.keys()[i] == API_KW_DISP_PACKAGE)
+                package = parser.params.values()[i].toString();
+        }
+        if(from.isEmpty() || package.isEmpty()) return HTTP_BAD_REQUEST;
+
+        bool isExectd = getDispUuidsRange(primitives, from.toInt(), package.toInt());
+        return isExectd ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+    }
+    else return HTTP_METHOD_NOT_ALLOWED;
 }
 
 int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
@@ -164,9 +201,8 @@ int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
         IPrimitives* primit = parser.object.get();
         Discussion newDisc = *static_cast<Discussion*>(primit);
 
-        bool isExec = addDispute(newDisc);
-        return isExec ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+        bool isExectd = addDispute(newDisc);
+        return isExectd ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
     }
-    else
-        return HTTP_METHOD_NOT_ALLOWED;
+    else return HTTP_METHOD_NOT_ALLOWED;
 }
