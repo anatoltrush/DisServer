@@ -7,16 +7,24 @@ void dis::SystemAPI::sendToAll(const QList<dis::Client> &clients, const QByteArr
 
 void dis::SystemAPI::kickByTime(QList<dis::Client> &clients){}
 
-void dis::SystemAPI::logOut(QStringMap &allTokens, const QString &userToken){
-    for(int i = 0; i < allTokens.size(); i++)
-        if(allTokens.values()[i] == userToken)
-            allTokens.erase(allTokens.begin() + i);
+bool dis::SystemAPI::isAlreadyIn(const QList<dis::Client> &clients, const QString &userUuid){
+    for(const auto &client : clients)
+        if(client.uuid == userUuid)
+            return true;
+    return false;
 }
 
-bool dis::SystemAPI::isAuthorized(const QStringMap &allTokens, const QString &userToken, QString &currUsr){
-    for(int i = 0; i < allTokens.size(); i++)
-        if(allTokens.values()[i] == userToken){
-            currUsr = allTokens.keys()[i];
+void dis::SystemAPI::logOut(QList<dis::Client> &clients, const QString &userToken){
+    for(int i = 0; i < clients.size(); i++)
+        if(clients[i].authorToken == userToken)
+            clients.erase(clients.begin() + i);
+}
+
+bool dis::SystemAPI::isAuthorized(QList<dis::Client> &clients, const QString &userToken, QString &currUsr){
+    for(int i = 0; i < clients.size(); i++)
+        if(clients[i].authorToken == userToken){
+            currUsr = clients[i].uuid;
+            clients[i].lastRequestTime = QDateTime::currentDateTime();
             return true;
         }
     return false;

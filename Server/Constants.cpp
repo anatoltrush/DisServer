@@ -17,6 +17,9 @@ QString dis::getReasonPhrase(int code){
     case HTTP_UNAUTHORIZED: // 401
         result = "Unauthorized";
         break;
+    case HTTP_FORBIDDEN: // 403
+        result = "Forbidden";
+        break;
     case HTTP_NOT_FOUND: // 404
         result = "Not Found";
         break;

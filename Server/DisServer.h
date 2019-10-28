@@ -2,6 +2,7 @@
 #define DISSERVER_H
 
 #include <QTcpServer>
+#include <QTcpSocket>
 
 #include "../Common/disDefines.h"
 #include "Constants.h"
@@ -25,9 +26,9 @@ public:
     QTcpServer *tcpServer;
     DBController dbcntr;
 
-    QList<Client> clients; // FIXME: remove "Uuid_Token"
+    QList<QTcpSocket*> sockets;
 
-    QStringMap Uuid_Token; // <uuid, token> of authorized users // TODO: добавить время авторизации/логина
+    QList<Client> clients;
 
     int errorStatus = 0;
 
@@ -42,11 +43,8 @@ private:
     // TODO; time for kick
 
 };
-
 //! @} server_part
-
 }
-
 #endif // DISSERVER_H
 
 // TODO: SEND MESSAGE TO ALL

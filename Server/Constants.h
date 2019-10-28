@@ -10,6 +10,7 @@
 
 #define HTTP_BAD_REQUEST            400 // (PUT || POST) BAD FORMAT OR LOST
 #define HTTP_UNAUTHORIZED           401
+#define HTTP_FORBIDDEN              403
 #define HTTP_NOT_FOUND              404 // BAD URL
 #define HTTP_METHOD_NOT_ALLOWED     405 // BAD API
 #define HTTP_CONFLICT               409 // REPEATED RECORD
@@ -34,19 +35,6 @@
 namespace dis {
     QString getReasonPhrase(int code);
 }
-
-//! @group key_words
-//! @{
-// functions names
-#define KW_FUNC_REGISTRATION    "registration"
-#define KW_FUNC_LOGIN           "login"
-#define KW_FUNC_LOGOUT          "logout"
-
-// in headers
-#define HDR_KW_AUTHORIZATION    "Authorization"
-#define HDR_KW_PSWRD            "Password"
-#define HDR_KW_CONTENT_TYPE     "Content-Type"
-//! @} entities
 
 //typedef enum _HTTP_VERB {
 //  HttpVerbUnparsed = 0,

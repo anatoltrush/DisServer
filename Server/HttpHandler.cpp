@@ -2,7 +2,7 @@
 
 dis::HttpHandler::HttpHandler(){}
 
-void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QStringMap &authorTokens){
+void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QList<Client> &clients){
     // NOT AUTHORIZED REQUESTS
 
     UserAPI userAPI;
@@ -28,7 +28,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
             if(isExec){
                 QString token = QUuid::createUuid().toString();
                 response.authToken = token;
-                authorTokens.insertMulti(newUser.uuid, token); // <uuid, token>
+                clients.push_back(Client(newUser.uuid, token, QDateTime::currentDateTime()));
                 status = HTTP_OK;
                 return;
             }
@@ -44,9 +44,15 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
             if(isExsist && !userUuid.isEmpty()){
                 QString token = QUuid::createUuid().toString();
                 response.authToken = token;
-                authorTokens.insertMulti(userUuid, token); // <uuid, token>
-                status = HTTP_OK;
-                return;
+                if(!sysAPI.isAlreadyIn(clients, userUuid)){
+                    clients.push_back(Client(userUuid, token, QDateTime::currentDateTime()));
+                    status = HTTP_OK;
+                    return;
+                }
+                else{
+                    status = HTTP_FORBIDDEN;
+                    return;
+                }
             }
             else{
                 status = HTTP_UNAUTHORIZED;
@@ -55,16 +61,15 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         }
         // LOG OUT
         if(parser.method == VERB_GET && parser.function == KW_FUNC_LOGOUT){
-            sysAPI.logOut(authorTokens, parser.authorToken);
+            sysAPI.logOut(clients, parser.authorToken);
             status = HTTP_OK;
             return;
         }
     }
 
-
     // IS AUTHORIZED
-    if(parser.authorToken != "godOfPhp"){ // FIXME: delete later
-        bool isAuth = sysAPI.isAuthorized(authorTokens, parser.authorToken, currentUser);
+    if(parser.authorToken != "godOfPhp"){ // FIXME: temporary password, delete later
+        bool isAuth = sysAPI.isAuthorized(clients, parser.authorToken, currentUser);
         if(!isAuth){
             status = HTTP_UNAUTHORIZED;
             return;

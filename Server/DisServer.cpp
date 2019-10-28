@@ -5,21 +5,17 @@ dis::DisServer::DisServer(){
 
     connect(tcpServer, &QTcpServer::newConnection, this, &DisServer::slotNewConnection);
 
-    dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+//    dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
 }
 
 dis::DisServer::~DisServer(){}
 
 void dis::DisServer::slotNewConnection(){
-    dis::Client newClient;
-    newClient.socket = tcpServer->nextPendingConnection();
-    newClient.lastRequestTime = QDateTime::currentDateTimeUtc();
-
-    connect(newClient.socket, &QTcpSocket::readyRead, this, &DisServer::slotReadyRead);
-    connect(newClient.socket, &QTcpSocket::disconnected, this, &DisServer::slotClientDisconnected);
-    connect(newClient.socket, &QTcpSocket::destroyed, this, &DisServer::slotSocketDeleted);
-
-    clients.push_back(newClient);
+    QTcpSocket* tcpSock = tcpServer->nextPendingConnection();
+    connect(tcpSock, &QTcpSocket::readyRead, this, &DisServer::slotReadyRead);
+    connect(tcpSock, &QTcpSocket::disconnected, this, &DisServer::slotClientDisconnected);
+    connect(tcpSock, &QTcpSocket::destroyed, this, &DisServer::slotSocketDeleted);
+    sockets.push_back(tcpSock);
 }
 
 void dis::DisServer::slotReadyRead(){
@@ -36,7 +32,7 @@ void dis::DisServer::slotReadyRead(){
     HttpResponse httpResponse;
 
     HttpHandler httpHandler;
-    httpHandler.handle(httpParser, dbcntr, httpResponse, Uuid_Token);
+    httpHandler.handle(httpParser, dbcntr, httpResponse, clients);
 
     httpResponse.createResponse(httpParser, httpHandler.status /*, userToken*/);
 
@@ -58,10 +54,7 @@ void dis::DisServer::slotClientDisconnected(){
 }
 
 void dis::DisServer::slotSocketDeleted(){
-    for(int i = 0; i < clients.size(); i++){
-        if(!clients[i].socket->isValid()){
-            clients.erase(clients.begin() + i);
-            i--;
-        }
-    }
+    for(int i = 0; i < sockets.size(); i++)
+        if(!sockets[i]->isValid())
+            sockets.erase(sockets.begin() + i);
 }

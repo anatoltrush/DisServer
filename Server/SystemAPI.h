@@ -1,6 +1,8 @@
 #ifndef SYSTEMAPI_H
 #define SYSTEMAPI_H
 
+#include <QtSql>
+
 #include "../Common/disDefines.h"
 #include "../Primitives/Client.h"
 
@@ -13,8 +15,9 @@ public:
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
     void kickByTime(QList<dis::Client> &clients);
 
-    void logOut(QStringMap &allTokens, const QString &userToken); // OPTION
-    bool isAuthorized(const QStringMap &allTokens, const QString &userToken, QString &currUsr);
+    bool isAlreadyIn(const QList<dis::Client> &clients, const QString &userUuid);
+    void logOut(QList<dis::Client> &clients, const QString &userToken);
+    bool isAuthorized(QList<Client> &clients, const QString &userToken, QString &currUsr);
 
     bool checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid);
     bool isEmailExsist(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist);

@@ -23,7 +23,7 @@ public:
 
     SystemAPI sysAPI;
 
-    void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QStringMap &authorTokens);
+    void handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QList<Client> &clients);
 };
 
 //! @} server_part
