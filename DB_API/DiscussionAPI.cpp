@@ -44,7 +44,9 @@ bool dis::DiscussionAPI::deleteDisputeByUuid(const QString &uuid){
     }
 }
 
-bool dis::DiscussionAPI::updDisputeByUuid(const QString &uuid){}
+bool dis::DiscussionAPI::updDisputeByUuid(const QString &uuid){
+    QSqlQuery query(db);
+}
 
 bool dis::DiscussionAPI::getDisputeCount(int &count){
     QSqlQuery query(db);

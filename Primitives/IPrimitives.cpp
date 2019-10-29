@@ -39,3 +39,23 @@ QByteArray dis::IPrimitives::createMessageBodyHtml(const QList<QString> &uuids){
     result.append(res);
     return result;
 }
+
+QByteArray dis::IPrimitives::toQBA(const QString &bound, const QString &propName, const QString &data){
+    QByteArray res;
+    res.append("--" + bound + nextLn);
+    res.append("Content-Disposition: mixed; name=\"" + propName + "\"" + nextLn);
+    res.append("Content-Type: text/plain" + nextLn);
+    res.append(nextLn);
+    res.append(data + nextLn);
+    return res;
+}
+
+QByteArray dis::IPrimitives::toQBA(const QString &bound, const QString &propName, const QByteArray &data){
+    QByteArray res;
+    res.append("--" + bound + nextLn);
+    res.append("Content-Disposition: mixed; name=\"" + propName + "\"" + nextLn);
+    res.append("Content-Type: image/jpeg" + nextLn);
+    res.append(nextLn);
+    res.append(data + nextLn);
+    return res;
+}

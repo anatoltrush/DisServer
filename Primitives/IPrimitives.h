@@ -30,6 +30,9 @@ public:
     //! use for primitive types (int, QString)
     static QByteArray createMessageBodyHtml(const QList<QString> &uuids);
 
+    static QByteArray toQBA(const QString &bound, const QString &propName, const QString &data);
+    static QByteArray toQBA(const QString &bound, const QString &propName, const QByteArray &data);
+
     //! @brief Fills msgBody from object properties
     virtual QByteArray createMessageBody(const QString &separ) = 0;
     //! @brief Fills msgBody from object properties for HTML

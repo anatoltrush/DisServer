@@ -17,7 +17,6 @@
 #include "../Primitives/User.h"
 
 namespace dis{
-// TODO: check input params SQL injections
 //! @addtogroup server_part
 //! @{
 class HttpParser

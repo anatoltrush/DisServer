@@ -41,6 +41,22 @@ void dis::Discussion::fillByParse(const QVariantMap &params){
 
 QByteArray dis::Discussion::createMessageBody(const QString &separ){
     QByteArray res;
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_UUID, this->uuid));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_UUID_AUTHOR, this->uuid_author));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_SECTION, this->section));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_TOPIC, this->topic));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_TIME_CRTD, this->time_created.toString(Qt::SystemLocaleShortDate)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_TYPE, QString::number(this->type)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_STEP, QString::number(this->step)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_REWARD, QString::number(this->reward)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_LANG_REG, this->languageRegion));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_TEXT_DATA, this->text));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_VOTED, QString::number(this->voted)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_MAX_VOTERS, QString::number(this->maxVoters)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_ICON, this->icon_data));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_W, QString::number(this->img_w)));
+    res.append(IPrimitives::toQBA(separ, PROP_DISP_H, QString::number(this->img_h)));
+    res.append("--" + separ + "--");
     return res;
 }
 

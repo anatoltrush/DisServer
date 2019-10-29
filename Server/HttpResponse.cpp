@@ -48,7 +48,7 @@ void dis::HttpResponse::createHeaders(){
 
     QList<QString> headers;
     headers.push_back("Server: " + serverName);
-    headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString());
+    headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString(Qt::SystemLocaleShortDate));
 
     if(strings.size() > 0) headers.push_back("Content-Type: text/plain; boundary=\"" + bound + "\"");
     if(entities.size() > 0) headers.push_back("Content-Type: multipart/mixed; boundary=\"" + bound + "\"");
@@ -69,7 +69,8 @@ void dis::HttpResponse::createMessage(const HttpParser &parser){
     }
     if(entities.size() > 0){
         if(parser.method == QString(VERB_GET)){
-            entities.front()->createMessageBody(parser.bound);
+            QByteArray msg = entities.front()->createMessageBody(parser.bound);
+            responseQBA.append(msg);
         }
     }
 }

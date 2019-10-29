@@ -45,5 +45,5 @@ private:
 //! @} server_part
 
 }
-// TODO: parse message body
+
 #endif // HTTPRESPONSE_H

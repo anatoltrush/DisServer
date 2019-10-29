@@ -5,7 +5,7 @@ dis::DisServer::DisServer(){
 
     connect(tcpServer, &QTcpServer::newConnection, this, &DisServer::slotNewConnection);
 
-//    dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+    dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
 }
 
 dis::DisServer::~DisServer(){}
