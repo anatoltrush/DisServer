@@ -1,8 +1,20 @@
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+
 #include "Image.h"
 
 dis::Image::Image(){}
 
 dis::Image::~Image(){}
+
+void dis::Image::resize(const QSize &size){
+    QImage oldImg(reinterpret_cast<const unsigned char*>(img_data.data()), width, height, QImage::Format_RGB32);
+    QImage newImg = oldImg.scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    this->img_data = QByteArray::fromRawData((const char*)newImg.bits(), newImg.byteCount());
+    this->width = newImg.size().width();
+    this->height = newImg.size().height();
+}
 
 void dis::Image::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf("UUID")).toString();
@@ -26,3 +38,5 @@ QByteArray dis::Image::createMessageBody(const QString &separ){
 QByteArray dis::Image::createMessageBodyHtml(){
 
 }
+
+#pragma GCC diagnostic pop

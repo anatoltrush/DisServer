@@ -62,6 +62,27 @@ bool dis::ImageAPI::getImagesByPostUuid(const QString &postUuid, QList<Image> &i
     }
 }
 
+bool dis::ImageAPI::getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image> &images, const QSize &size){
+    images.clear();
+    QSqlQuery query(db);
+    query.prepare("SELECT * FROM " + tableName + " WHERE UUID_post = ?");
+    query.addBindValue(postUuid);
+    if(query.exec()){
+        QSqlRecord record = query.record();
+        while(query.next()) {
+            dis::Image img;
+            img.fillBySQL(query, record);
+            img.resize(size);
+            images.push_back(img);
+        }
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
 int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitivess){
     entities.clear();
     primitivess.clear();

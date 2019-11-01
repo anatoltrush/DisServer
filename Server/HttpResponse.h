@@ -9,7 +9,7 @@ namespace dis{
 
 //! @addtogroup server_part
 //! @{
-
+//! This class send only ONE entity! (can to send more but need to correct)
 class HttpResponse
 {
 public:
@@ -25,6 +25,8 @@ public:
     void admitResult(std::vector<std::unique_ptr<IPrimitives> > &ents);
 
 private:
+    bool isStatusOk = false;
+
     static QString serverName;
     static QString httpVersion;
     static QString nextLn;
@@ -35,7 +37,7 @@ private:
     // 1 step
     void createStartLine(int status);
     // 2 step
-    void createHeaders();
+    void createHeaders(const HttpParser &parser);
     // 3 step
     void createMessage(const HttpParser &parser);
 

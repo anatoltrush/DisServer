@@ -105,16 +105,37 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
             else{
                 status = HTTP_UNPROCESSABLE_ENTITY;
             }
-
         }
     }
     // PATCH
     if(parser.method == VERB_PATCH){
+        for(const auto &dbApi : dbcntr.dbAPIs){
+            if(dbApi->typeApi == parser.entity){
+                bool isUserGranted = false; //...
+                if(isUserGranted){
+                    // do smthng...
+                }
+            }
+            else{
+                status = HTTP_UNPROCESSABLE_ENTITY;
+            }
+        }
         // use parser.object
         // TODO: check WHO CAN PATCH (only owner)
     }
     // DELETE
     if(parser.method == VERB_DELETE){
+        for(const auto &dbApi : dbcntr.dbAPIs){
+            if(dbApi->typeApi == parser.entity){
+                bool isUserGranted = false; //...
+                if(isUserGranted){
+                    // do smthng...
+                }
+            }
+            else{
+                status = HTTP_UNPROCESSABLE_ENTITY;
+            }
+        }
         // use parser.params
         // TODO: check WHO CAN DELETE (only owner)
     }

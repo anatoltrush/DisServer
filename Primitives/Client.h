@@ -3,7 +3,7 @@
 
 #include <QDate>
 
-// TODO: #define PROP_USER_UUID"UUID" // example
+// TODO: #define PROP_USER_UUID"UUID + IN API" // example
 
 namespace dis{
 

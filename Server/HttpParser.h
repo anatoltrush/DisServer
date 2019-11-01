@@ -55,6 +55,8 @@ private:
     void optionPut();
     void optionHead();
 
+    void validateParams();
+
     QPair<QString, QVariant> parseBlock(const QString &block);
 
     static void getPrimitive(std::unique_ptr<IPrimitives> &object, const QString &entity);

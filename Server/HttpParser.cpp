@@ -12,6 +12,8 @@ void dis::HttpParser::parse(const QByteArray &data){
     if(method == QString(VERB_OPTION)) optionParse();
     if(method == QString(VERB_PUT)) optionPut();
     if(method == QString(VERB_HEAD)) optionHead();
+
+    validateParams();
 }
 
 void dis::HttpParser::basicParse(const QByteArray &data){
@@ -118,6 +120,10 @@ void dis::HttpParser::optionPut(){
 }
 
 void dis::HttpParser::optionHead(){}
+
+void dis::HttpParser::validateParams(){
+    // TODO: implement "validateParams"
+}
 
 QPair<QString, QVariant> dis::HttpParser::parseBlock(const QString &block){
     QPair<QString, QVariant> res;

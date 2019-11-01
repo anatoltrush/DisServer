@@ -8,15 +8,16 @@ dis::HttpResponse::HttpResponse(){}
 
 void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
     responseQBA.clear();
+    isStatusOk = (code >= 100 && code < 400); // CONDITION
     // -----
-    if(code >= 100 && code < 400){
+    if(isStatusOk){
         createStartLine(code);
-        createHeaders();
+        createHeaders(parser);
         createMessage(parser);
     }
     else{
         createStartLine(code);
-        createHeaders();
+        createHeaders(parser);
     }
 }
 
@@ -43,17 +44,19 @@ void dis::HttpResponse::createStartLine(int status){
     responseQBA.append(starting_line);
 }
 
-void dis::HttpResponse::createHeaders(){
-    // if(method == )... several cases
-
+void dis::HttpResponse::createHeaders(const HttpParser &parser){
     QList<QString> headers;
     headers.push_back("Server: " + serverName);
     headers.push_back("Date: " + QDateTime::currentDateTimeUtc().toString(Qt::SystemLocaleShortDate));
+    // += Authorization
+    if((parser.method == VERB_POST && parser.function == KW_FUNC_REGISTRATION && isStatusOk) ||
+            (parser.method == VERB_GET && parser.function == KW_FUNC_LOGIN && isStatusOk))
+        headers.push_back(HDR_KW_AUTHORIZATION ": " + this->authToken);
 
     if(strings.size() > 0) headers.push_back("Content-Type: text/plain; boundary=\"" + bound + "\"");
     if(entities.size() > 0) headers.push_back("Content-Type: multipart/mixed; boundary=\"" + bound + "\"");
 
-    // to QBA
+    // convert to QBA
     for(const auto &hdr : headers){
         QString newHdr = hdr + nextLn;
         responseQBA.append(newHdr);
@@ -62,7 +65,6 @@ void dis::HttpResponse::createHeaders(){
 }
 
 void dis::HttpResponse::createMessage(const HttpParser &parser){
-    // if(method == )... several cases
     if(strings.size() > 0){
         QByteArray messQBA = IPrimitives::createMessageBody(strings, bound);
         responseQBA.append(messQBA);

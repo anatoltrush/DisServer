@@ -26,7 +26,7 @@ void dis::Discussion::fillByParse(const QVariantMap &params){
     this->uuid_author = params.value(PROP_DISP_UUID_AUTHOR).toString();
     this->section = params.value(PROP_DISP_SECTION).toString();
     this->topic = params.value(PROP_DISP_TOPIC).toString();
-    this->time_created = params.value(PROP_DISP_TIME_CRTD).toDateTime();
+    this->time_created = QDateTime::fromString(params.value(PROP_DISP_TIME_CRTD).toString(), Qt::SystemLocaleShortDate);
     this->type = params.value(PROP_DISP_TYPE).toInt();
     this->step = params.value(PROP_DISP_STEP).toInt();
     this->reward = params.value(PROP_DISP_REWARD).toInt();

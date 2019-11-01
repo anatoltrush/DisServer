@@ -35,6 +35,7 @@ public:
      * @param images List of received images
      */
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
+    bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitivess) override;
     int postFunction(const HttpParser &parser) override;

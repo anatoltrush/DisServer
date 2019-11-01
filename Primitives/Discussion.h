@@ -1,9 +1,6 @@
 #ifndef DISCUSSION_H
 #define DISCUSSION_H
 
-#include <QUuid>
-#include <QImage>
-
 #include "IPrimitives.h"
 
 #define PROP_DISP_UUID          "UUID"
