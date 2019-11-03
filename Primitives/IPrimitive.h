@@ -1,5 +1,5 @@
-#ifndef IPRIMITIVES_H
-#define IPRIMITIVES_H
+#ifndef IPRIMITIVE_H
+#define IPRIMITIVE_H
 
 #include <QtSql>
 
@@ -10,11 +10,13 @@ namespace dis{
 /**
  * @brief The IPrimitives is an interface for all inherited classes
  */
-class IPrimitives
+class IPrimitive
 {
 public:
-    IPrimitives();
-    virtual ~IPrimitives();
+    IPrimitive();
+    virtual ~IPrimitive();
+
+    virtual QString getAuthor() const = 0;
 
     /**
      * @brief fillBySQL Fills properties of object by SQL query
@@ -41,4 +43,4 @@ public:
 //! @} entities
 }
 
-#endif // IPRIMITIVES_H
+#endif // IPRIMITIVE_H

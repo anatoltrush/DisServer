@@ -9,7 +9,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(userAPI.typeApi == parser.entity){
         // REGISTRATION
         if(parser.method == VERB_POST && parser.function == KW_FUNC_REGISTRATION){
-            IPrimitives* primit = parser.object.get();
+            IPrimitive* primit = parser.object.get();
             User newUser = *static_cast<User*>(primit);
 
             bool isExsist = false;
@@ -76,7 +76,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         }
     }
 
-    std::vector<std::unique_ptr<IPrimitives>> entities;
+    std::vector<std::unique_ptr<IPrimitive>> entities;
     QList<QString> primitives;
 
     // GET
@@ -100,7 +100,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
                 status = dbApi->postFunction(parser);
-                if(status == HTTP_OK) break;
+                break;
             }
             else{
                 status = HTTP_UNPROCESSABLE_ENTITY;
@@ -111,9 +111,14 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_PATCH){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                bool isUserGranted = false; //...
+                bool isUserGranted = sysAPI.isGranted(currentUser, parser.object);
                 if(isUserGranted){
-                    // do smthng...
+                    status = dbApi->patchFunction(parser);
+                    break;
+                }
+                else{
+                    status = HTTP_UNAUTHORIZED;
+                    break;
                 }
             }
             else{
@@ -127,17 +132,20 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_DELETE){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                bool isUserGranted = false; //...
+                bool isUserGranted = sysAPI.isGranted(currentUser, parser.object);
                 if(isUserGranted){
-                    // do smthng...
+                    status = dbApi->deleteFunction(parser);
+                    break;
+                }
+                else{
+                    status = HTTP_UNAUTHORIZED;
+                    break;
                 }
             }
             else{
                 status = HTTP_UNPROCESSABLE_ENTITY;
             }
         }
-        // use parser.params
-        // TODO: check WHO CAN DELETE (only owner)
     }
     // else... (OPTIONS, PUT and other)
 }

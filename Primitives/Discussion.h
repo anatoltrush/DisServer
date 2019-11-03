@@ -1,7 +1,7 @@
 #ifndef DISCUSSION_H
 #define DISCUSSION_H
 
-#include "IPrimitives.h"
+#include "IPrimitive.h"
 
 #define PROP_DISP_UUID          "UUID"
 #define PROP_DISP_UUID_AUTHOR   "UUID_author"
@@ -22,7 +22,7 @@
 namespace dis{
 //! @addtogroup entities
 //! @{
-class Discussion : public IPrimitives
+class Discussion : public IPrimitive
 {
 public:
     Discussion();
@@ -44,6 +44,8 @@ public:
     int img_w = 0;
     int img_h = 0;
     // 15
+
+    QString getAuthor() const override {return uuid_author;}
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByParse(const QVariantMap &params) override;

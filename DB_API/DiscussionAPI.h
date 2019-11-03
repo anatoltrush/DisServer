@@ -58,8 +58,10 @@ public:
     bool getDisputesRange(QList<dis::Discussion>& discussions, int from, int batch);
     bool getDispUuidsRange(QList<QString>& uuids, int from, int batch);
 
-    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) override;
+    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;
+    int patchFunction(const HttpParser &parser) override;
+    int deleteFunction(const HttpParser &parser) override;
 };
 //! @} database_api
 }

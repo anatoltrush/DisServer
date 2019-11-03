@@ -83,7 +83,7 @@ bool dis::UserAPI::getUsers(QList<dis::User> &users){
     }
 }
 
-int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
+int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----
@@ -91,3 +91,7 @@ int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_
 }
 
 int dis::UserAPI::postFunction(const dis::HttpParser &parser){/*LEAVE EMPTY*/}
+
+int dis::UserAPI::patchFunction(const dis::HttpParser &parser){}
+
+int dis::UserAPI::deleteFunction(const HttpParser &parser){}

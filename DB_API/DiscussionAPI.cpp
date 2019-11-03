@@ -128,7 +128,7 @@ bool dis::DiscussionAPI::getDispUuidsRange(QList<QString> &uuids, int from, int 
     }
 }
 
-int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
+int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----
@@ -200,7 +200,7 @@ int dis::DiscussionAPI::getFunction(const HttpParser &parser, std::vector<std::u
 
 int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
     if(parser.function == "addDispute"){
-        IPrimitives* primit = parser.object.get();
+        IPrimitive* primit = parser.object.get();
         Discussion newDisc = *static_cast<Discussion*>(primit);
 
         bool isExectd = addDispute(newDisc);
@@ -208,3 +208,7 @@ int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
     }
     else return HTTP_METHOD_NOT_ALLOWED;
 }
+
+int dis::DiscussionAPI::patchFunction(const dis::HttpParser &parser){}
+
+int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){}

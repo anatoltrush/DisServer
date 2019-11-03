@@ -8,7 +8,7 @@
 #include "Constants.h"
 #include "../Common/unique.h"
 #include "../Common/disDefines.h"
-#include "../Primitives/IPrimitives.h"
+#include "../Primitives/IPrimitive.h"
 #include "../Primitives/Discussion.h"
 #include "../Primitives/Answer.h"
 #include "../Primitives/Comment.h"
@@ -37,9 +37,9 @@ public:
 //{ output data
     QString authorToken; // for authorization
     QString pswrd; // for logIn
-    QVariantMap params; // for GET or DELETE requests
+    QVariantMap params; // contains pairs (for GET or DELETE requests)
     QList<QString> blocks; // everywhere
-    std::unique_ptr<IPrimitives> object; // for POST or PATCH or PUT requests
+    std::unique_ptr<IPrimitive> object; // contains whole object (for POST or PATCH or PUT requests)
 //}
 
     void parse(const QByteArray &data);
@@ -59,7 +59,7 @@ private:
 
     QPair<QString, QVariant> parseBlock(const QString &block);
 
-    static void getPrimitive(std::unique_ptr<IPrimitives> &object, const QString &entity);
+    static void getPrimitive(std::unique_ptr<IPrimitive> &object, const QString &entity);
 };
 //! @} server_part
 }

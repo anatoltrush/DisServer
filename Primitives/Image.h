@@ -1,7 +1,9 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
-#include "IPrimitives.h"
+#include "IPrimitive.h"
+
+#define IMG_FORMAT_JPG  "JPG"
 
 // TODO: #define PROP_USER_UUID"UUID + IN API" // example
 
@@ -10,7 +12,7 @@ namespace dis{
 //! @addtogroup entities
 //! @{
 
-class Image : public IPrimitives
+class Image : public IPrimitive
 {
 public:
     Image();
@@ -22,8 +24,8 @@ public:
     //! can be dispute OR album OR comment OR userID(if avatar)
     QString uuid_post;
 
-    int width;
-    int height;
+    int width = 0;
+    int height = 0;
     QByteArray img_data;
 
     QDateTime time_created;
@@ -33,10 +35,14 @@ public:
 
     void resize(const QSize &size);
 
+    QString getAuthor() const override {return "";} // no necessary to implement
+
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByParse(const QVariantMap &params) override;
 
-private:    
+private:
+    QString currentFormat = IMG_FORMAT_JPG;
+
     QByteArray createMessageBody(const QString &separ) override;
     QByteArray createMessageBodyHtml() override;
 };

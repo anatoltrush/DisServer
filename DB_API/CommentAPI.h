@@ -19,8 +19,10 @@ public:
 
     bool getCommByUuid(const QString &uuid, dis::Comment &comment);
 
-    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) override;
+    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;
+    int patchFunction(const HttpParser &parser) override;
+    int deleteFunction(const HttpParser &parser) override;
 };
 
 //! @} database_api

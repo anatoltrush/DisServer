@@ -2,7 +2,7 @@
 #define IMAGEAPI_H
 
 #include "IdbAPI.h"
-#include "../QDisput/Primitives/Image.h"
+#include "../Primitives/Image.h"
 
 namespace dis{
 
@@ -37,8 +37,10 @@ public:
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
     bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);
 
-    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitivess) override;
+    int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitivess) override;
     int postFunction(const HttpParser &parser) override;
+    int patchFunction(const HttpParser &parser) override;
+    int deleteFunction(const HttpParser &parser) override;
 };
 
 //! @} database_api

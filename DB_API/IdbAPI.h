@@ -4,7 +4,7 @@
 #include <QString>
 
 #include "../Common/unique.h"
-#include "../Primitives/IPrimitives.h"
+#include "../Primitives/IPrimitive.h"
 #include "../Server/Constants.h"
 #include "../Server/HttpParser.h"
 
@@ -32,13 +32,13 @@ public:
 
     void setDataBase(const QSqlDatabase &dataBase){db = dataBase;}
 
-    virtual int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives>> &entities, QList<QString> &primitives) = 0;
+    virtual int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) = 0;
 
     virtual int postFunction(const HttpParser &parser) = 0;
 
-//    virtual int patchFunction() = 0;
+    virtual int patchFunction(const HttpParser &parser) = 0;
 
-//    virtual int deleteFunction() = 0;
+    virtual int deleteFunction(const HttpParser &parser) = 0;
 };
 
 //! @} database_api

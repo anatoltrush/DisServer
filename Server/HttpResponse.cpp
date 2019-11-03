@@ -26,7 +26,7 @@ void dis::HttpResponse::admitResult(const QList<QString> &uuids){
     strings = uuids;
 }
 
-void dis::HttpResponse::admitResult(std::vector<std::unique_ptr<IPrimitives> > &ents){
+void dis::HttpResponse::admitResult(std::vector<std::unique_ptr<IPrimitive> > &ents){
     entities.clear();
     for(auto &ent : ents)
         entities.push_back(std::move(ent));
@@ -66,7 +66,7 @@ void dis::HttpResponse::createHeaders(const HttpParser &parser){
 
 void dis::HttpResponse::createMessage(const HttpParser &parser){
     if(strings.size() > 0){
-        QByteArray messQBA = IPrimitives::createMessageBody(strings, bound);
+        QByteArray messQBA = IPrimitive::createMessageBody(strings, bound);
         responseQBA.append(messQBA);
     }
     if(entities.size() > 0){

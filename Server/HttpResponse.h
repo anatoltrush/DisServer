@@ -3,7 +3,7 @@
 
 #include "Constants.h"
 #include "HttpParser.h"
-#include "../Primitives/IPrimitives.h"
+#include "../Primitives/IPrimitive.h"
 
 namespace dis{
 
@@ -22,7 +22,7 @@ public:
     void createResponse(const HttpParser &parser, int code);
 
     void admitResult(const QList<QString> &uuids);
-    void admitResult(std::vector<std::unique_ptr<IPrimitives> > &ents);
+    void admitResult(std::vector<std::unique_ptr<IPrimitive> > &ents);
 
 private:
     bool isStatusOk = false;
@@ -32,7 +32,7 @@ private:
     static QString nextLn;
 
     QList<QString> strings;
-    std::vector<std::unique_ptr<IPrimitives> > entities;
+    std::vector<std::unique_ptr<IPrimitive> > entities;
 
     // 1 step
     void createStartLine(int status);

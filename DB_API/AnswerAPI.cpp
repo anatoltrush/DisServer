@@ -39,7 +39,7 @@ bool dis::AnswerAPI::getAnswersByDisputeUuid(const QString &dispUuid, QList<dis:
     }
 }
 
-int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitives){
+int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();
     // -----
@@ -47,3 +47,11 @@ int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::uniqu
 }
 
 int dis::AnswerAPI::postFunction(const dis::HttpParser &parser){}
+
+int dis::AnswerAPI::patchFunction(const dis::HttpParser &parser){}
+
+int dis::AnswerAPI::deleteFunction(const HttpParser &parser){
+    // no necessary to implement
+    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
+    return HTTP_METHOD_NOT_ALLOWED;
+}

@@ -6,14 +6,14 @@
 
 #include "Discussion.h"
 #include "Purchase.h"
-#include "IPrimitives.h"
+#include "IPrimitive.h"
 
 // TODO: #define PROP_USER_UUID"UUID + IN API" // example
 
 namespace dis{
 //! @addtogroup entities
 //! @{
-class User : public IPrimitives
+class User : public IPrimitive
 {
 public:
     //! short constructor
@@ -44,11 +44,12 @@ public:
     int level = 0;
     QDateTime time_registration;
     QDateTime time_last_active;
+    int money = 0;
 
     std::vector<dis::Discussion> createdDisps;
-    std::vector<dis::Purchase> purchases;
+    std::vector<dis::Purchase> purchases;   
 
-    int money = 0;
+    QString getAuthor() const override {return uuid;}
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByParse(const QVariantMap &params) override;

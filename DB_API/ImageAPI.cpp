@@ -83,7 +83,7 @@ bool dis::ImageAPI::getImagesByPostUuidLight(const QString &postUuid, QList<dis:
     }
 }
 
-int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitives> > &entities, QList<QString> &primitivess){
+int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitivess){
     entities.clear();
     primitivess.clear();
     // -----
@@ -91,3 +91,11 @@ int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique
 }
 
 int dis::ImageAPI::postFunction(const dis::HttpParser &parser){}
+
+int dis::ImageAPI::patchFunction(const dis::HttpParser &parser){}
+
+int dis::ImageAPI::deleteFunction(const HttpParser &parser){
+    // no necessary to implement
+    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
+    return HTTP_METHOD_NOT_ALLOWED;
+}

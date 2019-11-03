@@ -1,7 +1,7 @@
 #ifndef ANSWER_H
 #define ANSWER_H
 
-#include "IPrimitives.h"
+#include "IPrimitive.h"
 
 // TODO: #define PROP_USER_UUID"UUID + IN API" // example
 
@@ -10,7 +10,7 @@ namespace dis{
 //! @addtogroup entities
 //! @{
 
-class Answer : public IPrimitives
+class Answer : public IPrimitive
 {
 public:
     Answer();
@@ -20,8 +20,9 @@ public:
     QString text;
     int score;
 
-    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
+    QString getAuthor() const override {return "";} // no necessary to implement
 
+    void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
     void fillByParse(const QVariantMap &params) override;
 
 private:

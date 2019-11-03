@@ -20,10 +20,10 @@ void dis::SystemAPI::logOut(QList<dis::Client> &clients, const QString &userToke
             clients.erase(clients.begin() + i);
 }
 
-bool dis::SystemAPI::isAuthorized(QList<dis::Client> &clients, const QString &userToken, QString &currUsr){
+bool dis::SystemAPI::isAuthorized(QList<dis::Client> &clients, const QString &userToken, QString &currUser){
     for(int i = 0; i < clients.size(); i++)
         if(clients[i].authorToken == userToken){
-            currUsr = clients[i].uuid;
+            currUser = clients[i].uuid;
             clients[i].lastRequestTime = QDateTime::currentDateTime();
             return true;
         }

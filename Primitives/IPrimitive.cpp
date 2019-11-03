@@ -1,12 +1,12 @@
-#include "IPrimitives.h"
+#include "IPrimitive.h"
 
-QString dis::IPrimitives::nextLn = "\r\n";
+QString dis::IPrimitive::nextLn = "\r\n";
 
-dis::IPrimitives::IPrimitives(){}
+dis::IPrimitive::IPrimitive(){}
 
-dis::IPrimitives::~IPrimitives(){}
+dis::IPrimitive::~IPrimitive(){}
 
-QByteArray dis::IPrimitives::createMessageBody(const QList<QString> &uuids, const QString &separ){
+QByteArray dis::IPrimitive::createMessageBody(const QList<QString> &uuids, const QString &separ){
     QList<QString>messStrings;
     for(const auto &uuid : uuids){
         messStrings.push_back("--" + separ);
@@ -24,7 +24,7 @@ QByteArray dis::IPrimitives::createMessageBody(const QList<QString> &uuids, cons
     return result;
 }
 
-QByteArray dis::IPrimitives::createMessageBodyHtml(const QList<QString> &uuids){
+QByteArray dis::IPrimitive::createMessageBodyHtml(const QList<QString> &uuids){
     QString res;
     for(const auto &uuid : uuids){
         res += "<b>";
@@ -40,7 +40,7 @@ QByteArray dis::IPrimitives::createMessageBodyHtml(const QList<QString> &uuids){
     return result;
 }
 
-QByteArray dis::IPrimitives::toQBA(const QString &bound, const QString &propName, const QString &data){
+QByteArray dis::IPrimitive::toQBA(const QString &bound, const QString &propName, const QString &data){
     QByteArray res;
     res.append("--" + bound + nextLn);
     res.append("Content-Disposition: mixed; name=\"" + propName + "\"" + nextLn);
@@ -50,7 +50,7 @@ QByteArray dis::IPrimitives::toQBA(const QString &bound, const QString &propName
     return res;
 }
 
-QByteArray dis::IPrimitives::toQBA(const QString &bound, const QString &propName, const QByteArray &data){
+QByteArray dis::IPrimitive::toQBA(const QString &bound, const QString &propName, const QByteArray &data){
     QByteArray res;
     res.append("--" + bound + nextLn);
     res.append("Content-Disposition: mixed; name=\"" + propName + "\"" + nextLn);

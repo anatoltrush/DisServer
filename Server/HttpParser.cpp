@@ -159,7 +159,7 @@ QPair<QString, QVariant> dis::HttpParser::parseBlock(const QString &block){
     return res;
 }
 
-void dis::HttpParser::getPrimitive(std::unique_ptr<IPrimitives> &object, const QString &entity){
+void dis::HttpParser::getPrimitive(std::unique_ptr<IPrimitive> &object, const QString &entity){
     if(entity == API_TYPE_DISPUTES) object = std::make_unique<Discussion>();
     if(entity == API_TYPE_ANSWERS) object = std::make_unique<Answer>();
     if(entity == API_TYPE_COMMENTS) object = std::make_unique<Comment>();
