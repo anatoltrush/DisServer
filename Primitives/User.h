@@ -13,6 +13,15 @@
 namespace dis{
 //! @addtogroup entities
 //! @{
+
+enum Sex{
+    NA = -1,
+    Male,
+    Female,
+    Transgender
+    // other if need
+};
+
 class User : public IPrimitive
 {
 public:
@@ -32,7 +41,8 @@ public:
     QList<QString> IPs;
 
     QDateTime time_birth;
-    int sex = 0;    
+    Sex sex = Sex::NA;
+    Sex preference = Sex::NA;
 
     // SPECIAL PROPERTY
     QString nickName;

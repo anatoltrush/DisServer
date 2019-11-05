@@ -22,7 +22,7 @@ bool dis::CommentAPI::addComment(const dis::Comment &comment){
     }
 }
 
-bool dis::CommentAPI::getCommByUuid(const QString &uuid, dis::Comment &comment){
+bool dis::CommentAPI::getCommentByUuid(const QString &uuid, dis::Comment &comment){
     QSqlQuery query(db);
     query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
     query.addBindValue(uuid);
@@ -37,6 +37,23 @@ bool dis::CommentAPI::getCommByUuid(const QString &uuid, dis::Comment &comment){
             return false;
         }
     }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, QList<QString> &commUuids){
+    commUuids.clear();
+    // TODO: impl
+}
+
+bool dis::CommentAPI::deleteCommentByPostUuid(const QString &postUuid){
+    QSqlQuery query(db);
+    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID_post = ?";
+    query.prepare(strQuery);
+    query.addBindValue(postUuid);
+    if(query.exec()) return true;
     else{
         qDebug() << db.lastError().text();
         return false;

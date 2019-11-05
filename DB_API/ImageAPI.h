@@ -21,11 +21,7 @@ public:
     //! @brief Add image to database
     bool addImage(const dis::Image &img);
 
-    /**
-     * @brief Get only one image by it Id
-     * @param uuid Image Id
-     * @param img Received imge
-     */
+    //! @brief Get only one image by it Id
     bool getImageByUuid(const QString &uuid, dis::Image &img);
 
     //! UUID of dispute OR album OR comment OR userID(if avatar)
@@ -36,6 +32,8 @@ public:
      */
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
     bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);
+
+    bool deleteImagesByPostUuid(const QString &postUuid);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitivess) override;
     int postFunction(const HttpParser &parser) override;

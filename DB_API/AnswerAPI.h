@@ -18,21 +18,12 @@ public:
     AnswerAPI();
     ~AnswerAPI() override;
 
-    /**
-     * @brief Add answer to database
-     * @param answer New answer
-     * @return true if query executed otherwise false
-     */
     bool addAnswer(const dis::Answer &answer);
 
-    /**
-     * @brief Get answers by dispute Id
-     * @param db DataBase
-     * @param dispUuid dispute Id
-     * @param answers List of received answers
-     * @return true if query executed otherwise false
-     */
+    //! @brief Get answers by dispute Id
     bool getAnswersByDisputeUuid(const QString& dispUuid, QList<dis::Answer>& answers);
+
+    bool deleteAnswerByDisputeUuid(const QString &uuid);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;

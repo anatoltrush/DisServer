@@ -83,6 +83,18 @@ bool dis::ImageAPI::getImagesByPostUuidLight(const QString &postUuid, QList<dis:
     }
 }
 
+bool dis::ImageAPI::deleteImagesByPostUuid(const QString &postUuid){
+    QSqlQuery query(db);
+    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID_post = ?";
+    query.prepare(strQuery);
+    query.addBindValue(postUuid);
+    if(query.exec()) return true;
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
 int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitivess){
     entities.clear();
     primitivess.clear();

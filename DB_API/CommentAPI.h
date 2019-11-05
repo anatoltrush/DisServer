@@ -2,7 +2,7 @@
 #define COMMENTAPI_H
 
 #include "IdbAPI.h"
-#include "../QDisput/Primitives/Comment.h"
+#include "../Primitives/Comment.h"
 
 namespace dis{
 
@@ -17,7 +17,10 @@ public:
 
     bool addComment(const dis::Comment &comment);
 
-    bool getCommByUuid(const QString &uuid, dis::Comment &comment);
+    bool getCommentByUuid(const QString &uuid, dis::Comment &comment);
+    bool getCommUuidsByPostUuid(const QString &postUuid, QList<QString> &commUuids);
+
+    bool deleteCommentByPostUuid(const QString &postUuid);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;

@@ -49,10 +49,25 @@ bool dis::SystemAPI::checkPswrd(const QSqlDatabase &db, const QString &tableName
     }
 }
 
-bool dis::SystemAPI::isEmailExsist(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist){
+bool dis::SystemAPI::isExsistEmail(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist){
     QSqlQuery query(db);
     query.prepare("SELECT UUID FROM " + tableName + " WHERE Email = ?");
     query.addBindValue(Email);
+    if(query.exec()){
+        if(query.first()) isExsist = true;
+        else isExsist = false;
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::SystemAPI::isExsistNick(const QSqlDatabase &db, const QString &tableName, const QString &Nick, bool &isExsist){
+    QSqlQuery query(db);
+    query.prepare("SELECT UUID FROM " + tableName + " WHERE Nick_name = ?");
+    query.addBindValue(Nick);
     if(query.exec()){
         if(query.first()) isExsist = true;
         else isExsist = false;

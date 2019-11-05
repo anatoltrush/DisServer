@@ -8,7 +8,7 @@ namespace dis{
 //! @{
 
 /**
- * @brief The IPrimitives is an interface for all inherited classes
+ * @brief The IPrimitive is an interface for all inherited classes
  */
 class IPrimitive
 {
@@ -18,12 +18,9 @@ public:
 
     virtual QString getAuthor() const = 0;
 
-    /**
-     * @brief fillBySQL Fills properties of object by SQL query
-     * @param query SQL query
-     * @param rec SQL record
-     */
+    //! @brief fillBySQL Fills properties of object by SQL query
     virtual void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) = 0;
+    //! @brief fillBySQL Fills properties of object by input params
     virtual void fillByParse(const QVariantMap &params) = 0;
 
     static QString nextLn;

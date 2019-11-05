@@ -3,29 +3,37 @@
 dis::HttpHandler::HttpHandler(){}
 
 void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QList<Client> &clients){
-    // NOT AUTHORIZED REQUESTS
-
+    // NOTE: NOT AUTHORIZED REQUESTS ARE SITUATED HERE
     UserAPI userAPI;
     if(userAPI.typeApi == parser.entity){
         // REGISTRATION
         if(parser.method == VERB_POST && parser.function == KW_FUNC_REGISTRATION){
             IPrimitive* primit = parser.object.get();
             User newUser = *static_cast<User*>(primit);
-
-            bool isExsist = false;
-            // NOTE: e-mail check
-            bool checkEmail = sysAPI.isEmailExsist(dbcntr.dataBase, userAPI.tableName, newUser.email, isExsist);
+            // e-mail check
+            bool isExsistEmail = false;
+            bool checkEmail = sysAPI.isExsistEmail(dbcntr.dataBase, userAPI.tableName, newUser.email, isExsistEmail);
             if(!checkEmail){
                 status = HTTP_INTERNAL_SERVER_ERROR;
                 return;
             }
-            if(isExsist){
+            // nick-name check
+            bool isExsistNick = false;
+            bool checkNick = sysAPI.isExsistNick(dbcntr.dataBase, userAPI.tableName, newUser.nickName, isExsistNick);
+            if(!checkNick){
+                status = HTTP_INTERNAL_SERVER_ERROR;
+                return;
+            }
+
+            // -conclusion-
+            if(isExsistEmail || isExsistNick){
                 status = HTTP_CONFLICT;
                 return;
             }
 
-            bool isExec = userAPI.addUser(newUser);
-            if(isExec){
+            // if not duplicate
+            bool isExectd = userAPI.addUser(newUser);
+            if(isExectd){
                 QString token = QUuid::createUuid().toString();
                 response.authToken = token;
                 clients.push_back(Client(newUser.uuid, token, QDateTime::currentDateTime()));
@@ -68,7 +76,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     }
 
     // IS AUTHORIZED
-    if(parser.authorToken != "godOfPhp"){ // FIXME: temporary password, delete later
+    if(parser.authorToken != "godOfPhp"){ // FIXME: temporary token, delete later
         bool isAuth = sysAPI.isAuthorized(clients, parser.authorToken, currentUser);
         if(!isAuth){
             status = HTTP_UNAUTHORIZED;
@@ -76,6 +84,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         }
     }
 
+    // NOTE: NOT AUTHORIZED REQUESTS ARE SITUATED HERE
     std::vector<std::unique_ptr<IPrimitive>> entities;
     QList<QString> primitives;
 
@@ -125,8 +134,6 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
                 status = HTTP_UNPROCESSABLE_ENTITY;
             }
         }
-        // use parser.object
-        // TODO: check WHO CAN PATCH (only owner)
     }
     // DELETE
     if(parser.method == VERB_DELETE){

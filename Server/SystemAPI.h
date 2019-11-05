@@ -22,7 +22,8 @@ public:
     bool isGranted(const QString &currUser, const std::unique_ptr<IPrimitive> &object) {return currUser == object->getAuthor();}
 
     bool checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid);
-    bool isEmailExsist(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist);
+    bool isExsistEmail(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist);
+    bool isExsistNick(const QSqlDatabase &db, const QString &tableName, const QString &Nick, bool &isExsist);
 };
 }
 

@@ -21,7 +21,7 @@ public:
     QString uuid = QUuid::createUuid().toString();
     QString uuid_author;
 
-    //! can be dispute OR album OR comment OR userID(if avatar)
+    //! can be DISPUTE_ID or ALBUM_ID or COMMENT_ID or USER_ID(if avatar)
     QString uuid_post;
 
     int width = 0;

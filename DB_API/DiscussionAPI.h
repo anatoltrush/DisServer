@@ -2,6 +2,9 @@
 #define DISCUSSIONAPI_H
 
 #include "IdbAPI.h"
+#include "ImageAPI.h"
+#include "AnswerAPI.h"
+#include "CommentAPI.h"
 #include "../Primitives/Discussion.h"
 
 #define API_KW_DISP_FROM    "from"
@@ -30,17 +33,10 @@ public:
      */
     bool updDisputeByUuid(const QString &uuid);
 
-    /**
-     * @brief (GET) Helps to know amount of all disputes
-     * @param count Amount of records in Dispute table
-     */
+    //! @brief (GET) Helps to know amount of all disputes
     bool getDisputeCount(int& count);
 
-    /**
-     * @brief (GET) Get dispute knowing it Id
-     * @param uuid Id of dispute
-     * @param disp Filled dispute
-     */
+    //! @brief (GET) Get dispute knowing it Id
     bool getDisputeByUuid(const QString &uuid, dis::Discussion &disp);
 
     /**
