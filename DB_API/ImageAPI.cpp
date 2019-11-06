@@ -49,7 +49,7 @@ bool dis::ImageAPI::getImagesByPostUuid(const QString &postUuid, QList<Image> &i
     query.addBindValue(postUuid);
     if(query.exec()){
         QSqlRecord record = query.record();
-        while(query.next()) {
+        while(query.next()){
             dis::Image img;
             img.fillBySQL(query, record);
             images.push_back(img);
@@ -74,6 +74,25 @@ bool dis::ImageAPI::getImagesByPostUuidLight(const QString &postUuid, QList<dis:
             img.fillBySQL(query, record);
             img.resize(size);
             images.push_back(img);
+        }
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::ImageAPI::getImagesUuidsByPostUuid(const QString &postUuid, QList<QString> &imgsUuids){
+    imgsUuids.clear();
+    QSqlQuery query(db);
+    query.prepare("SELECT UUID FROM " + tableName + " WHERE UUID_post = ?");
+    query.addBindValue(postUuid);
+    if(query.exec()){
+        QSqlRecord record = query.record();
+        while(query.next()){
+            QString uuid = query.value(record.indexOf("UUID")).toString();
+            imgsUuids.push_back(uuid);
         }
         return true;
     }

@@ -45,7 +45,21 @@ bool dis::CommentAPI::getCommentByUuid(const QString &uuid, dis::Comment &commen
 
 bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, QList<QString> &commUuids){
     commUuids.clear();
-    // TODO: impl
+    QSqlQuery query(db);
+    query.prepare("SELECT UUID FROM " + tableName + " WHERE UUID_post = ?");
+    query.addBindValue(postUuid);
+    if(query.exec()){
+        QSqlRecord record = query.record();
+        while(query.next()){
+            QString uuid = query.value(record.indexOf("UUID")).toString();
+            commUuids.push_back(uuid);
+        }
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
 }
 
 bool dis::CommentAPI::deleteCommentByPostUuid(const QString &postUuid){
@@ -58,6 +72,23 @@ bool dis::CommentAPI::deleteCommentByPostUuid(const QString &postUuid){
         qDebug() << db.lastError().text();
         return false;
     }
+}
+
+bool dis::CommentAPI::deleteCommentByPostUuidFull(const QString &postUuid){
+    QSqlQuery query(db);
+
+    QList<QString> parents;
+    QList<QString> children;
+    // fill parents
+    bool isPrntsFilled = getCommUuidsByPostUuid(postUuid, parents);
+    if(!isPrntsFilled) return false;
+    while(true){
+        // fill children (for...)
+        // delete parents
+        if(children.size() == 0) break;
+        parents = children;
+    }
+    return true; // FIXME: temporary
 }
 
 int dis::CommentAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){

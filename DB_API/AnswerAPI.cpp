@@ -41,7 +41,7 @@ bool dis::AnswerAPI::getAnswersByDisputeUuid(const QString &dispUuid, QList<dis:
 
 bool dis::AnswerAPI::deleteAnswerByDisputeUuid(const QString &uuid){
     QSqlQuery query(db);
-    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
+    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID_dispute = ?";
     query.prepare(strQuery);
     query.addBindValue(uuid);
     if(query.exec()) return true;

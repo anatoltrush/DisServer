@@ -28,10 +28,10 @@ public:
     /**
      * @brief Get images by post Id
      * @param postUuid It can be disputeId OR albumId OR commentId OR smthn else
-     * @param images List of received images
      */
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
     bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);
+    bool getImagesUuidsByPostUuid(const QString &postUuid, QList<QString> &imgsUuids);
 
     bool deleteImagesByPostUuid(const QString &postUuid);
 

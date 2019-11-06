@@ -216,33 +216,47 @@ int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){
         QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
         // TODO: put check here
 
-        // 1) delete Images
+        CommentAPI commAPI;
         ImageAPI imageAPI;
-        bool isImgsDltd = imageAPI.deleteImagesByPostUuid(uuidForDel);
 
-        // 2) delete Answers
+        // 1) delete Answers
         AnswerAPI answerAPI;
         bool isAnswrsDltd = answerAPI.deleteAnswerByDisputeUuid(uuidForDel);
 
-        // 3) delete Comments
-        CommentAPI commAPI;
-        QList<QString> allCommUuids;
-        bool isCommsGot = commAPI.getCommUuidsByPostUuid(uuidForDel, allCommUuids);
-        if(isCommsGot)
-            for(const auto &commUuid : allCommUuids){
-                // 3.1)
-                bool isCommImgDltd = imageAPI.deleteImagesByPostUuid(commUuid);
-                if(!isCommImgDltd) return HTTP_INTERNAL_SERVER_ERROR;
-            }
-        else  return HTTP_INTERNAL_SERVER_ERROR;
-        // 3.2)
-        bool isCommsDltd = commAPI.deleteCommentByPostUuid(uuidForDel);
+        // 2) Comms & Imgs
 
-        // 4) delete Dispute
+        // 2.1) Delete comments of Images
+        QList<QString> imgsUuids;
+        bool isImgsGot = imageAPI.getImagesUuidsByPostUuid(uuidForDel, imgsUuids);
+        if(!isImgsGot) return HTTP_INTERNAL_SERVER_ERROR;
+        for(const auto &imgUuid : imgsUuids){
+            bool isCommsDltd = commAPI.deleteCommentByPostUuidFull(imgUuid);
+            if(!isCommsDltd) return HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        // 2.2) Delete Images        
+        bool isImgsDltd = imageAPI.deleteImagesByPostUuid(uuidForDel);
+
+        // 3) Comms & Disp
+        // 3.1) Delete comments of Dispute        
+        bool isCommsDltd = commAPI.deleteCommentByPostUuidFull(uuidForDel);
+        if(!isCommsDltd) return HTTP_INTERNAL_SERVER_ERROR;
+        // 3.2) Delete Dispute
         bool isDisDltd = deleteDisputeByUuid(uuidForDel);
 
+//        // 3) delete Comments
+//        QList<QString> allCommUuids;
+//        bool isCommsGot = commAPI.getCommUuidsByPostUuid(uuidForDel, allCommUuids);
+//        if(isCommsGot)
+//            for(const auto &commUuid : allCommUuids){
+//                // 3.1)
+//                bool isCommImgDltd = imageAPI.deleteImagesByPostUuid(commUuid);
+//                if(!isCommImgDltd) return HTTP_INTERNAL_SERVER_ERROR;
+//            }
+//        else  return HTTP_INTERNAL_SERVER_ERROR;
+
         // -conclusion-
-        return (isImgsDltd && isAnswrsDltd && isCommsDltd && isDisDltd) ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+        return (isImgsDltd && isAnswrsDltd && isDisDltd) ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
     }
     else return HTTP_METHOD_NOT_ALLOWED;
 }

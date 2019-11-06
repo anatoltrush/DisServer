@@ -5,7 +5,7 @@
 
 #include "../Common/disDefines.h"
 #include "../Primitives/Client.h"
-#include "../Primitives/IPrimitive.h"
+#include "../Primitives/Discussion.h"
 
 namespace dis{
 class SystemAPI
@@ -19,7 +19,7 @@ public:
     bool isAlreadyIn(const QList<dis::Client> &clients, const QString &userUuid);
     void logOut(QList<dis::Client> &clients, const QString &userToken);
     bool isAuthorized(QList<Client> &clients, const QString &userToken, QString &currUser);
-    bool isGranted(const QString &currUser, const std::unique_ptr<IPrimitive> &object) {return currUser == object->getAuthor();}
+    bool isVerified(const QString &currUser, const Discussion &object) {return currUser == object.getAuthor();}
 
     bool checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid);
     bool isExsistEmail(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist);

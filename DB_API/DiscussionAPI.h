@@ -49,7 +49,7 @@ public:
      *    discussionAPI.getDisputesRange(dbcntrl.dataBase, disps, 2, 4);
      *  @endcode
      * returns 4 records from 2 index to 5 index (start index = 0)
-     * @todo sorting by topic and other...
+     * @todo sorting by topic and other params...
      */
     bool getDisputesRange(QList<dis::Discussion>& discussions, int from, int batch);
     bool getDispUuidsRange(QList<QString>& uuids, int from, int batch);

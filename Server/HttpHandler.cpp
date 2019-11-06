@@ -120,8 +120,17 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_PATCH){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                bool isUserGranted = sysAPI.isGranted(currentUser, parser.object);
-                if(isUserGranted){
+                QString uuidForUpd = parser.params.value(PROP_DISP_UUID).toString();
+                Discussion disc;
+                DiscussionAPI discAPI;
+                bool isDiscGot = discAPI.getDisputeByUuid(uuidForUpd, disc);
+                if(!isDiscGot){
+                    status = HTTP_INTERNAL_SERVER_ERROR;
+                    return;
+                }
+                // end of disp getting
+                bool isUserVerified = sysAPI.isVerified(currentUser, disc);
+                if(isUserVerified){
                     status = dbApi->patchFunction(parser);
                     break;
                 }
@@ -139,8 +148,18 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_DELETE){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                bool isUserGranted = sysAPI.isGranted(currentUser, parser.object);
-                if(isUserGranted){
+                QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
+                Discussion disc;
+                DiscussionAPI discAPI;
+                bool isDiscGot = discAPI.getDisputeByUuid(uuidForDel, disc);
+                if(!isDiscGot){
+                    status = HTTP_INTERNAL_SERVER_ERROR;
+                    return;
+                }
+                // end of disp getting
+//                bool isUserVerified = sysAPI.isVerified(currentUser, disc);
+                bool isUserVerified = true; // FIXME: temporary
+                if(isUserVerified){
                     status = dbApi->deleteFunction(parser);
                     break;
                 }

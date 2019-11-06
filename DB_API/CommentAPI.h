@@ -3,6 +3,7 @@
 
 #include "IdbAPI.h"
 #include "../Primitives/Comment.h"
+#include "../DB_API/ImageAPI.h"
 
 namespace dis{
 
@@ -21,6 +22,7 @@ public:
     bool getCommUuidsByPostUuid(const QString &postUuid, QList<QString> &commUuids);
 
     bool deleteCommentByPostUuid(const QString &postUuid);
+    bool deleteCommentByPostUuidFull(const QString &postUuid);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;
