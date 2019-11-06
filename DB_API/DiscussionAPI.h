@@ -58,6 +58,9 @@ public:
     int postFunction(const HttpParser &parser) override;
     int patchFunction(const HttpParser &parser) override;
     int deleteFunction(const HttpParser &parser) override;
+
+private:
+    bool deleteDisputeUuid(const QString &uuid);
 };
 //! @} database_api
 }

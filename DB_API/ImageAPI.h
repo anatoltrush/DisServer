@@ -1,8 +1,11 @@
-#ifndef IMAGEAPI_H
-#define IMAGEAPI_H
+//#ifndef IMAGEAPI_H
+//#define IMAGEAPI_H
+
+#pragma once
 
 #include "IdbAPI.h"
 #include "../Primitives/Image.h"
+#include "../DB_API/CommentAPI.h"
 
 namespace dis{
 
@@ -33,16 +36,19 @@ public:
     bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);
     bool getImagesUuidsByPostUuid(const QString &postUuid, QList<QString> &imgsUuids);
 
-    bool deleteImagesByPostUuid(const QString &postUuid);
+    bool deleteImageByUuid(const QString &uuid);
 
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitivess) override;
     int postFunction(const HttpParser &parser) override;
     int patchFunction(const HttpParser &parser) override;
     int deleteFunction(const HttpParser &parser) override;
+
+private:
+    bool deleteImageUuid(const QString &uuid);
 };
 
 //! @} database_api
 
 }
 
-#endif // IMAGEAPI_H
+//#endif // IMAGEAPI_H

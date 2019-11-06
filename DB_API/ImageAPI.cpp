@@ -102,16 +102,11 @@ bool dis::ImageAPI::getImagesUuidsByPostUuid(const QString &postUuid, QList<QStr
     }
 }
 
-bool dis::ImageAPI::deleteImagesByPostUuid(const QString &postUuid){
-    QSqlQuery query(db);
-    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID_post = ?";
-    query.prepare(strQuery);
-    query.addBindValue(postUuid);
-    if(query.exec()) return true;
-    else{
-        qDebug() << db.lastError().text();
-        return false;
-    }
+bool dis::ImageAPI::deleteImageByUuid(const QString &uuid){
+    CommentAPI commAPI;
+    bool isCommsDltd = commAPI.deleteCommentByPostUuidFull(uuid);
+    bool isImgDltd = deleteImageUuid(uuid);
+    return (isCommsDltd && isImgDltd);
 }
 
 int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitivess){
@@ -126,7 +121,23 @@ int dis::ImageAPI::postFunction(const dis::HttpParser &parser){}
 int dis::ImageAPI::patchFunction(const dis::HttpParser &parser){}
 
 int dis::ImageAPI::deleteFunction(const HttpParser &parser){
-    // no necessary to implement
-    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
-    return HTTP_METHOD_NOT_ALLOWED;
+    // TODO: impl ImageAPI::deleteFunction(const HttpParser &parser)
+    // 1) USE deleteCommentByPostUuidFull (send this->uuid)
+    // 2) then kill itself
+
+//    // no necessary to implement
+//    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
+    //    return HTTP_METHOD_NOT_ALLOWED;
+}
+
+bool dis::ImageAPI::deleteImageUuid(const QString &uuid){
+    QSqlQuery query(db);
+    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
+    query.prepare(strQuery);
+    query.addBindValue(uuid);
+    if(query.exec()) return true;
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
 }

@@ -43,7 +43,7 @@ bool dis::CommentAPI::getCommentByUuid(const QString &uuid, dis::Comment &commen
     }
 }
 
-bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, QList<QString> &commUuids){
+bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, std::vector<QString> &commUuids){
     commUuids.clear();
     QSqlQuery query(db);
     query.prepare("SELECT UUID FROM " + tableName + " WHERE UUID_post = ?");
@@ -62,33 +62,49 @@ bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, QList<QStr
     }
 }
 
-bool dis::CommentAPI::deleteCommentByPostUuid(const QString &postUuid){
-    QSqlQuery query(db);
-    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID_post = ?";
-    query.prepare(strQuery);
-    query.addBindValue(postUuid);
-    if(query.exec()) return true;
-    else{
-        qDebug() << db.lastError().text();
-        return false;
-    }
+bool dis::CommentAPI::deleteCommentByUuid(const QString &uuid){
+    bool isCommsDltd = deleteCommentByPostUuidFull(uuid);
+    bool isCommDltd = deleteCommentUuid(uuid);
+    return (isCommsDltd && isCommDltd);
 }
 
 bool dis::CommentAPI::deleteCommentByPostUuidFull(const QString &postUuid){
     QSqlQuery query(db);
 
-    QList<QString> parents;
-    QList<QString> children;
+    std::vector<QString> parents;
+    std::vector<QString> children;
     // fill parents
     bool isPrntsFilled = getCommUuidsByPostUuid(postUuid, parents);
     if(!isPrntsFilled) return false;
     while(true){
-        // fill children (for...)
+        children.clear();
+        // fill children
+        for(const auto &prnt : parents){
+            std::vector<QString> subChldrn;
+            bool isChldrnGot = getCommUuidsByPostUuid(prnt, subChldrn);
+            if(!isChldrnGot) return false;
+            children.insert(children.end(), subChldrn.begin(), subChldrn.end());
+        }
         // delete parents
+        for(const auto &prnt : parents){
+            // delete image
+            ImageAPI imageAPI;
+            QList<QString> imgsUuids;
+            bool isImgsGot = imageAPI.getImagesUuidsByPostUuid(prnt, imgsUuids);
+            if(!isImgsGot) return false;
+            for(const auto &imgUuid : imgsUuids){
+                bool isImgDlt = imageAPI.deleteImageByUuid(imgUuid);
+                if(!isImgDlt) return false;
+            }
+            // delete comment
+            bool isCommDltd = deleteCommentUuid(prnt);
+            if(!isCommDltd) return false;
+        }
+
         if(children.size() == 0) break;
         parents = children;
     }
-    return true; // FIXME: temporary
+    return true;
 }
 
 int dis::CommentAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){
@@ -102,4 +118,19 @@ int dis::CommentAPI::postFunction(const dis::HttpParser &parser){}
 
 int dis::CommentAPI::patchFunction(const dis::HttpParser &parser){}
 
-int dis::CommentAPI::deleteFunction(const HttpParser &parser){}
+int dis::CommentAPI::deleteFunction(const HttpParser &parser){
+    // TODO: impl CommentAPI::deleteFunction(const HttpParser &parser)
+    // USE deleteCommentByUuid
+}
+
+bool dis::CommentAPI::deleteCommentUuid(const QString &uuid){
+    QSqlQuery query(db);
+    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
+    query.prepare(strQuery);
+    query.addBindValue(uuid);
+    if(query.exec()) return true;
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
