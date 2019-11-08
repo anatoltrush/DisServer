@@ -1,6 +1,6 @@
 #include "CommentAPI.h"
 
-dis::CommentAPI::CommentAPI() : IdbAPI ("Comments", API_TYPE_COMMENTS){}
+dis::CommentAPI::CommentAPI() : IdbAPI (TABLE_COMMENTS, API_TYPE_COMMENTS){}
 
 dis::CommentAPI::~CommentAPI(){}
 

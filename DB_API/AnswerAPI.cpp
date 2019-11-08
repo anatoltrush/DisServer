@@ -1,13 +1,16 @@
 #include "AnswerAPI.h"
 
-dis::AnswerAPI::AnswerAPI() : IdbAPI ("Answers", API_TYPE_ANSWERS){}
+dis::AnswerAPI::AnswerAPI() : IdbAPI (TABLE_ANSWERS, API_TYPE_ANSWERS){}
 
 dis::AnswerAPI::~AnswerAPI(){}
 
 bool dis::AnswerAPI::addAnswer(const dis::Answer &answer){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO " + tableName + " (UUID_dispute, Text_data, Score) "
-                  "VALUES (?, ?, ?)");
+    QString request("INSERT INTO " + tableName + " (" + PROP_ANS_UUID + ", " + PROP_ANS_UUID_DISP + ", "
+                                                    "" + PROP_ANS_TEXT + ", " + PROP_ANS_SCORE + ") "
+                                                    "VALUES (?, ?, ?, ?)");
+    query.prepare(request);
+    query.addBindValue(answer.uuid);
     query.addBindValue(answer.uuid_dispute);
     query.addBindValue(answer.text);
     query.addBindValue(answer.score);
@@ -22,7 +25,7 @@ bool dis::AnswerAPI::addAnswer(const dis::Answer &answer){
 bool dis::AnswerAPI::getAnswersByDisputeUuid(const QString &dispUuid, QList<dis::Answer> &answers){
     answers.clear();
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM " + tableName + " WHERE UUID_dispute = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE " + PROP_ANS_UUID_DISP + " = ?");
     query.addBindValue(dispUuid);
     if(query.exec()){
         QSqlRecord record = query.record();
@@ -41,7 +44,7 @@ bool dis::AnswerAPI::getAnswersByDisputeUuid(const QString &dispUuid, QList<dis:
 
 bool dis::AnswerAPI::deleteAnswerByDisputeUuid(const QString &uuid){
     QSqlQuery query(db);
-    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID_dispute = ?";
+    QString strQuery = "DELETE FROM " + tableName + " WHERE " + PROP_ANS_UUID_DISP + " = ?";
     query.prepare(strQuery);
     query.addBindValue(uuid);
     if(query.exec()) return true;
@@ -63,7 +66,7 @@ int dis::AnswerAPI::postFunction(const dis::HttpParser &parser){}
 int dis::AnswerAPI::patchFunction(const dis::HttpParser &parser){}
 
 int dis::AnswerAPI::deleteFunction(const HttpParser &parser){
-    // no necessary to implement
+    // no necessary to implement (deletes by Dispute deletion)
     qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
     return HTTP_METHOD_NOT_ALLOWED;
 }

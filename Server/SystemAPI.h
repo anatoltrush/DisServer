@@ -5,6 +5,7 @@
 
 #include "../Common/disDefines.h"
 #include "../Primitives/Client.h"
+#include "../Primitives/User.h"
 #include "../Primitives/Discussion.h"
 
 namespace dis{

@@ -13,7 +13,6 @@
 #include "../Primitives/Answer.h"
 #include "../Primitives/Comment.h"
 #include "../Primitives/Image.h"
-#include "../Primitives/Purchase.h"
 #include "../Primitives/User.h"
 
 namespace dis{
@@ -52,8 +51,8 @@ private:
     void patchParse();
     void deleteParse();
     void optionParse();
-    void optionPut();
-    void optionHead();
+    void putParse();
+    void headParse();
 
     void validateParams();
 

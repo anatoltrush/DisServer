@@ -1,6 +1,6 @@
 #include "DiscussionAPI.h"
 
-dis::DiscussionAPI::DiscussionAPI() : IdbAPI ("Disputes", API_TYPE_DISPUTES){}
+dis::DiscussionAPI::DiscussionAPI() : IdbAPI (TABLE_DISPUTES, API_TYPE_DISPUTES){}
 
 dis::DiscussionAPI::~DiscussionAPI(){}
 

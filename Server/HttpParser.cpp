@@ -10,8 +10,8 @@ void dis::HttpParser::parse(const QByteArray &data){
     if(method == QString(VERB_PATCH)) patchParse();
     if(method == QString(VERB_DELETE)) deleteParse();
     if(method == QString(VERB_OPTION)) optionParse();
-    if(method == QString(VERB_PUT)) optionPut();
-    if(method == QString(VERB_HEAD)) optionHead();
+    if(method == QString(VERB_PUT)) putParse();
+    if(method == QString(VERB_HEAD)) headParse();
 
     validateParams();
 }
@@ -114,12 +114,12 @@ void dis::HttpParser::deleteParse(){}
 
 void dis::HttpParser::optionParse(){}
 
-void dis::HttpParser::optionPut(){
+void dis::HttpParser::putParse(){
     getPrimitive(object, entity);
     object->fillByParse(params);
 }
 
-void dis::HttpParser::optionHead(){}
+void dis::HttpParser::headParse(){}
 
 void dis::HttpParser::validateParams(){
     // TODO: implement "validateParams"
@@ -164,6 +164,5 @@ void dis::HttpParser::getPrimitive(std::unique_ptr<IPrimitive> &object, const QS
     if(entity == API_TYPE_ANSWERS) object = std::make_unique<Answer>();
     if(entity == API_TYPE_COMMENTS) object = std::make_unique<Comment>();
     if(entity == API_TYPE_IMAGES) object = std::make_unique<Image>();
-    if(entity == API_TYPE_PURCHASES) object = std::make_unique<Purchase>();
     if(entity == API_TYPE_USERS) object = std::make_unique<User>();
 }

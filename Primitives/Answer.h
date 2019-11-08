@@ -3,7 +3,10 @@
 
 #include "IPrimitive.h"
 
-// TODO: #define PROP_USER_UUID"UUID + IN API" // example
+#define PROP_ANS_UUID       "UUID"
+#define PROP_ANS_UUID_DISP  "UUID_dispute"
+#define PROP_ANS_TEXT       "Text_data"
+#define PROP_ANS_SCORE      "Score"
 
 namespace dis{
 
@@ -16,9 +19,10 @@ public:
     Answer();
     ~Answer() override;
 
+    QString uuid = QUuid::createUuid().toString();
     QString uuid_dispute;
     QString text;
-    int score;
+    int score = 0;
 
     QString getAuthor() const override {return "";} // no necessary to implement
 

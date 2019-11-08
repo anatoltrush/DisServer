@@ -4,7 +4,6 @@ dis::DBController::DBController(){
     dbAPIs.push_back(std::make_unique<AnswerAPI>());
     dbAPIs.push_back(std::make_unique<UserAPI>());
     dbAPIs.push_back(std::make_unique<DiscussionAPI>());
-    dbAPIs.push_back(std::make_unique<PurchaseAPI>());
     dbAPIs.push_back(std::make_unique<CommentAPI>());
     dbAPIs.push_back(std::make_unique<ImageAPI>());
 }

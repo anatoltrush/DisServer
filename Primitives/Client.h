@@ -3,10 +3,7 @@
 
 #include <QDate>
 
-// TODO: #define PROP_USER_UUID"UUID + IN API" // example
-
 namespace dis{
-
 //! @addtogroup entities
 //! @{
 class Client
@@ -19,15 +16,6 @@ public:
     QString uuid;
     QString authorToken;
     QDateTime lastRequestTime;
-
-//private:
-//    Q_DISABLE_COPY(Client)
-
-//signals:
-//    void signalUpdTime();
-
-//public slots:
-//    void slotUpdTime();
 };
 //! @} entities
 }

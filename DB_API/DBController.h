@@ -3,7 +3,6 @@
 
 #include "UserAPI.h"
 #include "DiscussionAPI.h"
-#include "PurchaseAPI.h"
 #include "CommentAPI.h"
 #include "ImageAPI.h"
 #include "AnswerAPI.h"

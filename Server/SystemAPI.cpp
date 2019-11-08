@@ -33,12 +33,12 @@ bool dis::SystemAPI::isAuthorized(QList<dis::Client> &clients, const QString &us
 bool dis::SystemAPI::checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid){
     if(pswrd.isEmpty()) return false;
     QSqlQuery query(db);
-    query.prepare("SELECT UUID, Password FROM " + tableName + " WHERE Password = ?");
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_PSWRD + " = ?");
     query.addBindValue(pswrd);
     if(query.exec()){
         if(query.first()){
             QSqlRecord record = query.record();
-            uuid = query.value(record.indexOf("UUID")).toString();
+            uuid = query.value(record.indexOf(PROP_USR_UUID)).toString();
             return true;
         }
         else return false;
@@ -51,7 +51,7 @@ bool dis::SystemAPI::checkPswrd(const QSqlDatabase &db, const QString &tableName
 
 bool dis::SystemAPI::isExsistEmail(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist){
     QSqlQuery query(db);
-    query.prepare("SELECT UUID FROM " + tableName + " WHERE Email = ?");
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_EMAIL + " = ?");
     query.addBindValue(Email);
     if(query.exec()){
         if(query.first()) isExsist = true;
@@ -66,7 +66,7 @@ bool dis::SystemAPI::isExsistEmail(const QSqlDatabase &db, const QString &tableN
 
 bool dis::SystemAPI::isExsistNick(const QSqlDatabase &db, const QString &tableName, const QString &Nick, bool &isExsist){
     QSqlQuery query(db);
-    query.prepare("SELECT UUID FROM " + tableName + " WHERE Nick_name = ?");
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_NICK + " = ?");
     query.addBindValue(Nick);
     if(query.exec()){
         if(query.first()) isExsist = true;

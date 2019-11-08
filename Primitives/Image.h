@@ -5,13 +5,22 @@
 
 #define IMG_FORMAT_JPG  "JPG"
 
-// TODO: #define PROP_USER_UUID"UUID + IN API" // example
+#define PROP_IMG_UUID       "UUID"
+#define PROP_IMG_UUID_ATHR  "UUID_author"
+#define PROP_IMG_UUID_POST  "UUID_post"
+#define PROP_IMG_DATA       "Image_data"
+#define PROP_IMG_W          "Width"
+#define PROP_IMG_H          "Height"
+#define PROP_IMG_FRMT       "Format"
+#define PROP_IMG_TIME_CRTD  "Time_created"
+#define PROP_IMG_GEO        "Geo_data"
+#define PROP_IMG_LIKE       "Lice"
+#define PROP_IMG_DLIKE      "Dislike"
 
 namespace dis{
 
 //! @addtogroup entities
 //! @{
-
 class Image : public IPrimitive
 {
 public:
@@ -24,14 +33,18 @@ public:
     //! can be DISPUTE_ID or ALBUM_ID or COMMENT_ID or USER_ID(if avatar)
     QString uuid_post;
 
+    QByteArray img_data;
     int width = 0;
     int height = 0;
-    QByteArray img_data;
+    QString format = IMG_FORMAT_JPG;
 
     QDateTime time_created;
 
     //! if has
     QString geo_data;
+
+    int like = 0;
+    int disLike = 0;
 
     void resize(const QSize &size);
 
@@ -41,14 +54,10 @@ public:
     void fillByParse(const QVariantMap &params) override;
 
 private:
-    QString currentFormat = IMG_FORMAT_JPG;
-
     QByteArray createMessageBody(const QString &separ) override;
     QByteArray createMessageBodyHtml() override;
 };
-
 //! @} entities
-
 }
 
 #endif // IMAGE_H

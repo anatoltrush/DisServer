@@ -2,7 +2,7 @@
 #define ANSWERAPI_H
 
 #include "IdbAPI.h"
-#include "../QDisput/Primitives/Answer.h"
+#include "../Primitives/Answer.h"
 
 namespace dis{
 

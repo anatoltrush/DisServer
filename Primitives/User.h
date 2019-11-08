@@ -1,19 +1,18 @@
 #ifndef USER_H
 #define USER_H
 
-#include <QDateTime>
-#include <QUuid>
-
 #include "Discussion.h"
-#include "Purchase.h"
 #include "IPrimitive.h"
 
 // TODO: #define PROP_USER_UUID"UUID + IN API" // example
+#define PROP_USR_UUID   "UUID"
+#define PROP_USR_PSWRD  "Password"
+#define PROP_USR_EMAIL  "Email"
+#define PROP_USR_NICK   "Nick_name"
 
 namespace dis{
 //! @addtogroup entities
 //! @{
-
 enum Sex{
     NA = -1,
     Male,
@@ -25,7 +24,6 @@ enum Sex{
 class User : public IPrimitive
 {
 public:
-    //! short constructor
     User();
     ~User() override;
 
@@ -44,7 +42,6 @@ public:
     Sex sex = Sex::NA;
     Sex preference = Sex::NA;
 
-    // SPECIAL PROPERTY
     QString nickName;
     QString login;
     QString password;
@@ -57,7 +54,6 @@ public:
     int money = 0;
 
     std::vector<dis::Discussion> createdDisps;
-    std::vector<dis::Purchase> purchases;   
 
     QString getAuthor() const override {return uuid;}
 
