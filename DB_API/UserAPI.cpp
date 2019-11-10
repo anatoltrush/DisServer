@@ -6,12 +6,31 @@ dis::UserAPI::~UserAPI(){}
 
 bool dis::UserAPI::addUser(const dis::User &user){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO " + tableName + " (UUID, Name, Surname, Country) "
-                  "VALUES (?, ?, ?, ?)");
+    QString request("INSERT INTO " + tableName + " (" + PROP_USR_UUID + ", " + PROP_USR_NAME + ", " + PROP_USR_SNAME + ", " + PROP_USR_CNTRY + ","
+                                                  " " + PROP_USR_CITY + ", " + PROP_USR_EMAIL + ", " + PROP_USR_SEX + ", " + PROP_USR_PREF + ","
+                                                  " " + PROP_USR_NICK + ", " + PROP_USR_PSWRD + ", " + PROP_USR_MNY + ", " + PROP_USR_SCORE + ","
+                                                  " " + PROP_USR_TIME_BRTH + ", " + PROP_USR_TIME_REG + ", " + PROP_USR_AVTR + ", " + PROP_USR_W + ","
+                                                  " " + PROP_USR_H + ", " + PROP_USR_FRMT + ") "
+                                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    query.prepare(request);
     query.addBindValue(user.uuid);
     query.addBindValue(user.name);
     query.addBindValue(user.surname);
     query.addBindValue(user.country);
+    query.addBindValue(user.city);
+    query.addBindValue(user.email);
+    query.addBindValue(user.sex);
+    query.addBindValue(user.preference);
+    query.addBindValue(user.nickName);
+    query.addBindValue(user.password);
+    query.addBindValue(user.money);
+    query.addBindValue(user.score);
+    query.addBindValue(user.time_birth);
+    query.addBindValue(user.time_registration);
+    query.addBindValue(user.avtr_data);
+    query.addBindValue(user.avtr_w);
+    query.addBindValue(user.avtr_h);
+    query.addBindValue(user.format);
 
     if(query.exec()) return true;
     else{
@@ -22,7 +41,7 @@ bool dis::UserAPI::addUser(const dis::User &user){
 
 bool dis::UserAPI::deleteUser(const QString &uuid){
     QSqlQuery query(db);
-    query.prepare("DELETE FROM " + tableName + " WHERE UUID = ?");
+    query.prepare("DELETE FROM " + tableName + " WHERE " + PROP_USR_UUID + " = ?");
     query.addBindValue(uuid);
     if(query.exec()) return true;
     else{
@@ -31,9 +50,10 @@ bool dis::UserAPI::deleteUser(const QString &uuid){
     }
 }
 
-bool dis::UserAPI::updateUser(const QString& uuid, const dis::User &newData){
+bool dis::UserAPI::updateUser(const QString& uuid, const dis::User &newData){ // TODO: fill all fields in "UserAPI::updateUser"
     QSqlQuery query(db);
-    query.prepare("UPDATE " + tableName + " SET Name = ?, Surname = ?, Country = ? WHERE UUID = ?");
+    query.prepare("UPDATE " + tableName + " SET " + PROP_USR_NAME + " = ?,"
+                                          " " + PROP_USR_SNAME + " = ?, " + PROP_USR_CNTRY + " = ? WHERE " + PROP_USR_UUID + " = ?");
     query.addBindValue(newData.name);
     query.addBindValue(newData.surname);
     query.addBindValue(newData.country);
@@ -48,7 +68,7 @@ bool dis::UserAPI::updateUser(const QString& uuid, const dis::User &newData){
 
 bool dis::UserAPI::getUserByUuid(const QString &uuid, dis::User &user){
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE " + PROP_USR_UUID + " = ?");
     query.addBindValue(uuid);
     if(query.exec()){
         if(query.first()){

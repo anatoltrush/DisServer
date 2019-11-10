@@ -3,8 +3,6 @@
 
 #include "IPrimitive.h"
 
-#define IMG_FORMAT_JPG  "JPG"
-
 #define PROP_IMG_UUID       "UUID"
 #define PROP_IMG_UUID_ATHR  "UUID_author"
 #define PROP_IMG_UUID_POST  "UUID_post"

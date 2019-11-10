@@ -11,7 +11,6 @@ namespace dis{
 
 //! @addtogroup database_api
 //! @{
-//!
 class CommentAPI : public IdbAPI
 {
 public:

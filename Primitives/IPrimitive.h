@@ -3,6 +3,8 @@
 
 #include <QtSql>
 
+#include "../Common/disDefines.h"
+
 namespace dis{
 //! @addtogroup entities
 //! @{

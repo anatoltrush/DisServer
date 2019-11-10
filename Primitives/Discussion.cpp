@@ -20,6 +20,7 @@ void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->icon_data = query.value(rec.indexOf(PROP_DISP_ICON)).toByteArray();
     this->img_w = query.value(rec.indexOf(PROP_DISP_W)).toInt();
     this->img_h = query.value(rec.indexOf(PROP_DISP_H)).toInt();
+    this->format = query.value(rec.indexOf(PROP_DISP_FRMT)).toString();
 }
 
 void dis::Discussion::fillByParse(const QVariantMap &params){
@@ -37,6 +38,7 @@ void dis::Discussion::fillByParse(const QVariantMap &params){
     this->icon_data = params.value(PROP_DISP_ICON).toByteArray();
     this->img_w = params.value(PROP_DISP_W).toInt();
     this->img_h = params.value(PROP_DISP_H).toInt();
+    this->format = params.value(PROP_DISP_FRMT).toString();
 }
 
 QByteArray dis::Discussion::createMessageBody(const QString &separ){
@@ -56,6 +58,7 @@ QByteArray dis::Discussion::createMessageBody(const QString &separ){
     res.append(IPrimitive::toQBA(separ, PROP_DISP_ICON, this->icon_data));
     res.append(IPrimitive::toQBA(separ, PROP_DISP_W, QString::number(this->img_w)));
     res.append(IPrimitive::toQBA(separ, PROP_DISP_H, QString::number(this->img_h)));
+    res.append(IPrimitive::toQBA(separ, PROP_DISP_FRMT, this->format));
     res.append("--" + separ + "--");
     return res;
 }

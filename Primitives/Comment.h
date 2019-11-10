@@ -3,7 +3,14 @@
 
 #include "IPrimitive.h"
 
-// TODO: #define PROP_USER_UUID"UUID + IN API" // example
+#define PROP_COMM_UUID          "UUID"
+#define PROP_COMM_UUID_POST     "UUID_post"
+#define PROP_COMM_UUID_ATHR     "UUID_author"
+#define PROP_COMM_UUID_RCVR     "UUID_receiver"
+#define PROP_COMM_TIME_CRTD     "Time_created"
+#define PROP_COMM_TEXT          "Text_data"
+#define PROP_COMM_LIKE          "Lice"
+#define PROP_COMM_DLIKE         "Dislike"
 
 namespace dis{
 //! @addtogroup entities
@@ -16,13 +23,15 @@ public:
 
     QString uuid = QUuid::createUuid().toString();
 
-    //! dispute OR foto OR other comment
+    //! can be DISPUTE_ID or ALBUM_ID or COMMENT_ID or USER_ID(if avatar)
     QString uuid_post;
     QString uuid_author;
     //! can be empty if first comment at all
     QString uuid_receiver;
     QDateTime time_created;
     QString text;
+    int like = 0;
+    int disLike = 0;
 
     QString getAuthor() const override {return uuid_author;}
 

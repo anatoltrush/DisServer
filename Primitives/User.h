@@ -1,14 +1,26 @@
 #ifndef USER_H
 #define USER_H
 
-#include "Discussion.h"
 #include "IPrimitive.h"
 
-// TODO: #define PROP_USER_UUID"UUID + IN API" // example
-#define PROP_USR_UUID   "UUID"
-#define PROP_USR_PSWRD  "Password"
-#define PROP_USR_EMAIL  "Email"
-#define PROP_USR_NICK   "Nick_name"
+#define PROP_USR_UUID       "UUID"
+#define PROP_USR_NAME       "Name"
+#define PROP_USR_SNAME      "Surname"
+#define PROP_USR_CNTRY      "Country"
+#define PROP_USR_CITY       "City"
+#define PROP_USR_EMAIL      "Email"
+#define PROP_USR_SEX        "Sex"
+#define PROP_USR_PREF       "Preference"
+#define PROP_USR_NICK       "Nick_name"
+#define PROP_USR_PSWRD      "Password"
+#define PROP_USR_MNY        "Money"
+#define PROP_USR_SCORE      "Score"
+#define PROP_USR_TIME_BRTH  "Time_birth"
+#define PROP_USR_TIME_REG   "Time_register"
+#define PROP_USR_AVTR       "Avat_data"
+#define PROP_USR_W          "Avat_width"
+#define PROP_USR_H          "Avat_height"
+#define PROP_USR_FRMT       "Format"
 
 namespace dis{
 //! @addtogroup entities
@@ -21,13 +33,12 @@ enum Sex{
     // other if need
 };
 
-class User : public IPrimitive
+class User : public IPrimitive // TODO: fill all fields
 {
 public:
     User();
     ~User() override;
 
-    // COMMON PROPERTY
     QString uuid = QUuid::createUuid().toString();
     QString name;
     QString surname;
@@ -36,24 +47,28 @@ public:
     QString city;
 
     QString email;
-    QList<QString> IPs;
+    std::vector<QString> IPs;
 
-    QDateTime time_birth;
     Sex sex = Sex::NA;
     Sex preference = Sex::NA;
 
     QString nickName;
-    QString login;
     QString password;
-    int role = -1;
-    int status = -1; // confirmed, banned or else
-    int score = 0;
-    int level = 0;
-    QDateTime time_registration;
-    QDateTime time_last_active;
     int money = 0;
+    int status = 0; // confirmed, banned or else / need?
+    int score = 0;
+    int level = 0; // need?
 
-    std::vector<dis::Discussion> createdDisps;
+    QDateTime time_birth;
+    QDateTime time_registration;
+    QDateTime time_last_active; // need?
+
+    // Avatar (image)
+    QByteArray avtr_data;
+    int avtr_w = 0;
+    int avtr_h = 0;
+    QString format = IMG_FORMAT_JPG;
+    // 21
 
     QString getAuthor() const override {return uuid;}
 

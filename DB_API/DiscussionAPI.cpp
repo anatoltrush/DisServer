@@ -6,9 +6,13 @@ dis::DiscussionAPI::~DiscussionAPI(){}
 
 bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO " + tableName + " (UUID, UUID_author, Section, Topic, Time_created,"
-                  "Type, Step, Reward, Lang_region, Text_data, Voted, MaxVoters, Icon_data, Img_width, Img_height)"
-                  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    QString request("INSERT INTO " + tableName + " (" + PROP_DISP_UUID + ", " + PROP_DISP_UUID_AUTHOR + ", " + PROP_DISP_SECTION + ", " + PROP_DISP_TOPIC + ", "
+                                                 "" + PROP_DISP_TIME_CRTD + ", " + PROP_DISP_TYPE + ", " + PROP_DISP_STEP + ", " + PROP_DISP_REWARD + ", "
+                                                 "" + PROP_DISP_LANG_REG + ", " + PROP_DISP_TEXT_DATA + ", " + PROP_DISP_VOTED + ", " + PROP_DISP_MAX_VOTERS + ", "
+                                                 "" + PROP_DISP_ICON + ", " + PROP_DISP_W + ", " + PROP_DISP_H + ", " + PROP_DISP_FRMT + ") "
+                                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    query.prepare(request);
     query.addBindValue(dispute.uuid);
     query.addBindValue(dispute.uuid_author);
     query.addBindValue(dispute.section);
@@ -24,6 +28,7 @@ bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     query.addBindValue(dispute.icon_data);
     query.addBindValue(dispute.img_w);
     query.addBindValue(dispute.img_h);
+    query.addBindValue(dispute.format);
 
     if(query.exec()) return true;
     else{
@@ -45,7 +50,7 @@ bool dis::DiscussionAPI::updDisputeByUuid(const QString &uuid){
 
 bool dis::DiscussionAPI::getDisputeCount(int &count){
     QSqlQuery query(db);
-    QString strQuery = "SELECT count(*) FROM " + tableName;
+    QString strQuery = "SELECT count(" + QString(PROP_DISP_UUID) + ") FROM " + tableName;
     query.prepare(strQuery);
     if(query.exec()){
         if(query.first()){
@@ -62,7 +67,7 @@ bool dis::DiscussionAPI::getDisputeCount(int &count){
 
 bool dis::DiscussionAPI::getDisputeByUuid(const QString &uuid, dis::Discussion &disp){
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE " + PROP_DISP_UUID + " = ?");
     query.addBindValue(uuid);
     if(query.exec()){
         if(query.first()){
@@ -82,7 +87,7 @@ bool dis::DiscussionAPI::getDisputesRange(QList<dis::Discussion> &discussions, i
     discussions.clear();
     QSqlQuery query(db);
     QString strQuery = "SELECT * FROM " + tableName +
-            " ORDER BY Time_created DESC"
+            " ORDER BY " + PROP_DISP_TIME_CRTD + " DESC"
             " offset " + QString::number(from) +
             " rows fetch next " + QString::number(batch) +
             " rows only";
@@ -105,7 +110,7 @@ bool dis::DiscussionAPI::getDispUuidsRange(QList<QString> &uuids, int from, int 
     uuids.clear();
     QSqlQuery query(db);
     QString strQuery = "SELECT " + QString(PROP_DISP_UUID) + " FROM " + tableName +
-            " ORDER BY Time_created DESC"
+            " ORDER BY " + PROP_DISP_TIME_CRTD + " DESC"
             " offset " + QString::number(from) +
             " rows fetch next " + QString::number(batch) +
             " rows only";

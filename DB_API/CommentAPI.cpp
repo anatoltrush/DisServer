@@ -6,14 +6,19 @@ dis::CommentAPI::~CommentAPI(){}
 
 bool dis::CommentAPI::addComment(const dis::Comment &comment){
     QSqlQuery query(db);
-    query.prepare("INSERT INTO " + tableName + " (UUID, UUID_post, UUID_author, UUID_receiver, Time_created, Text_data) "
-                  "VALUES (?, ?, ?, ?, ?, ?)");
+    QString request("INSERT INTO " + tableName + " (" + PROP_COMM_UUID + ", " + PROP_COMM_UUID_POST + ", " + PROP_COMM_UUID_ATHR + ","
+                                                  " " + PROP_COMM_UUID_RCVR + ", " + PROP_COMM_TIME_CRTD + ", " + PROP_COMM_TEXT + ","
+                                                  " " + PROP_COMM_LIKE + ", " + PROP_COMM_DLIKE + ") "
+                                                                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    query.prepare(request);
     query.addBindValue(comment.uuid);
     query.addBindValue(comment.uuid_post);
     query.addBindValue(comment.uuid_author);
     query.addBindValue(comment.uuid_receiver);
     query.addBindValue(comment.time_created);
     query.addBindValue(comment.text);
+    query.addBindValue(comment.like);
+    query.addBindValue(comment.disLike);
 
     if(query.exec()) return true;
     else{
@@ -24,7 +29,7 @@ bool dis::CommentAPI::addComment(const dis::Comment &comment){
 
 bool dis::CommentAPI::getCommentByUuid(const QString &uuid, dis::Comment &comment){
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM " + tableName + " WHERE UUID = ?");
+    query.prepare("SELECT * FROM " + tableName + " WHERE " + PROP_COMM_UUID + " = ?");
     query.addBindValue(uuid);
     if(query.exec()){
         if(query.first()){
@@ -46,12 +51,12 @@ bool dis::CommentAPI::getCommentByUuid(const QString &uuid, dis::Comment &commen
 bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, std::vector<QString> &commUuids){
     commUuids.clear();
     QSqlQuery query(db);
-    query.prepare("SELECT UUID FROM " + tableName + " WHERE UUID_post = ?");
+    query.prepare("SELECT " + QString(PROP_COMM_UUID) + " FROM " + tableName + " WHERE " + PROP_COMM_UUID_POST + " = ?");
     query.addBindValue(postUuid);
     if(query.exec()){
         QSqlRecord record = query.record();
         while(query.next()){
-            QString uuid = query.value(record.indexOf("UUID")).toString();
+            QString uuid = query.value(record.indexOf(PROP_COMM_UUID)).toString();
             commUuids.push_back(uuid);
         }
         return true;
@@ -125,7 +130,7 @@ int dis::CommentAPI::deleteFunction(const HttpParser &parser){
 
 bool dis::CommentAPI::deleteCommentUuid(const QString &uuid){
     QSqlQuery query(db);
-    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
+    QString strQuery = "DELETE FROM " + tableName + " WHERE " + PROP_COMM_UUID + " = ?";
     query.prepare(strQuery);
     query.addBindValue(uuid);
     if(query.exec()) return true;
