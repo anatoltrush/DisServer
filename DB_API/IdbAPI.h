@@ -32,6 +32,8 @@ public:
 
     void setDataBase(const QSqlDatabase &dataBase){db = dataBase;}
 
+    virtual bool getObject(const HttpParser& parser, std::unique_ptr<IPrimitive>& object) = 0;
+
     virtual int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) = 0;
 
     virtual int postFunction(const HttpParser &parser) = 0;

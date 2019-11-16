@@ -4,6 +4,8 @@ dis::HttpParser::HttpParser(){}
 
 void dis::HttpParser::parse(const QByteArray &data){
     basicParse(data);
+    validateParams();
+    if(status != HTTP_OK) return;
 
     if(method == QString(VERB_GET)) getParse();
     if(method == QString(VERB_POST)) postParse();
@@ -12,18 +14,25 @@ void dis::HttpParser::parse(const QByteArray &data){
     if(method == QString(VERB_OPTION)) optionParse();
     if(method == QString(VERB_PUT)) putParse();
     if(method == QString(VERB_HEAD)) headParse();
+}
 
-    validateParams();
+void dis::HttpParser::setStatus(int stat, const QString &msg){
+    status = stat;
+    statMsg = msg;
 }
 
 void dis::HttpParser::basicParse(const QByteArray &data){
     QString message_body;
     QString allData(data);
-    // TODO: check errors
+    // check
+    if(data.isEmpty()){
+        setStatus(HTTP_BAD_REQUEST, "PARSER ERROR: Empty request data.");
+        return;
+    }
 
     // 1) separate into two parts (st+headers and message)
     QStringList startHdrs_Msg = allData.split("\r\n\r\n");
-    // TODO: check errors
+
     QString startHdrs = startHdrs_Msg.front();
     message_body.clear();
     for(int i = 1; i < startHdrs_Msg.size(); i++){
@@ -39,6 +48,11 @@ void dis::HttpParser::basicParse(const QByteArray &data){
 
     // 2.2) first string
     QStringList startWrds = this->starting_line.split(" ");
+    // check
+    if(startWrds.size() < 3){
+        setStatus(HTTP_BAD_REQUEST, "PARSER ERROR: Bad start line parse.");
+        return;
+    }
     this->method = startWrds[0];
     this->address = startWrds[1];
     this->httpVers = startWrds[2];
@@ -53,12 +67,22 @@ void dis::HttpParser::basicParse(const QByteArray &data){
         QStringList hdrLst = hdrs[i].split(": ");
         this->headers.insert(hdrLst.front(), hdrLst.back());
     }
+    // check
+    if(headers.isEmpty()){
+        setStatus(HTTP_BAD_REQUEST, "PARSER ERROR: Empty headers.");
+        return;
+    }
 
     // 4) Content-type/bound
     for(int i = 0; i < headers.size(); i++){
-        if(headers.keys()[i] == HDR_KW_CONTENT_TYPE){ // can use indexOF
-            QStringList cntype = headers.values()[i].split("\"");
-            this->bound = cntype[1]; // check, may be out of range
+        if(headers.keys()[i] == HDR_KW_CONTENT_TYPE){
+            QStringList cntType = headers.values()[i].split("\"");
+            // check
+            if(cntType.size() < 2){
+                setStatus(HTTP_BAD_REQUEST, "PARSER ERROR: bound searching.");
+                return;
+            }
+            this->bound = cntType[1]; // check, may be out of range
         }
     }
 
@@ -96,6 +120,9 @@ void dis::HttpParser::basicParse(const QByteArray &data){
         QPair<QString, QVariant> record = parseBlock(block);
         params.insertMulti(record.first, record.second);
     }
+
+    // if all ok
+    setStatus(HTTP_OK, "OK");
 }
 
 void dis::HttpParser::getParse(){}
@@ -122,7 +149,13 @@ void dis::HttpParser::putParse(){
 void dis::HttpParser::headParse(){}
 
 void dis::HttpParser::validateParams(){
-    // TODO: implement "validateParams"
+    QString badSymb = " ";
+    for(int i = 0; i < params.size(); i++){
+        QString key = params.keys()[i];
+        if(key.contains(badSymb)){
+            setStatus(HTTP_BAD_REQUEST, "PARSER ERROR: Bad params.");
+        }
+    }
 }
 
 QPair<QString, QVariant> dis::HttpParser::parseBlock(const QString &block){

@@ -124,8 +124,12 @@ int dis::CommentAPI::postFunction(const dis::HttpParser &parser){}
 int dis::CommentAPI::patchFunction(const dis::HttpParser &parser){}
 
 int dis::CommentAPI::deleteFunction(const HttpParser &parser){
-    // TODO: impl CommentAPI::deleteFunction(const HttpParser &parser)
-    // USE deleteCommentByUuid
+    if(parser.function == "deleteCommentByUuid"){
+        QString uuidForDel = parser.params.value(PROP_COMM_UUID).toString();
+        bool isExctd = deleteCommentByUuid(uuidForDel);
+        return isExctd ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+    }
+    else return HTTP_METHOD_NOT_ALLOWED;
 }
 
 bool dis::CommentAPI::deleteCommentUuid(const QString &uuid){

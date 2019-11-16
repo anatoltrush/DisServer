@@ -1,14 +1,9 @@
 #ifndef HTTPPARSER_H
 #define HTTPPARSER_H
 
-#include <QString>
-#include <QByteArray>
-#include <QVariant>
-
 #include "Constants.h"
 #include "../Common/unique.h"
 #include "../Common/disDefines.h"
-#include "../Primitives/IPrimitive.h"
 #include "../Primitives/Discussion.h"
 #include "../Primitives/Answer.h"
 #include "../Primitives/Comment.h"
@@ -24,6 +19,7 @@ public:
     HttpParser();
 
     int status = HTTP_BAD_REQUEST;
+    const QString& lastError() const {return statMsg;}
 
 //{ input raw data
     QString method, address, httpVers;
@@ -44,6 +40,10 @@ public:
     void parse(const QByteArray &data);
 
 private:
+    // inner
+    QString statMsg = "NA";
+    void setStatus(int stat, const QString& msg);
+    // ---
     void basicParse(const QByteArray &data);
 
     void getParse();

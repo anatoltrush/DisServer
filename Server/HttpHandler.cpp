@@ -3,6 +3,13 @@
 dis::HttpHandler::HttpHandler(){}
 
 void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QList<Client> &clients){
+    // CHECK PARSER
+    if(parser.status != HTTP_OK){
+        qDebug() << parser.lastError();
+        status = parser.status;
+        return;
+    }
+
     // NOTE: NOT AUTHORIZED REQUESTS ARE SITUATED HERE
     UserAPI userAPI;
     if(userAPI.typeApi == parser.entity){
@@ -117,7 +124,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         }
     }
     // PATCH
-    if(parser.method == VERB_PATCH){
+    if(parser.method == VERB_PATCH){ // IS OK??? // TODO: change
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
                 QString uuidForUpd = parser.params.value(PROP_DISP_UUID).toString();
@@ -148,17 +155,25 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_DELETE){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
-                Discussion disc;
-                DiscussionAPI discAPI;
-                bool isDiscGot = discAPI.getDisputeByUuid(uuidForDel, disc);
-                if(!isDiscGot){
+//                QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
+//                Discussion disc;
+//                DiscussionAPI discAPI;
+//                bool isDiscGot = discAPI.getDisputeByUuid(uuidForDel, disc);
+//                if(!isDiscGot){
+//                    status = HTTP_INTERNAL_SERVER_ERROR;
+//                    return;
+//                }
+                // TODO: перенести вышележащее в getObject
+
+                // get object
+                std::unique_ptr<IPrimitive> object;
+                bool isObjGot = dbApi->getObject(parser, object);
+                if(!isObjGot){
                     status = HTTP_INTERNAL_SERVER_ERROR;
                     return;
                 }
-                // end of disp getting
-//                bool isUserVerified = sysAPI.isVerified(currentUser, disc);
-                bool isUserVerified = true; // FIXME: temporary
+                // check rights
+                bool isUserVerified = sysAPI.isVerified(currentUser, *object.get());
                 if(isUserVerified){
                     status = dbApi->deleteFunction(parser);
                     break;
