@@ -54,6 +54,11 @@ bool dis::AnswerAPI::deleteAnswerByDisputeUuid(const QString &uuid){
     }
 }
 
+bool dis::AnswerAPI::getObjectPart(const dis::HttpParser &parser, std::unique_ptr<dis::IPrimitive> &object){
+    object = std::make_unique<Answer>();
+    return false;
+}
+
 int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();

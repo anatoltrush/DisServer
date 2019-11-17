@@ -70,6 +70,7 @@ public:
     QString format = IMG_FORMAT_JPG;
     // 21
 
+    QString getUUID() const override {return uuid;}
     QString getAuthor() const override {return uuid;}
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;

@@ -91,7 +91,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         }
     }
 
-    // NOTE: NOT AUTHORIZED REQUESTS ARE SITUATED HERE
+    // NOTE: AUTHORIZED REQUESTS ARE SITUATED HERE
     std::vector<std::unique_ptr<IPrimitive>> entities;
     QList<QString> primitives;
 
@@ -116,6 +116,10 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
                 status = dbApi->postFunction(parser);
+                if(status == HTTP_OK){
+                    QString id = parser.object->getUUID();
+                    response.admitResult({id}); // TODO: put UUID here
+                }
                 break;
             }
             else{
@@ -124,19 +128,18 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         }
     }
     // PATCH
-    if(parser.method == VERB_PATCH){ // IS OK??? // TODO: change
+    if(parser.method == VERB_PATCH){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-                QString uuidForUpd = parser.params.value(PROP_DISP_UUID).toString();
-                Discussion disc;
-                DiscussionAPI discAPI;
-                bool isDiscGot = discAPI.getDisputeByUuid(uuidForUpd, disc);
-                if(!isDiscGot){
+                // get object
+                std::unique_ptr<IPrimitive> object;
+                bool isObjGot = dbApi->getObjectPart(parser, object);
+                if(!isObjGot){
                     status = HTTP_INTERNAL_SERVER_ERROR;
                     return;
                 }
-                // end of disp getting
-                bool isUserVerified = sysAPI.isVerified(currentUser, disc);
+                // check rights
+                bool isUserVerified = sysAPI.isVerified(currentUser, *object.get());
                 if(isUserVerified){
                     status = dbApi->patchFunction(parser);
                     break;
@@ -155,24 +158,15 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
     if(parser.method == VERB_DELETE){
         for(const auto &dbApi : dbcntr.dbAPIs){
             if(dbApi->typeApi == parser.entity){
-//                QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
-//                Discussion disc;
-//                DiscussionAPI discAPI;
-//                bool isDiscGot = discAPI.getDisputeByUuid(uuidForDel, disc);
-//                if(!isDiscGot){
-//                    status = HTTP_INTERNAL_SERVER_ERROR;
-//                    return;
-//                }
-                // TODO: перенести вышележащее в getObject
-
                 // get object
                 std::unique_ptr<IPrimitive> object;
-                bool isObjGot = dbApi->getObject(parser, object);
+                bool isObjGot = dbApi->getObjectPart(parser, object);
                 if(!isObjGot){
                     status = HTTP_INTERNAL_SERVER_ERROR;
                     return;
                 }
                 // check rights
+                currentUser = "godOfPhp"; // FIXME: temporary token, delete later
                 bool isUserVerified = sysAPI.isVerified(currentUser, *object.get());
                 if(isUserVerified){
                     status = dbApi->deleteFunction(parser);

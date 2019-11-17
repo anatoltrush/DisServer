@@ -46,6 +46,7 @@ public:
 
     void resize(const QSize &size);
 
+    QString getUUID() const override {return "";} // no necessary to implement
     QString getAuthor() const override {return "";} // no necessary to implement
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;

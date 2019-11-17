@@ -103,6 +103,27 @@ bool dis::UserAPI::getUsers(QList<dis::User> &users){
     }
 }
 
+bool dis::UserAPI::getObjectPart(const dis::HttpParser &parser, std::unique_ptr<dis::IPrimitive> &object){
+    object = std::make_unique<User>();
+    QString uuidForDel = parser.params.value(PROP_USR_UUID).toString();
+
+    QSqlQuery query(db);
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_UUID + " = ?");
+    query.addBindValue(uuidForDel);
+    if(query.exec()){
+        if(query.first()){
+            QSqlRecord record = query.record();
+            object->fillBySQL(query, record);
+            return true;
+        }
+        else return false;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
 int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitives){
     entities.clear();
     primitives.clear();

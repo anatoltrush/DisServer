@@ -25,6 +25,8 @@ public:
     bool deleteCommentByUuid(const QString &uuid);
     bool deleteCommentByPostUuidFull(const QString &postUuid);
 
+    bool getObjectPart(const HttpParser& parser, std::unique_ptr<IPrimitive>& object) override;
+
     int getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive>> &entities, QList<QString> &primitives) override;
     int postFunction(const HttpParser &parser) override;
     int patchFunction(const HttpParser &parser) override;

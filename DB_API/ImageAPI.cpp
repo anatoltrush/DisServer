@@ -115,6 +115,11 @@ bool dis::ImageAPI::deleteImageByUuid(const QString &uuid){
     return (isCommsDltd && isImgDltd);
 }
 
+bool dis::ImageAPI::getObjectPart(const dis::HttpParser &parser, std::unique_ptr<dis::IPrimitive> &object){
+    object = std::make_unique<Image>();
+    return false;
+}
+
 int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique_ptr<IPrimitive> > &entities, QList<QString> &primitivess){
     entities.clear();
     primitivess.clear();

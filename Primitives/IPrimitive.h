@@ -18,6 +18,7 @@ public:
     IPrimitive();
     virtual ~IPrimitive();
 
+    virtual QString getUUID() const = 0;
     virtual QString getAuthor() const = 0;
 
     //! @brief fillBySQL Fills properties of object by SQL query

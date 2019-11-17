@@ -33,6 +33,7 @@ public:
     int like = 0;
     int disLike = 0;
 
+    QString getUUID() const override {return uuid;}
     QString getAuthor() const override {return uuid_author;}
 
     void fillBySQL(const QSqlQuery& query, const QSqlRecord& rec) override;
