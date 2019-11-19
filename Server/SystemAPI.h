@@ -1,12 +1,18 @@
 #ifndef SYSTEMAPI_H
 #define SYSTEMAPI_H
 
-#include <QtSql>
-
-#include "../Common/disDefines.h"
 #include "../Primitives/Client.h"
-#include "../Primitives/User.h"
-#include "../Primitives/Discussion.h"
+#include "../Primitives/IPrimitive.h"
+
+#ifdef linux
+
+#elif _WIN32
+#include <windows.h>
+#elif __APPLE__
+
+#else
+
+#endif
 
 namespace dis{
 class SystemAPI
@@ -14,17 +20,23 @@ class SystemAPI
 public:
     SystemAPI();
 
+    static uint maxTimeSecs;
+    static float maxMemPercs;
+    static uint maxNumUsers;
+
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
-    void kickByTime(QList<dis::Client> &clients);
 
     bool isAlreadyIn(const QList<dis::Client> &clients, const QString &userUuid);
     void logOut(QList<dis::Client> &clients, const QString &userToken);
     bool isAuthorized(QList<Client> &clients, const QString &userToken, QString &currUser);
     bool isVerified(const QString &currUser, const IPrimitive &object) {return currUser == object.getAuthor();}
 
-    bool checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid);
-    bool isExsistEmail(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist);
-    bool isExsistNick(const QSqlDatabase &db, const QString &tableName, const QString &Nick, bool &isExsist);
+    static float getFreeMemSize();
+    static QDateTime getTimeDiff(const QDateTime &lastReq);
+
+    static void kickByTime(QList<dis::Client> &clients);
+    static void kickByMemory(QList<dis::Client> &clients);
+    static void kickByNumber(QList<dis::Client> &clients);
 };
 }
 

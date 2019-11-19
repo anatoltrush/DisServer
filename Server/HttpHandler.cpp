@@ -19,14 +19,14 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
             User newUser = *static_cast<User*>(primit);
             // e-mail check
             bool isExsistEmail = false;
-            bool checkEmail = sysAPI.isExsistEmail(dbcntr.dataBase, userAPI.tableName, newUser.email, isExsistEmail);
+            bool checkEmail = userAPI.isExsistEmail(newUser.email, isExsistEmail);
             if(!checkEmail){
                 status = HTTP_INTERNAL_SERVER_ERROR;
                 return;
             }
             // nick-name check
             bool isExsistNick = false;
-            bool checkNick = sysAPI.isExsistNick(dbcntr.dataBase, userAPI.tableName, newUser.nickName, isExsistNick);
+            bool checkNick = userAPI.isExsistNick(newUser.nickName, isExsistNick);
             if(!checkNick){
                 status = HTTP_INTERNAL_SERVER_ERROR;
                 return;
@@ -55,7 +55,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
         // LOG IN
         if(parser.method == VERB_GET && parser.function == KW_FUNC_LOGIN){
             QString userUuid;
-            bool isExsist = sysAPI.checkPswrd(dbcntr.dataBase, userAPI.tableName, parser.pswrd, userUuid);
+            bool isExsist = userAPI.checkPswrd(parser.pswrd, userUuid);
             if(isExsist && !userUuid.isEmpty()){
                 QString token = QUuid::createUuid().toString();
                 response.authToken = token;

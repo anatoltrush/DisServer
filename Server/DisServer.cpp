@@ -22,6 +22,7 @@ void dis::DisServer::slotReadyRead(){
     auto begin = std::chrono::steady_clock::now();
 
     QTcpSocket *socket = qobject_cast<QTcpSocket*>(sender());
+    qDebug() << socket->socketDescriptor();
 
     QByteArray readAll = socket->readAll();
     QString reqst(readAll);

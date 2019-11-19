@@ -103,6 +103,55 @@ bool dis::UserAPI::getUsers(QList<dis::User> &users){
     }
 }
 
+bool dis::UserAPI::checkPswrd(const QString &pswrd, QString &uuid){
+    if(pswrd.isEmpty()) return false;
+    QSqlQuery query(db);
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_PSWRD + " = ?");
+    query.addBindValue(pswrd);
+    if(query.exec()){
+        if(query.first()){
+            QSqlRecord record = query.record();
+            uuid = query.value(record.indexOf(PROP_USR_UUID)).toString();
+            return true;
+        }
+        else return false;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::UserAPI::isExsistEmail(const QString &Email, bool &isExsist){
+    QSqlQuery query(db);
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_EMAIL + " = ?");
+    query.addBindValue(Email);
+    if(query.exec()){
+        if(query.first()) isExsist = true;
+        else isExsist = false;
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::UserAPI::isExsistNick(const QString &Nick, bool &isExsist){
+    QSqlQuery query(db);
+    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_NICK + " = ?");
+    query.addBindValue(Nick);
+    if(query.exec()){
+        if(query.first()) isExsist = true;
+        else isExsist = false;
+        return true;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
 bool dis::UserAPI::getObjectPart(const dis::HttpParser &parser, std::unique_ptr<dis::IPrimitive> &object){
     object = std::make_unique<User>();
     QString uuidForDel = parser.params.value(PROP_USR_UUID).toString();

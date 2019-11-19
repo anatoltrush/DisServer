@@ -1,11 +1,12 @@
 #include "SystemAPI.h"
 
-dis::SystemAPI::SystemAPI(){
-}
+uint dis::SystemAPI::maxTimeSecs = 600; // 10min
+float dis::SystemAPI::maxMemPercs = 80.0f; // 80%
+uint dis::SystemAPI::maxNumUsers = 1000; // 1000usrs
+
+dis::SystemAPI::SystemAPI(){}
 
 void dis::SystemAPI::sendToAll(const QList<dis::Client> &clients, const QByteArray &message){}
-
-void dis::SystemAPI::kickByTime(QList<dis::Client> &clients){}
 
 bool dis::SystemAPI::isAlreadyIn(const QList<dis::Client> &clients, const QString &userUuid){
     for(const auto &client : clients)
@@ -30,51 +31,49 @@ bool dis::SystemAPI::isAuthorized(QList<dis::Client> &clients, const QString &us
     return false;
 }
 
-bool dis::SystemAPI::checkPswrd(const QSqlDatabase &db, const QString &tableName, const QString &pswrd, QString &uuid){
-    if(pswrd.isEmpty()) return false;
-    QSqlQuery query(db);
-    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_PSWRD + " = ?");
-    query.addBindValue(pswrd);
-    if(query.exec()){
-        if(query.first()){
-            QSqlRecord record = query.record();
-            uuid = query.value(record.indexOf(PROP_USR_UUID)).toString();
-            return true;
-        }
-        else return false;
+float dis::SystemAPI::getFreeMemSize(){
+#ifdef linux
+    // Linux code
+    qDebug() << "SystemAPI::getFreeMemSize NOT IMPLEMENTED IN LINUX OS";
+
+#elif _WIN32
+    MEMORYSTATUSEX memory_status;
+    memory_status.dwLength = sizeof(MEMORYSTATUSEX);
+
+    if(GlobalMemoryStatusEx(&memory_status)){
+        unsigned long long int fullMem = memory_status.ullTotalPhys / (1024 * 1024);
+        unsigned long long int busyMem = memory_status.ullAvailPhys / (1024 * 1024);
+
+        float perc = (busyMem / static_cast<float>(fullMem)) * 100.0f;
+        return perc;
     }
     else{
-        qDebug() << db.lastError().text();
-        return false;
+        qDebug() << "WARNING: SystemAPI::getFreeMemSize ---> Unknown RAM";
+        return 100.0f;
     }
+
+#elif __APPLE__
+    // Mac code
+    qDebug() << "SystemAPI::getFreeMemSize NOT IMPLEMENTED IN MAC OS";
+
+#else
+    //For other OS
+    qDebug() << "SystemAPI::getFreeMemSize NOT IMPLEMENTED IN THIS OS";
+#endif
 }
 
-bool dis::SystemAPI::isExsistEmail(const QSqlDatabase &db, const QString &tableName, const QString &Email, bool &isExsist){
-    QSqlQuery query(db);
-    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_EMAIL + " = ?");
-    query.addBindValue(Email);
-    if(query.exec()){
-        if(query.first()) isExsist = true;
-        else isExsist = false;
-        return true;
-    }
-    else{
-        qDebug() << db.lastError().text();
-        return false;
-    }
+QDateTime dis::SystemAPI::getTimeDiff(const QDateTime &lastReq){
+    QDateTime now = QDateTime::currentDateTime();
+
+    qint64 seconds = lastReq.secsTo(now);
+    QDateTime interval = QDateTime::fromSecsSinceEpoch(seconds);
+    interval = interval.addYears(-1970);
+    interval = interval.addSecs(-10800); // -3 hours (TimeZone)
+    return interval;
 }
 
-bool dis::SystemAPI::isExsistNick(const QSqlDatabase &db, const QString &tableName, const QString &Nick, bool &isExsist){
-    QSqlQuery query(db);
-    query.prepare("SELECT " + QString(PROP_USR_UUID) + " FROM " + tableName + " WHERE " + PROP_USR_NICK + " = ?");
-    query.addBindValue(Nick);
-    if(query.exec()){
-        if(query.first()) isExsist = true;
-        else isExsist = false;
-        return true;
-    }
-    else{
-        qDebug() << db.lastError().text();
-        return false;
-    }
-}
+void dis::SystemAPI::kickByTime(QList<dis::Client> &clients){}
+
+void dis::SystemAPI::kickByMemory(QList<dis::Client> &clients){}
+
+void dis::SystemAPI::kickByNumber(QList<dis::Client> &clients){}

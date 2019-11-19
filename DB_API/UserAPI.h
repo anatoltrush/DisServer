@@ -20,8 +20,12 @@ public:
     bool deleteUser(const QString &uuid);
     bool updateUser(const QString &uuid, const dis::User &newData);
     bool getUserByUuid(const QString &uuid, dis::User &user);
-
     bool getUsers(QList<dis::User>& users);
+
+    // system API
+    bool checkPswrd(const QString &pswrd, QString &uuid);
+    bool isExsistEmail(const QString &Email, bool &isExsist);
+    bool isExsistNick(const QString &Nick, bool &isExsist);
 
     bool getObjectPart(const HttpParser& parser, std::unique_ptr<IPrimitive>& object) override;
 
