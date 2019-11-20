@@ -2,7 +2,7 @@
 
 uint dis::SystemAPI::maxTimeSecs = 600; // 10min
 float dis::SystemAPI::maxMemPercs = 80.0f; // 80%
-uint dis::SystemAPI::maxNumUsers = 1000; // 1000usrs
+int dis::SystemAPI::maxNumUsers = 1000; // 1000usrs
 
 dis::SystemAPI::SystemAPI(){}
 

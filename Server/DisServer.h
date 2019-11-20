@@ -12,10 +12,8 @@
 #include "HttpHandler.h"
 
 namespace dis{
-
 //! @addtogroup server_part
 //! @{
-
 class DisServer : public QObject
 {
     Q_OBJECT
@@ -24,27 +22,22 @@ public:
     ~DisServer();
 
     QTcpServer *tcpServer;
+
     DBController dbcntr;
 
     QList<QTcpSocket*> sockets;
 
     QList<Client> clients;
 
-    int errorStatus = 0;
+    void freeUsers(); // kick
 
 public slots:
     void slotNewConnection();
     void slotReadyRead();
     void slotClientDisconnected();
-
     void slotSocketDeleted();
-
-private:
-    // TODO; time for kick
 
 };
 //! @} server_part
 }
 #endif // DISSERVER_H
-
-// TODO: SEND MESSAGE TO ALL

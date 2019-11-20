@@ -10,6 +10,28 @@ dis::DisServer::DisServer(){
 
 dis::DisServer::~DisServer(){}
 
+bool byLastReq(const dis::Client& clFrst, const dis::Client& clSec){return clFrst.lastRequestTime > clSec.lastRequestTime;}
+
+void dis::DisServer::freeUsers(){
+    // time
+    // TODO
+
+    // memory
+    float freeMemPerc = dis::SystemAPI::getFreeMemSize();
+    if(freeMemPerc < dis::SystemAPI::maxMemPercs){
+        // TODO
+    }
+
+    // amount
+    if(clients.size() > dis::SystemAPI::maxNumUsers){
+        // sort
+        std::sort(clients.begin(), clients.end(), byLastReq);
+        // delete
+        while(clients.size() > dis::SystemAPI::maxNumUsers)
+            clients.pop_back();
+    }
+}
+
 void dis::DisServer::slotNewConnection(){
     QTcpSocket* tcpSock = tcpServer->nextPendingConnection();
     connect(tcpSock, &QTcpSocket::readyRead, this, &DisServer::slotReadyRead);

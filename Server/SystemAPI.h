@@ -22,7 +22,7 @@ public:
 
     static uint maxTimeSecs;
     static float maxMemPercs;
-    static uint maxNumUsers;
+    static int maxNumUsers;
 
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
 
