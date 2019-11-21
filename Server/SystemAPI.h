@@ -23,6 +23,7 @@ public:
     static qint64 maxTime;
     static float needFreeMemPercs;
     static float percLeft;
+    static int minNumber;
 
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
 

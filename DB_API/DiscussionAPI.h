@@ -1,7 +1,6 @@
 #ifndef DISCUSSIONAPI_H
 #define DISCUSSIONAPI_H
 
-#include "IdbAPI.h"
 #include "ImageAPI.h"
 #include "AnswerAPI.h"
 #include "CommentAPI.h"

@@ -184,4 +184,6 @@ int dis::UserAPI::postFunction(const dis::HttpParser &parser){/*LEAVE EMPTY*/}
 
 int dis::UserAPI::patchFunction(const dis::HttpParser &parser){}
 
-int dis::UserAPI::deleteFunction(const HttpParser &parser){}
+int dis::UserAPI::deleteFunction(const HttpParser &parser){
+    // del Usr+Imgs+Frnds
+}

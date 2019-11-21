@@ -76,6 +76,8 @@ bool byLastReq(const dis::Client& clFrst, const dis::Client& clSec){return clFrs
 void dis::DisServer::slotTick(){
     if(tcpServer->isListening()){
         while(true){
+            if(clients.size() < dis::SystemAPI::minNumber) break;
+            // -----
             if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
             // free by time
             std::sort(clients.begin(), clients.end(), byLastReq);

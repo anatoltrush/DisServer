@@ -71,7 +71,8 @@ bool dis::ImageAPI::getImagesByPostUuid(const QString &postUuid, QList<Image> &i
 bool dis::ImageAPI::getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image> &images, const QSize &size){
     images.clear();
     QSqlQuery query(db);
-    query.prepare("SELECT * FROM " + tableName + " WHERE " + PROP_IMG_UUID_POST + " = ?");
+    QString request("SELECT * FROM " + tableName + " WHERE " + PROP_IMG_UUID_POST + " = ?");
+    query.prepare(request);
     query.addBindValue(postUuid);
     if(query.exec()){
         QSqlRecord record = query.record();

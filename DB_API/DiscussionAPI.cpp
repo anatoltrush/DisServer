@@ -233,9 +233,10 @@ int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
 int dis::DiscussionAPI::patchFunction(const dis::HttpParser &parser){}
 
 int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){
+    // del Answrs+Imgs+Dis(comms)
     if(parser.function == "deleteDisputeByUuid"){
         QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
-        // TODO: put check here
+        if(uuidForDel.size() != 38/*size of UUID*/) return HTTP_BAD_REQUEST;
 
         CommentAPI commAPI;
         ImageAPI imageAPI;

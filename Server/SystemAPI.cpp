@@ -3,6 +3,7 @@
 qint64 dis::SystemAPI::maxTime = 82800; // 23hrs
 float dis::SystemAPI::needFreeMemPercs = 40.0f; // 40%
 float dis::SystemAPI::percLeft = 0.9f; // left 90% of users
+int dis::SystemAPI::minNumber = 10000; // min number of users to not delete
 
 dis::SystemAPI::SystemAPI(){}
 
