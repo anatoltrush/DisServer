@@ -1,8 +1,8 @@
 #include "SystemAPI.h"
 
-uint dis::SystemAPI::maxTimeSecs = 600; // 10min
-float dis::SystemAPI::maxMemPercs = 80.0f; // 80%
-int dis::SystemAPI::maxNumUsers = 1000; // 1000usrs
+qint64 dis::SystemAPI::maxTime = 82800; // 23hrs
+float dis::SystemAPI::needFreeMemPercs = 40.0f; // 40%
+float dis::SystemAPI::percLeft = 0.9f; // left 90% of users
 
 dis::SystemAPI::SystemAPI(){}
 
@@ -45,6 +45,7 @@ float dis::SystemAPI::getFreeMemSize(){
         unsigned long long int busyMem = memory_status.ullAvailPhys / (1024 * 1024);
 
         float perc = (busyMem / static_cast<float>(fullMem)) * 100.0f;
+        if(perc < 5.0f) qDebug() << "WARNING: INSUFFICIENT OF FREE MEMORY!!! " << perc << "%";
         return perc;
     }
     else{
@@ -72,8 +73,18 @@ QDateTime dis::SystemAPI::getTimeDiff(const QDateTime &lastReq){
     return interval;
 }
 
-void dis::SystemAPI::kickByTime(QList<dis::Client> &clients){}
+void dis::SystemAPI::kickByTime(QList<dis::Client> &clients){
+    while(true){
+        QDateTime now = QDateTime::currentDateTime();
+        qint64 seconds = clients.back().lastRequestTime.secsTo(now);
+        if(seconds > dis::SystemAPI::maxTime)
+            clients.pop_back();
+        else break;
+    }
+}
 
-void dis::SystemAPI::kickByMemory(QList<dis::Client> &clients){}
-
-void dis::SystemAPI::kickByNumber(QList<dis::Client> &clients){}
+void dis::SystemAPI::kickByNumber(QList<dis::Client> &clients){
+    int newSz = clients.size() * dis::SystemAPI::percLeft;
+    while(clients.size() > newSz)
+        clients.pop_back();
+}

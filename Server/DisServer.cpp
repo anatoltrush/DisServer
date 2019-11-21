@@ -3,33 +3,22 @@
 dis::DisServer::DisServer(){
     tcpServer = new QTcpServer;
 
+    timer = new QTimer(this);
+    timer->setInterval(60000); // config tick time in msec
+    timer->start();
+
     connect(tcpServer, &QTcpServer::newConnection, this, &DisServer::slotNewConnection);
 
+    connect(timer, &QTimer::timeout, this, &DisServer::slotTick);
+
     dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+
+//    clients.push_back(Client("1", "11", QDateTime::fromString("21.11.2019 16:52", Qt::SystemLocaleShortDate)));
 }
 
-dis::DisServer::~DisServer(){}
-
-bool byLastReq(const dis::Client& clFrst, const dis::Client& clSec){return clFrst.lastRequestTime > clSec.lastRequestTime;}
-
-void dis::DisServer::freeUsers(){
-    // time
-    // TODO
-
-    // memory
-    float freeMemPerc = dis::SystemAPI::getFreeMemSize();
-    if(freeMemPerc < dis::SystemAPI::maxMemPercs){
-        // TODO
-    }
-
-    // amount
-    if(clients.size() > dis::SystemAPI::maxNumUsers){
-        // sort
-        std::sort(clients.begin(), clients.end(), byLastReq);
-        // delete
-        while(clients.size() > dis::SystemAPI::maxNumUsers)
-            clients.pop_back();
-    }
+dis::DisServer::~DisServer(){
+    delete tcpServer;
+    delete timer;
 }
 
 void dis::DisServer::slotNewConnection(){
@@ -80,4 +69,23 @@ void dis::DisServer::slotSocketDeleted(){
     for(int i = 0; i < sockets.size(); i++)
         if(!sockets[i]->isValid())
             sockets.erase(sockets.begin() + i);
+}
+
+bool byLastReq(const dis::Client& clFrst, const dis::Client& clSec){return clFrst.lastRequestTime > clSec.lastRequestTime;}
+
+void dis::DisServer::slotTick(){
+    if(tcpServer->isListening()){
+        while(true){
+            if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
+            // free by time
+            std::sort(clients.begin(), clients.end(), byLastReq);
+            dis::SystemAPI::kickByTime(clients);
+            // -----
+            if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
+            // free by num
+            dis::SystemAPI::kickByNumber(clients);
+            // -----
+            if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
+        }
+    }
 }

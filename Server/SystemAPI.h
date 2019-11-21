@@ -20,9 +20,9 @@ class SystemAPI
 public:
     SystemAPI();
 
-    static uint maxTimeSecs;
-    static float maxMemPercs;
-    static int maxNumUsers;
+    static qint64 maxTime;
+    static float needFreeMemPercs;
+    static float percLeft;
 
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
 
@@ -34,8 +34,8 @@ public:
     static float getFreeMemSize();
     static QDateTime getTimeDiff(const QDateTime &lastReq);
 
+    static void kickOld(QList<dis::Client> &clients);
     static void kickByTime(QList<dis::Client> &clients);
-    static void kickByMemory(QList<dis::Client> &clients);
     static void kickByNumber(QList<dis::Client> &clients);
 };
 }

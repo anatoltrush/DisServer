@@ -3,6 +3,7 @@
 
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QTimer>
 
 #include "../Common/disDefines.h"
 #include "Constants.h"
@@ -22,21 +23,23 @@ public:
     ~DisServer();
 
     QTcpServer *tcpServer;
-
-    DBController dbcntr;
-
     QList<QTcpSocket*> sockets;
 
     QList<Client> clients;
 
-    void freeUsers(); // kick
+    QTimer* timer;
+
+    DBController dbcntr;
 
 public slots:
+    // server slots
     void slotNewConnection();
     void slotReadyRead();
     void slotClientDisconnected();
     void slotSocketDeleted();
 
+    // timer slots
+    void slotTick();
 };
 //! @} server_part
 }
