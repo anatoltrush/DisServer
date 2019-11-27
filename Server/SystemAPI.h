@@ -18,7 +18,8 @@ namespace dis{
 class SystemAPI
 {
 public:
-    SystemAPI();
+    SystemAPI() = default;
+    ~SystemAPI() = default;
 
     static qint64 maxTime;
     static float needFreeMemPercs;

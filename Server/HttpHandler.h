@@ -16,7 +16,8 @@ namespace dis{
 class HttpHandler
 {
 public:
-    HttpHandler();
+    HttpHandler() = default;
+    ~HttpHandler() = default;
 
     int status = HTTP_BAD_REQUEST;
     QString currentUser;

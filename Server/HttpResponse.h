@@ -13,7 +13,8 @@ namespace dis{
 class HttpResponse
 {
 public:
-    HttpResponse();
+    HttpResponse() = default;
+    ~HttpResponse() = default;
 
     QByteArray responseQBA;
 

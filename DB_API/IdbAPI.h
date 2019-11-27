@@ -20,7 +20,7 @@ class IdbAPI
 {
 public:
     IdbAPI(const QString &tabName = "\tDEFAULT_TABLE_NAME\t", const QString &typeName = "\tDEFAULT_IdbAPI\t");
-    virtual ~IdbAPI();
+    virtual ~IdbAPI() = default;
 
     QSqlDatabase db;
 

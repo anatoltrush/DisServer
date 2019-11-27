@@ -2,10 +2,6 @@
 
 QString dis::IPrimitive::nextLn = "\r\n";
 
-dis::IPrimitive::IPrimitive(){}
-
-dis::IPrimitive::~IPrimitive(){}
-
 QByteArray dis::IPrimitive::createMessageBody(const QList<QString> &uuids, const QString &separ){
     QList<QString>messStrings;
     for(const auto &uuid : uuids){

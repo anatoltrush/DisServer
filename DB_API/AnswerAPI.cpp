@@ -2,8 +2,6 @@
 
 dis::AnswerAPI::AnswerAPI() : IdbAPI (TABLE_ANSWERS, API_TYPE_ANSWERS){}
 
-dis::AnswerAPI::~AnswerAPI(){}
-
 bool dis::AnswerAPI::addAnswer(const dis::Answer &answer){
     QSqlQuery query(db);
     QString request("INSERT INTO " + tableName + " (" + PROP_ANS_UUID + ", " + PROP_ANS_UUID_DISP + ", "

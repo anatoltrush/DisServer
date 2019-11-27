@@ -4,8 +4,6 @@ QString dis::HttpResponse::serverName = "DisServer/1.0";
 QString dis::HttpResponse::httpVersion = "HTTP/1.1";
 QString dis::HttpResponse::nextLn = "\r\n";
 
-dis::HttpResponse::HttpResponse(){}
-
 void dis::HttpResponse::createResponse(const HttpParser &parser, int code){
     responseQBA.clear();
     isStatusOk = (code >= 100 && code < 400); // CONDITION

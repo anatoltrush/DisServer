@@ -3,10 +3,6 @@
 
 #include "Image.h"
 
-dis::Image::Image(){}
-
-dis::Image::~Image(){}
-
 void dis::Image::resize(const QSize &size){
     QImage oldImg = QImage::fromData(img_data, format.toStdString().c_str());
 //    QImage oldImg(reinterpret_cast<const unsigned char*>(img_data.data()), width, height, QImage::Format_RGB32);

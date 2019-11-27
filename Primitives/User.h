@@ -36,8 +36,8 @@ enum Sex{
 class User : public IPrimitive // TODO: fill all fields
 {
 public:
-    User();
-    ~User() override;
+    User() = default;
+    ~User() override = default;
 
     QString uuid = QUuid::createUuid().toString();
     QString name;

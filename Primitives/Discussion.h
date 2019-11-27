@@ -26,8 +26,8 @@ namespace dis{
 class Discussion : public IPrimitive
 {
 public:
-    Discussion();
-    ~Discussion() override;
+    Discussion() = default;
+    ~Discussion() override = default;
 
     QString uuid = QUuid::createUuid().toString();
     QString uuid_author;

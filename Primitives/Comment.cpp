@@ -1,9 +1,5 @@
 #include "Comment.h"
 
-dis::Comment::Comment(){}
-
-dis::Comment::~Comment(){}
-
 void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf(PROP_COMM_UUID)).toString();
     this->uuid_post = query.value(rec.indexOf(PROP_COMM_UUID_POST)).toString();

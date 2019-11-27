@@ -1,9 +1,5 @@
 #include "Discussion.h"
 
-dis::Discussion::Discussion(){}
-
-dis::Discussion::~Discussion(){}
-
 void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf(PROP_DISP_UUID)).toString();
     this->uuid_author = query.value(rec.indexOf(PROP_DISP_UUID_AUTHOR)).toString();

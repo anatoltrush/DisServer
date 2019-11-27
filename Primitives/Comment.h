@@ -18,8 +18,8 @@ namespace dis{
 class Comment : public IPrimitive
 {
 public:
-    Comment();
-    ~Comment() override;
+    Comment() = default;
+    ~Comment() override = default;
 
     QString uuid = QUuid::createUuid().toString();
 

@@ -18,7 +18,7 @@ class DiscussionAPI : public IdbAPI
 {
 public:
     DiscussionAPI();
-    ~DiscussionAPI() override;
+    ~DiscussionAPI() override = default;
 
     //! @brief (POST) Add dispute to database
     bool addDispute(const dis::Discussion &dispute);

@@ -19,7 +19,7 @@ class ImageAPI : public IdbAPI
 {
 public:
     ImageAPI();
-    ~ImageAPI() override;
+    ~ImageAPI() override = default;
 
     //! @brief Add image to database
     bool addImage(const dis::Image &img);

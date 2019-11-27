@@ -13,7 +13,7 @@ class UserAPI : public IdbAPI
 {
 public:
     UserAPI();
-    ~UserAPI() override;
+    ~UserAPI() override = default;
 
     //! WARNING: use only for registration, not use in "postFunction"
     bool addUser(const dis::User &user);

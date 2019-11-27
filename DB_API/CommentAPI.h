@@ -15,7 +15,7 @@ class CommentAPI : public IdbAPI
 {
 public:
     CommentAPI();
-    ~CommentAPI() override;
+    ~CommentAPI() override = default;
 
     bool addComment(const dis::Comment &comment);
 

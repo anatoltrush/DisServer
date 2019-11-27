@@ -22,8 +22,8 @@ namespace dis{
 class Image : public IPrimitive
 {
 public:
-    Image();
-    ~Image() override;
+    Image() = default;
+    ~Image() override = default;
 
     QString uuid = QUuid::createUuid().toString();
     QString uuid_author;

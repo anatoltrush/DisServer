@@ -5,8 +5,6 @@ float dis::SystemAPI::needFreeMemPercs = 40.0f; // 40%
 float dis::SystemAPI::percLeft = 0.9f; // left 90% of users
 int dis::SystemAPI::minNumber = 10000; // min number of users to not delete
 
-dis::SystemAPI::SystemAPI(){}
-
 void dis::SystemAPI::sendToAll(const QList<dis::Client> &clients, const QByteArray &message){}
 
 bool dis::SystemAPI::isAlreadyIn(const QList<dis::Client> &clients, const QString &userUuid){

@@ -9,9 +9,9 @@ namespace dis{
 class Client
 {
 public:
-    Client();
+    Client() = default;
     Client(const QString &_uuid, const QString &autrTkn, const QDateTime &tm);
-    ~Client();
+    ~Client() = default;
 
     QString uuid;
     QString authorToken;

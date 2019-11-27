@@ -1,7 +1,5 @@
 #include "HttpHandler.h"
 
-dis::HttpHandler::HttpHandler(){}
-
 void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcntr, HttpResponse &response, QList<Client> &clients){
     // CHECK PARSER
     if(parser.status != HTTP_OK){

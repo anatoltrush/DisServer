@@ -2,8 +2,6 @@
 
 dis::UserAPI::UserAPI() : IdbAPI (TABLE_USERS, API_TYPE_USERS){}
 
-dis::UserAPI::~UserAPI(){}
-
 bool dis::UserAPI::addUser(const dis::User &user){
     QSqlQuery query(db);
     QString request("INSERT INTO " + tableName + " (" + PROP_USR_UUID + ", " + PROP_USR_NAME + ", " + PROP_USR_SNAME + ", " + PROP_USR_CNTRY + ","

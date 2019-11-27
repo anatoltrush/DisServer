@@ -2,8 +2,6 @@
 
 dis::CommentAPI::CommentAPI() : IdbAPI (TABLE_COMMENTS, API_TYPE_COMMENTS){}
 
-dis::CommentAPI::~CommentAPI(){}
-
 bool dis::CommentAPI::addComment(const dis::Comment &comment){
     QSqlQuery query(db);
     QString request("INSERT INTO " + tableName + " (" + PROP_COMM_UUID + ", " + PROP_COMM_UUID_POST + ", " + PROP_COMM_UUID_ATHR + ","

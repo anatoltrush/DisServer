@@ -2,8 +2,6 @@
 
 dis::DiscussionAPI::DiscussionAPI() : IdbAPI (TABLE_DISPUTES, API_TYPE_DISPUTES){}
 
-dis::DiscussionAPI::~DiscussionAPI(){}
-
 bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     QSqlQuery query(db);
     QString request("INSERT INTO " + tableName + " (" + PROP_DISP_UUID + ", " + PROP_DISP_UUID_AUTHOR + ", " + PROP_DISP_SECTION + ", " + PROP_DISP_TOPIC + ", "

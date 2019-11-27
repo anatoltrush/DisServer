@@ -15,8 +15,8 @@ namespace dis{
 class IPrimitive
 {
 public:
-    IPrimitive();
-    virtual ~IPrimitive();
+    IPrimitive() = default;
+    virtual ~IPrimitive() = default;
 
     virtual QString getUUID() const = 0;
     virtual QString getAuthor() const = 0;

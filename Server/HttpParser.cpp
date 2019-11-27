@@ -1,7 +1,5 @@
 #include "HttpParser.h"
 
-dis::HttpParser::HttpParser(){}
-
 void dis::HttpParser::parse(const QByteArray &data){
     basicParse(data);
     validateParams();

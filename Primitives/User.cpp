@@ -1,9 +1,5 @@
 #include "User.h"
 
-dis::User::User(){}
-
-dis::User::~User(){}
-
 void dis::User::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf(PROP_USR_UUID)).toString();
     this->name = query.value(rec.indexOf(PROP_USR_NAME)).toString();

@@ -16,8 +16,8 @@ namespace dis{
 class Answer : public IPrimitive
 {
 public:
-    Answer();
-    ~Answer() override;
+    Answer() = default;
+    ~Answer() override = default;
 
     QString uuid = QUuid::createUuid().toString();
     QString uuid_dispute;

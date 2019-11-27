@@ -16,7 +16,7 @@ class AnswerAPI : public IdbAPI
 {
 public:
     AnswerAPI();
-    ~AnswerAPI() override;
+    ~AnswerAPI() override = default;
 
     bool addAnswer(const dis::Answer &answer);
 

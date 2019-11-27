@@ -2,8 +2,6 @@
 
 dis::ImageAPI::ImageAPI() : IdbAPI (TABLE_IMAGES, API_TYPE_IMAGES){}
 
-dis::ImageAPI::~ImageAPI(){}
-
 bool dis::ImageAPI::addImage(const Image &img){
     QSqlQuery query(db);
     QString request("INSERT INTO " + tableName + " (" + PROP_IMG_UUID + ", " + PROP_IMG_UUID_ATHR + ", " + PROP_IMG_UUID_POST + ", "

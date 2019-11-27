@@ -1,9 +1,5 @@
 #include "Answer.h"
 
-dis::Answer::Answer(){}
-
-dis::Answer::~Answer(){}
-
 void dis::Answer::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->uuid = query.value(rec.indexOf(PROP_ANS_UUID)).toString();
     this->uuid_dispute = query.value(rec.indexOf(PROP_ANS_UUID_DISP)).toString();

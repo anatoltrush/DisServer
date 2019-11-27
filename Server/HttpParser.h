@@ -16,7 +16,8 @@ namespace dis{
 class HttpParser
 {
 public:
-    HttpParser();
+    HttpParser() = default;
+    ~HttpParser() = default;
 
     int status = HTTP_BAD_REQUEST;
     const QString& lastError() const {return statMsg;}
