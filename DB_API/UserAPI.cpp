@@ -37,17 +37,6 @@ bool dis::UserAPI::addUser(const dis::User &user){
     }
 }
 
-bool dis::UserAPI::deleteUser(const QString &uuid){
-    QSqlQuery query(db);
-    query.prepare("DELETE FROM " + tableName + " WHERE " + PROP_USR_UUID + " = ?");
-    query.addBindValue(uuid);
-    if(query.exec()) return true;
-    else{
-        qDebug() << db.lastError().text();
-        return false;
-    }
-}
-
 bool dis::UserAPI::updateUser(const QString& uuid, const dis::User &newData){ // TODO: fill all fields in "UserAPI::updateUser"
     QSqlQuery query(db);
     query.prepare("UPDATE " + tableName + " SET " + PROP_USR_NAME + " = ?,"
@@ -178,11 +167,50 @@ int dis::UserAPI::getFunction(const HttpParser &parser, std::vector<std::unique_
     return HTTP_METHOD_NOT_ALLOWED;
 }
 
-int dis::UserAPI::postFunction(const dis::HttpParser &parser){/*LEAVE EMPTY*/}
+int dis::UserAPI::postFunction(const dis::HttpParser &parser){
+    qDebug() << "UserAPI::postFunction: " + QString(HTTP_METHOD_NOT_ALLOWED);
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
 int dis::UserAPI::patchFunction(const dis::HttpParser &parser){}
 
 int dis::UserAPI::deleteFunction(const HttpParser &parser){
-    // del Usr+Imgs+Flwers+Flwings+ListOfVoted
-    // Диспуты юзера не удаляются
+    // del Imgs+Flwers+Flwings+ListOfVoted+Usr
+    if(parser.function == "deleteUserByUuid"){
+        QString uuidForDel = parser.params.value(PROP_USR_UUID).toString();
+        if(uuidForDel.size() != uuidSize) return HTTP_BAD_REQUEST;
+
+        // 1) Delete Images
+        ImageAPI imageAPI;
+        std::vector<QString> imgsUuids;
+        bool isImgsGot = imageAPI.getImagesUuidsByPostUuid(uuidForDel, imgsUuids);
+        if(!isImgsGot) return HTTP_INTERNAL_SERVER_ERROR;
+        for(const auto &imgUuid : imgsUuids){
+            bool isImgsDltd = imageAPI.deleteImageByUuid(imgUuid);
+            if(!isImgsDltd) return HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        // 2) Delete Flwrs+Flwngs
+
+        // 3) Delete Voted
+
+        // 4) Delete User
+        bool isUsrDltd = deleteUserUuid(uuidForDel);
+        if(!isUsrDltd) return HTTP_INTERNAL_SERVER_ERROR;
+
+        return HTTP_OK;
+    }
+    else return HTTP_METHOD_NOT_ALLOWED;
+}
+
+bool dis::UserAPI::deleteUserUuid(const QString &uuid){
+    QSqlQuery query(db);
+    QString strQuery = "DELETE FROM " + tableName + " WHERE " + PROP_USR_UUID + " = ?";
+    query.prepare(strQuery);
+    query.addBindValue(uuid);
+    if(query.exec()) return true;
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
 }

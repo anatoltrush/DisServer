@@ -120,9 +120,17 @@ bool dis::CommentAPI::deleteCommentByPostUuidRecurs(const QString &postUuid){
     return true;
 }
 
-bool dis::CommentAPI::deleteCommentByPostUuidAll(){
+bool dis::CommentAPI::deleteCommentByPostUuidAll(const QString &postUuid){
     QSqlQuery query(db);
-    // TODO: implement
+
+    std::vector<QString> uuids;
+    bool isCommsGot = getCommUuidsByPostUuid(postUuid, uuids);
+    if(!isCommsGot) return false;
+    for(const auto& id : uuids){
+        bool isDltd = deleteCommentByUuid(id);
+        if(!isDltd) return false;
+    }
+    return true;
 }
 
 bool dis::CommentAPI::getObjectPart(const dis::HttpParser &parser, std::unique_ptr<dis::IPrimitive> &object){

@@ -26,7 +26,7 @@ public:
 
     [[deprecated("Old version. Use <deleteCommentByPostUuidAll> instead")]]
     bool deleteCommentByPostUuidRecurs(const QString &postUuid);
-    bool deleteCommentByPostUuidAll();
+    bool deleteCommentByPostUuidAll(const QString &postUuid);
 
     bool getObjectPart(const HttpParser& parser, std::unique_ptr<IPrimitive>& object) override;
 

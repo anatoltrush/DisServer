@@ -24,7 +24,7 @@ public:
 
     QString uuid = QUuid::createUuid().toString();
 
-    //! can be DISPUTE_ID or ALBUM_ID or COMMENT_ID or USER_ID(if avatar)
+    //! can be DISPUTE_ID or COMMENT_ID or USER_ID(if his foto)
     QString uuid_post;
     QString uuid_author;
     //! can be empty if first comment at all

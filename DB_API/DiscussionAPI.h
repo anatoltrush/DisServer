@@ -22,9 +22,6 @@ public:
     //! @brief (POST) Add dispute to database
     bool addDispute(const dis::Discussion &dispute);
 
-    //! @brief (DELETE) Delete dispute knowing it Id
-    bool deleteDisputeByUuid(const QString &uuid);
-
     //! @brief (GET) Helps to know amount of all disputes
     bool getDisputeCount(int& count);
 

@@ -30,7 +30,7 @@ public:
     //! UUID of dispute OR album OR comment OR userID(if avatar)
     /**
      * @brief Get images by post Id
-     * @param postUuid It can be disputeId OR albumId OR commentId OR smthn else
+     * @param postUuid It can be DISPUTE_ID or COMMENT_ID or USER_ID(if his foto)
      */
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
     bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);

@@ -1,6 +1,8 @@
 #ifndef DISDEFINES_H
 #define DISDEFINES_H
 
+constexpr int uuidSize = 38; // size of UUID string
+
 #define IMG_FORMAT_JPG  "JPG"
 
 //{ Names of tables

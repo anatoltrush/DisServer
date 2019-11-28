@@ -19,6 +19,7 @@
 #define PROP_DISP_W             "Icon_width"
 #define PROP_DISP_H             "Icon_height"
 #define PROP_DISP_FRMT          "Format"
+// TODO: add 3 fields
 
 namespace dis{
 //! @addtogroup entities

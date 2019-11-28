@@ -35,16 +35,6 @@ bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     }
 }
 
-bool dis::DiscussionAPI::deleteDisputeByUuid(const QString &uuid){
-    // TODO: separate in 2 down there
-    // 1) del all comms
-    // 2) del disp
-    CommentAPI commAPI;
-    bool isCommsDltd = commAPI.deleteCommentByPostUuidRecurs(uuid);
-    bool isDisDltd = deleteDisputeUuid(uuid);
-    return (isCommsDltd && isDisDltd);
-}
-
 bool dis::DiscussionAPI::getDisputeCount(int &count){
     QSqlQuery query(db);
     QString strQuery = "SELECT count(" + QString(PROP_DISP_UUID) + ") FROM " + tableName;
@@ -234,18 +224,18 @@ int dis::DiscussionAPI::patchFunction(const dis::HttpParser &parser){
 }
 
 int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){
-    // del Answrs+Imgs+Dis(comms)
+    // del Answrs+Imgs+Comms++Dis
     if(parser.function == "deleteDisputeByUuid"){
         QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
-        if(uuidForDel.size() != 38/*38 - size of UUID*/) return HTTP_BAD_REQUEST;
-
-        ImageAPI imageAPI;
+        if(uuidForDel.size() != uuidSize) return HTTP_BAD_REQUEST;
 
         // 1) Delete Answers
         AnswerAPI answerAPI;
-        bool isAnswrsDltd = answerAPI.deleteAnswerByDisputeUuid(uuidForDel);
+        bool isAnswrsDltd = answerAPI.deleteAnswersByDisputeUuid(uuidForDel);
+        if(!isAnswrsDltd) return HTTP_INTERNAL_SERVER_ERROR;
 
         // 2) Delete Images
+        ImageAPI imageAPI;
         std::vector<QString> imgsUuids;
         bool isImgsGot = imageAPI.getImagesUuidsByPostUuid(uuidForDel, imgsUuids);
         if(!isImgsGot) return HTTP_INTERNAL_SERVER_ERROR;
@@ -254,18 +244,23 @@ int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){
             if(!isImgsDltd) return HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        // 3) Delete Dispute
-        bool isDisDltd = deleteDisputeByUuid(uuidForDel);
+        // 3) Delete Comments
+        CommentAPI commAPI;
+        bool isCommsDltd = commAPI.deleteCommentByPostUuidAll(uuidForDel);
+        if(!isCommsDltd) return HTTP_INTERNAL_SERVER_ERROR;
 
-        // -conclusion-
-        return (isAnswrsDltd && isDisDltd) ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+        // 4) Delete Dispute
+        bool isDisDltd = deleteDisputeUuid(uuidForDel);
+        if(!isDisDltd) return HTTP_INTERNAL_SERVER_ERROR;
+
+        return HTTP_OK;
     }
     else return HTTP_METHOD_NOT_ALLOWED;
 }
 
 bool dis::DiscussionAPI::deleteDisputeUuid(const QString &uuid){
     QSqlQuery query(db);
-    QString strQuery = "DELETE FROM " + tableName + " WHERE UUID = ?";
+    QString strQuery = "DELETE FROM " + tableName + " WHERE " + PROP_DISP_UUID + " = ?";
     query.prepare(strQuery);
     query.addBindValue(uuid);
     if(query.exec()) return true;

@@ -2,6 +2,7 @@
 #define USERAPI_H
 
 #include "IdbAPI.h"
+#include "ImageAPI.h"
 #include "../Primitives/User.h"
 
 namespace dis{
@@ -17,7 +18,6 @@ public:
 
     //! WARNING: use only for registration, not use in "postFunction"
     bool addUser(const dis::User &user);
-    bool deleteUser(const QString &uuid);
     bool updateUser(const QString &uuid, const dis::User &newData);
     bool getUserByUuid(const QString &uuid, dis::User &user);
     bool getUsers(QList<dis::User>& users);
@@ -35,6 +35,7 @@ public:
     int deleteFunction(const HttpParser &parser) override;
 
 private:
+    bool deleteUserUuid(const QString &uuid);
 };
 
 //! @} database_api

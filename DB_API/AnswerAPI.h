@@ -23,7 +23,7 @@ public:
     //! @brief Get answers by dispute Id
     bool getAnswersByDisputeUuid(const QString& dispUuid, QList<dis::Answer>& answers);
 
-    bool deleteAnswerByDisputeUuid(const QString &uuid);
+    bool deleteAnswersByDisputeUuid(const QString &uuid);
 
     bool getObjectPart(const HttpParser& parser, std::unique_ptr<IPrimitive>& object) override;
 
