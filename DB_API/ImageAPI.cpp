@@ -88,7 +88,7 @@ bool dis::ImageAPI::getImagesByPostUuidLight(const QString &postUuid, QList<dis:
     }
 }
 
-bool dis::ImageAPI::getImagesUuidsByPostUuid(const QString &postUuid, QList<QString> &imgsUuids){
+bool dis::ImageAPI::getImagesUuidsByPostUuid(const QString &postUuid, std::vector<QString> &imgsUuids){
     imgsUuids.clear();
     QSqlQuery query(db);
     query.prepare("SELECT " + QString(PROP_IMG_UUID) + " FROM " + tableName + " WHERE " + PROP_IMG_UUID_POST + " = ?");
@@ -109,9 +109,17 @@ bool dis::ImageAPI::getImagesUuidsByPostUuid(const QString &postUuid, QList<QStr
 
 bool dis::ImageAPI::deleteImageByUuid(const QString &uuid){
     CommentAPI commAPI;
-    bool isCommsDltd = commAPI.deleteCommentByPostUuidFull(uuid);
+    std::vector<QString> commUuids;
+    bool isCommsGot = commAPI.getCommUuidsByPostUuid(uuid, commUuids);
+    if(!isCommsGot) return false;
+    if(commUuids.size() > 0){
+        for(const auto& id : commUuids){
+            bool isCommDltd = commAPI.deleteCommentByUuid(id);
+            if(!isCommDltd) return false;
+        }
+    }
     bool isImgDltd = deleteImageUuid(uuid);
-    return (isCommsDltd && isImgDltd);
+    return isImgDltd;
 }
 
 bool dis::ImageAPI::getObjectPart(const dis::HttpParser &parser, std::unique_ptr<dis::IPrimitive> &object){

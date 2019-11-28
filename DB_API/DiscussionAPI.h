@@ -1,9 +1,8 @@
 #ifndef DISCUSSIONAPI_H
 #define DISCUSSIONAPI_H
 
-#include "ImageAPI.h"
-#include "AnswerAPI.h"
 #include "CommentAPI.h"
+#include "AnswerAPI.h"
 #include "../Primitives/Discussion.h"
 
 #define API_KW_DISP_FROM    "from"
@@ -25,12 +24,6 @@ public:
 
     //! @brief (DELETE) Delete dispute knowing it Id
     bool deleteDisputeByUuid(const QString &uuid);
-
-    /**
-     * @brief (PATCH) Update dispute knowing it Id
-     * @param uuid Id of dispute
-     */
-    bool updDisputeByUuid(const QString &uuid);
 
     //! @brief (GET) Helps to know amount of all disputes
     bool getDisputeCount(int& count);

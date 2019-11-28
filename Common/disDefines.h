@@ -30,6 +30,5 @@
 
 #include <QMap>
 using QStringMap = QMap<QString, QString>;
-//    typedef QMap<QString, QString> QStringMap;
 
 #endif // DISDEFINES_H

@@ -23,7 +23,10 @@ public:
     bool getCommUuidsByPostUuid(const QString &postUuid, std::vector<QString> &commUuids);
 
     bool deleteCommentByUuid(const QString &uuid);
-    bool deleteCommentByPostUuidFull(const QString &postUuid);
+
+    [[deprecated("Old version. Use <deleteCommentByPostUuidAll> instead")]]
+    bool deleteCommentByPostUuidRecurs(const QString &postUuid);
+    bool deleteCommentByPostUuidAll();
 
     bool getObjectPart(const HttpParser& parser, std::unique_ptr<IPrimitive>& object) override;
 

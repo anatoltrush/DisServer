@@ -5,7 +5,6 @@
 #include "DiscussionAPI.h"
 #include "CommentAPI.h"
 #include "ImageAPI.h"
-#include "AnswerAPI.h"
 
 namespace dis{
 

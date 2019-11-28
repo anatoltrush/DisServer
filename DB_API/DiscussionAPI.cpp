@@ -36,14 +36,13 @@ bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
 }
 
 bool dis::DiscussionAPI::deleteDisputeByUuid(const QString &uuid){
+    // TODO: separate in 2 down there
+    // 1) del all comms
+    // 2) del disp
     CommentAPI commAPI;
-    bool isCommsDltd = commAPI.deleteCommentByPostUuidFull(uuid);
+    bool isCommsDltd = commAPI.deleteCommentByPostUuidRecurs(uuid);
     bool isDisDltd = deleteDisputeUuid(uuid);
     return (isCommsDltd && isDisDltd);
-}
-
-bool dis::DiscussionAPI::updDisputeByUuid(const QString &uuid){
-    QSqlQuery query(db);
 }
 
 bool dis::DiscussionAPI::getDisputeCount(int &count){
@@ -228,15 +227,18 @@ int dis::DiscussionAPI::postFunction(const dis::HttpParser &parser){
     else return HTTP_METHOD_NOT_ALLOWED;
 }
 
-int dis::DiscussionAPI::patchFunction(const dis::HttpParser &parser){}
+int dis::DiscussionAPI::patchFunction(const dis::HttpParser &parser){
+    // no necessary to implement (no updates)
+    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
 int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){
     // del Answrs+Imgs+Dis(comms)
     if(parser.function == "deleteDisputeByUuid"){
         QString uuidForDel = parser.params.value(PROP_DISP_UUID).toString();
-        if(uuidForDel.size() != 38/*size of UUID*/) return HTTP_BAD_REQUEST;
+        if(uuidForDel.size() != 38/*38 - size of UUID*/) return HTTP_BAD_REQUEST;
 
-        CommentAPI commAPI;
         ImageAPI imageAPI;
 
         // 1) Delete Answers
@@ -244,7 +246,7 @@ int dis::DiscussionAPI::deleteFunction(const HttpParser &parser){
         bool isAnswrsDltd = answerAPI.deleteAnswerByDisputeUuid(uuidForDel);
 
         // 2) Delete Images
-        QList<QString> imgsUuids;
+        std::vector<QString> imgsUuids;
         bool isImgsGot = imageAPI.getImagesUuidsByPostUuid(uuidForDel, imgsUuids);
         if(!isImgsGot) return HTTP_INTERNAL_SERVER_ERROR;
         for(const auto &imgUuid : imgsUuids){

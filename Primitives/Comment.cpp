@@ -9,6 +9,7 @@ void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->text = query.value(rec.indexOf(PROP_COMM_TEXT)).toString();
     this->like = query.value(rec.indexOf(PROP_COMM_LIKE)).toInt();
     this->disLike = query.value(rec.indexOf(PROP_COMM_DLIKE)).toInt();
+    this->isDeleted = query.value(rec.indexOf(PROP_COMM_ISDLTD)).toBool();
 }
 
 void dis::Comment::fillByParse(const QVariantMap &params){

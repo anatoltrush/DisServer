@@ -2,7 +2,7 @@
 #define USERAPI_H
 
 #include "IdbAPI.h"
-#include "../QDisput/Primitives/User.h"
+#include "../Primitives/User.h"
 
 namespace dis{
 

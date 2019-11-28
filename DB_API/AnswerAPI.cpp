@@ -66,7 +66,11 @@ int dis::AnswerAPI::getFunction(const HttpParser &parser, std::vector<std::uniqu
 
 int dis::AnswerAPI::postFunction(const dis::HttpParser &parser){}
 
-int dis::AnswerAPI::patchFunction(const dis::HttpParser &parser){}
+int dis::AnswerAPI::patchFunction(const dis::HttpParser &parser){
+    // no necessary to implement (no updates)
+    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
 int dis::AnswerAPI::deleteFunction(const HttpParser &parser){
     // no necessary to implement (deletes by Dispute deletion)

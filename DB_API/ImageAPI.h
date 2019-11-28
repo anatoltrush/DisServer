@@ -34,7 +34,7 @@ public:
      */
     bool getImagesByPostUuid(const QString &postUuid, QList<dis::Image>& images);
     bool getImagesByPostUuidLight(const QString &postUuid, QList<dis::Image>& images, const QSize &size);
-    bool getImagesUuidsByPostUuid(const QString &postUuid, QList<QString> &imgsUuids);
+    bool getImagesUuidsByPostUuid(const QString &postUuid, std::vector<QString> &imgsUuids);
 
     bool deleteImageByUuid(const QString &uuid);
 
