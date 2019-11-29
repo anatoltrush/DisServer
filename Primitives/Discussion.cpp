@@ -17,6 +17,9 @@ void dis::Discussion::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->img_w = query.value(rec.indexOf(PROP_DISP_W)).toInt();
     this->img_h = query.value(rec.indexOf(PROP_DISP_H)).toInt();
     this->format = query.value(rec.indexOf(PROP_DISP_FRMT)).toString();
+    this->isAdvert = query.value(rec.indexOf(PROP_DISP_ISADV)).toBool();
+    this->isArch = query.value(rec.indexOf(PROP_DISP_ISARCH)).toBool();
+    this->secsLive = query.value(rec.indexOf(PROP_DISP_SECONDS)).toInt();
 }
 
 void dis::Discussion::fillByParse(const QVariantMap &params){
@@ -34,7 +37,10 @@ void dis::Discussion::fillByParse(const QVariantMap &params){
     this->icon_data = params.value(PROP_DISP_ICON).toByteArray();
     this->img_w = params.value(PROP_DISP_W).toInt();
     this->img_h = params.value(PROP_DISP_H).toInt();
-    this->format = params.value(PROP_DISP_FRMT).toString();
+    this->format = params.value(PROP_DISP_FRMT).toString();    
+    this->isAdvert = params.value(PROP_DISP_ISADV).toBool();
+    this->isArch = params.value(PROP_DISP_ISARCH).toBool();
+    this->secsLive = params.value(PROP_DISP_SECONDS).toInt();
 }
 
 QByteArray dis::Discussion::createMessageBody(const QString &separ){
@@ -55,6 +61,9 @@ QByteArray dis::Discussion::createMessageBody(const QString &separ){
     res.append(IPrimitive::toQBA(separ, PROP_DISP_W, QString::number(this->img_w)));
     res.append(IPrimitive::toQBA(separ, PROP_DISP_H, QString::number(this->img_h)));
     res.append(IPrimitive::toQBA(separ, PROP_DISP_FRMT, this->format));
+    res.append(IPrimitive::toQBA(separ, PROP_DISP_ISADV, QString::number(this->isAdvert)));
+    res.append(IPrimitive::toQBA(separ, PROP_DISP_ISARCH, QString::number(this->isArch)));
+    res.append(IPrimitive::toQBA(separ, PROP_DISP_SECONDS, QString::number(this->secsLive)));
     res.append("--" + separ + "--");
     return res;
 }

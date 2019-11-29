@@ -7,8 +7,9 @@ bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     QString request("INSERT INTO " + tableName + " (" + PROP_DISP_UUID + ", " + PROP_DISP_UUID_AUTHOR + ", " + PROP_DISP_SECTION + ", " + PROP_DISP_TOPIC + ", "
                                                  "" + PROP_DISP_TIME_CRTD + ", " + PROP_DISP_TYPE + ", " + PROP_DISP_STEP + ", " + PROP_DISP_REWARD + ", "
                                                  "" + PROP_DISP_LANG_REG + ", " + PROP_DISP_TEXT_DATA + ", " + PROP_DISP_VOTED + ", " + PROP_DISP_MAX_VOTERS + ", "
-                                                 "" + PROP_DISP_ICON + ", " + PROP_DISP_W + ", " + PROP_DISP_H + ", " + PROP_DISP_FRMT + ") "
-                                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                                                 "" + PROP_DISP_ICON + ", " + PROP_DISP_W + ", " + PROP_DISP_H + ", " + PROP_DISP_FRMT + ", "
+                                                 "" + PROP_DISP_ISADV + ", " + PROP_DISP_ISARCH + ", " + PROP_DISP_SECONDS + ") "
+                                                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     query.prepare(request);
     query.addBindValue(dispute.uuid);
@@ -27,6 +28,9 @@ bool dis::DiscussionAPI::addDispute(const dis::Discussion &dispute){
     query.addBindValue(dispute.img_w);
     query.addBindValue(dispute.img_h);
     query.addBindValue(dispute.format);
+    query.addBindValue(dispute.isAdvert);
+    query.addBindValue(dispute.isArch);
+    query.addBindValue(dispute.secsLive);
 
     if(query.exec()) return true;
     else{

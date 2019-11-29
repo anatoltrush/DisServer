@@ -19,7 +19,9 @@
 #define PROP_DISP_W             "Icon_width"
 #define PROP_DISP_H             "Icon_height"
 #define PROP_DISP_FRMT          "Format"
-// TODO: add 3 fields
+#define PROP_DISP_ISADV         "Is_advert"
+#define PROP_DISP_ISARCH        "Is_archived"
+#define PROP_DISP_SECONDS       "Seconds_live"
 
 namespace dis{
 //! @addtogroup entities
@@ -46,7 +48,10 @@ public:
     int img_w = 0;
     int img_h = 0;
     QString format = IMG_FORMAT_JPG;
-    // 16
+    bool isAdvert = false;
+    bool isArch = false;
+    int secsLive = 0;
+    // 19
 
     QString getUUID() const override {return uuid;}
     QString getAuthor() const override {return uuid_author;}
