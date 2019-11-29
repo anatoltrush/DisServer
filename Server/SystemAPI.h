@@ -21,10 +21,14 @@ public:
     SystemAPI() = default;
     ~SystemAPI() = default;
 
-    static qint64 maxTime;
-    static float needFreeMemPercs;
-    static float percLeft;
-    static int minNumber;
+    static qint64 maxTimeLastReq;
+    static int minNumberUsers;
+
+    static float needFreeRamPerc;
+    static float percRamLeft;
+
+    static float minFreeFilePerc;
+    static float minFileSizeMB;
 
     void sendToAll(const QList<dis::Client> &clients, const QByteArray &message);
 
@@ -33,12 +37,18 @@ public:
     bool isAuthorized(QList<Client> &clients, const QString &userToken, QString &currUser);
     bool isVerified(const QString &currUser, const IPrimitive &object) {return currUser == object.getAuthor();}
 
-    static float getFreeMemSize();
+    static float getFreeRamPerc();
     static QDateTime getTimeDiff(const QDateTime &lastReq);
 
     static void kickOld(QList<dis::Client> &clients);
     static void kickByTime(QList<dis::Client> &clients);
     static void kickByNumber(QList<dis::Client> &clients);
+
+    static float getFreeFileSpacePerc();
+
+    static bool getFileSize(const QSqlDatabase &dataBase, float &val);
+    static bool getUnAlloc(const QSqlDatabase &dataBase, float &val);
+    static void shrinkDBaseFiles(const QSqlDatabase &dataBase);
 };
 }
 

@@ -3,13 +3,18 @@
 dis::DisServer::DisServer(){
     tcpServer = new QTcpServer;
 
-    timer = new QTimer(this);
-    timer->setInterval(60000); // config tick time in msec
-    timer->start();
+    timerKick = new QTimer(this);
+    timerKick->setInterval(60000); // config tick time in msec
+    timerKick->start();
+
+    timerShrink = new QTimer(this);
+    timerShrink->setInterval(1000); // config tick time in msec
+    timerShrink->start();
 
     connect(tcpServer, &QTcpServer::newConnection, this, &DisServer::slotNewConnection);
 
-    connect(timer, &QTimer::timeout, this, &DisServer::slotTick);
+    connect(timerKick, &QTimer::timeout, this, &DisServer::slotTickKick);
+    connect(timerShrink, &QTimer::timeout, this, &DisServer::slotTickShrink);
 
     dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
 
@@ -18,7 +23,8 @@ dis::DisServer::DisServer(){
 
 dis::DisServer::~DisServer(){
     delete tcpServer;
-    delete timer;
+    delete timerKick;
+    delete timerShrink;
 }
 
 void dis::DisServer::slotNewConnection(){
@@ -73,21 +79,37 @@ void dis::DisServer::slotSocketDeleted(){
 
 bool byLastReq(const dis::Client& clFrst, const dis::Client& clSec){return clFrst.lastRequestTime > clSec.lastRequestTime;}
 
-void dis::DisServer::slotTick(){
+void dis::DisServer::slotTickKick(){
     if(tcpServer->isListening()){
         while(true){
-            if(clients.size() < dis::SystemAPI::minNumber) break;
+            if(clients.size() < dis::SystemAPI::minNumberUsers) break;
             // -----
-            if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
+            if(dis::SystemAPI::getFreeRamPerc() >= dis::SystemAPI::needFreeRamPerc) break;
             // free by time
             std::sort(clients.begin(), clients.end(), byLastReq);
             dis::SystemAPI::kickByTime(clients);
             // -----
-            if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
+            if(dis::SystemAPI::getFreeRamPerc() >= dis::SystemAPI::needFreeRamPerc) break;
             // free by num
             dis::SystemAPI::kickByNumber(clients);
             // -----
-            if(dis::SystemAPI::getFreeMemSize() >= dis::SystemAPI::needFreeMemPercs) break;
+            if(dis::SystemAPI::getFreeRamPerc() >= dis::SystemAPI::needFreeRamPerc) break;
         }
+    }
+}
+
+void dis::DisServer::slotTickShrink(){
+    if(tcpServer->isListening()){
+        float fileSz = 0.0f;
+        bool isGotFileSz = dis::SystemAPI::getFileSize(dbcntr.dataBase, fileSz);
+        if(!isGotFileSz || fileSz < dis::SystemAPI::minFileSizeMB) return;
+
+        float unallocSz = 0.0f;
+        bool isGotUnalloc = dis::SystemAPI::getUnAlloc(dbcntr.dataBase, unallocSz);
+        if(!isGotUnalloc) return;
+
+        float currFreePerc = unallocSz / fileSz * 100.0f;
+        if(currFreePerc > dis::SystemAPI::minFreeFilePerc)
+            dis::SystemAPI::shrinkDBaseFiles(dbcntr.dataBase);
     }
 }

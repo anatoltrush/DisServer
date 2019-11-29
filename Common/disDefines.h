@@ -3,6 +3,9 @@
 
 constexpr int uuidSize = 38; // size of UUID string
 
+#define DB_NAME         "Disput_db"
+#define DB_NAME_LOG     "Disput_db_log"
+
 #define IMG_FORMAT_JPG  "JPG"
 
 //{ Names of tables

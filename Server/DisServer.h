@@ -27,7 +27,8 @@ public:
 
     QList<Client> clients;
 
-    QTimer* timer;
+    QTimer* timerKick;
+    QTimer* timerShrink;
 
     DBController dbcntr;
 
@@ -39,7 +40,8 @@ public slots:
     void slotSocketDeleted();
 
     // timer slots
-    void slotTick();
+    void slotTickKick();
+    void slotTickShrink();
 };
 //! @} server_part
 }
