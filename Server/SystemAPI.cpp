@@ -6,8 +6,8 @@ int dis::SystemAPI::minNumberUsers = 10000; // min number of users to not delete
 float dis::SystemAPI::needFreeRamPerc = 40.0f; // 40%
 float dis::SystemAPI::percRamLeft = 0.9f; // left 90% of users
 
-float dis::SystemAPI::minFreeFilePerc = 5.0f; // 5%
-float dis::SystemAPI::minFileSizeMB = 1000.0f; // 1000MB/1GB
+float dis::SystemAPI::minFreeFilePerc = 10.0f; // 10%
+float dis::SystemAPI::minFileSizeMB = 10000.0f; // 10000MB/10GB
 
 void dis::SystemAPI::sendToAll(const QList<dis::Client> &clients, const QByteArray &message){}
 
@@ -38,6 +38,7 @@ float dis::SystemAPI::getFreeRamPerc(){
 #ifdef linux
     // Linux code
     qDebug() << "SystemAPI::getFreeMemSize NOT IMPLEMENTED IN LINUX OS";
+    return 100.0f;
 
 #elif _WIN32
     MEMORYSTATUSEX memory_status;
@@ -59,10 +60,12 @@ float dis::SystemAPI::getFreeRamPerc(){
 #elif __APPLE__
     // Mac code
     qDebug() << "SystemAPI::getFreeMemSize NOT IMPLEMENTED IN MAC OS";
+    return 100.0f;
 
 #else
     //For other OS
     qDebug() << "SystemAPI::getFreeMemSize NOT IMPLEMENTED IN THIS OS";
+    return 100.0f;
 #endif
 }
 
@@ -92,20 +95,40 @@ void dis::SystemAPI::kickByNumber(QList<dis::Client> &clients){
         clients.pop_back();
 }
 
-float dis::SystemAPI::getFreeFileSpacePerc(){}
-
 bool dis::SystemAPI::getFileSize(const QSqlDatabase &dataBase, float &val){
     QSqlQuery query(dataBase);
-    // TODO: impl
-    val = 1.0f;
-    return true;
+    QString strQuery = "SELECT CAST(size / 128.0 AS DECIMAL(17,2)) AS [SizeMB] FROM sys.database_files WHERE name = '" + QString(DB_NAME) + "'";
+    query.prepare(strQuery);
+    if(query.exec()){
+        if(query.first()){
+            val = query.value(0).toFloat();
+            return true;
+        }
+        else return false;
+    }
+    else{
+        qDebug() << dataBase.lastError().text();
+        return false;
+    }
 }
 
 bool dis::SystemAPI::getUnAlloc(const QSqlDatabase &dataBase, float &val){
     QSqlQuery query(dataBase);
-    // TODO: impl
-    val = 1.0f;
-    return true;
+    QString strQuery = "USE [" + QString(DB_NAME) + "] EXEC sp_spaceused";
+    query.prepare(strQuery);
+    if(query.exec()){
+        if(query.first()){
+            QString data = query.value(2).toString();
+            data.chop(3);
+            val = data.toFloat();
+            return true;
+        }
+        else return false;
+    }
+    else{
+        qDebug() << dataBase.lastError().text();
+        return false;
+    }
 }
 
 void dis::SystemAPI::shrinkDBaseFiles(const QSqlDatabase &dataBase){

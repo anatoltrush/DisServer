@@ -19,7 +19,7 @@ public:
 
     QSqlDatabase dataBase;
 
-    //! string for test "DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;"
+    //! string for test "DRIVER={SQL Server};SERVER=250PC;DATABASE=" + QString(DB_NAME) + ";Trusted_Connection=yes;"
     bool connect(const QString& connectString);
     void disconnect();
 
@@ -27,7 +27,6 @@ public:
 
 private:
     bool connected = false;
-    QString connString;
 };
 
 //! @} database_api

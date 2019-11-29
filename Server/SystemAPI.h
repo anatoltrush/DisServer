@@ -44,8 +44,7 @@ public:
     static void kickByTime(QList<dis::Client> &clients);
     static void kickByNumber(QList<dis::Client> &clients);
 
-    static float getFreeFileSpacePerc();
-
+    // shrink functions
     static bool getFileSize(const QSqlDatabase &dataBase, float &val);
     static bool getUnAlloc(const QSqlDatabase &dataBase, float &val);
     static void shrinkDBaseFiles(const QSqlDatabase &dataBase);

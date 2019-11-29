@@ -4,11 +4,11 @@ dis::DisServer::DisServer(){
     tcpServer = new QTcpServer;
 
     timerKick = new QTimer(this);
-    timerKick->setInterval(60000); // config tick time in msec
+    timerKick->setInterval(60000); // (1 min) config tick time in msec
     timerKick->start();
 
     timerShrink = new QTimer(this);
-    timerShrink->setInterval(1000); // config tick time in msec
+    timerShrink->setInterval(604800000); // (1 week) config tick time in msec
     timerShrink->start();
 
     connect(tcpServer, &QTcpServer::newConnection, this, &DisServer::slotNewConnection);
@@ -16,7 +16,7 @@ dis::DisServer::DisServer(){
     connect(timerKick, &QTimer::timeout, this, &DisServer::slotTickKick);
     connect(timerShrink, &QTimer::timeout, this, &DisServer::slotTickShrink);
 
-    dbcntr.connect("DRIVER={SQL Server};SERVER=250PC;DATABASE=Disput_db;Trusted_Connection=yes;");
+    dbcntr.connect(defConnStr);
 
 //    clients.push_back(Client("1", "11", QDateTime::fromString("21.11.2019 16:52", Qt::SystemLocaleShortDate)));
 }

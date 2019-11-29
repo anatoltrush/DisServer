@@ -18,12 +18,11 @@ bool dis::DBController::connect(const QString &connectString){
     //    db.setPassword("");
     if(dataBase.open()){
         connected = true;
-        connString = connectString;
         // ---
         for(const auto &api : dbAPIs)
             api->setDataBase(dataBase);
         // ---
-        qDebug() << "CONNECTED: "+ connString;
+        qDebug() << "CONNECTED: "+ connectString;
         return true;
     }
     else{

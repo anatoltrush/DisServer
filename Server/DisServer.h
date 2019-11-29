@@ -32,6 +32,8 @@ public:
 
     DBController dbcntr;
 
+    QString defConnStr = "DRIVER={SQL Server};SERVER=250PC;DATABASE=" + QString(DB_NAME) + ";Trusted_Connection=yes;";
+
 public slots:
     // server slots
     void slotNewConnection();
