@@ -1,7 +1,7 @@
 #ifndef HTTPRESPONSE_H
 #define HTTPRESPONSE_H
 
-#include "Constants.h"
+#include "../Common/Constants.h"
 #include "HttpParser.h"
 #include "../Primitives/IPrimitive.h"
 

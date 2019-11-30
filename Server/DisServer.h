@@ -5,8 +5,7 @@
 #include <QTcpSocket>
 #include <QTimer>
 
-#include "../Common/disDefines.h"
-#include "Constants.h"
+#include "../Common/Constants.h"
 #include "../DB_API/DBController.h"
 #include "HttpParser.h"
 #include "HttpResponse.h"

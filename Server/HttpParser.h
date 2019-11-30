@@ -1,9 +1,8 @@
 #ifndef HTTPPARSER_H
 #define HTTPPARSER_H
 
-#include "Constants.h"
+#include "../Common/Constants.h"
 #include "../Common/unique.h"
-#include "../Common/disDefines.h"
 #include "../Primitives/Discussion.h"
 #include "../Primitives/Answer.h"
 #include "../Primitives/Comment.h"
@@ -27,6 +26,8 @@ public:
     QString entity, function, bound/*if post*/;
 
     QString starting_line;
+
+    using QStringMap = QMap<QString, QString>;
     QStringMap headers;
 //}
 

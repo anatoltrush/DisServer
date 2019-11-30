@@ -1,9 +1,8 @@
 #ifndef HTTPHANDLER_H
 #define HTTPHANDLER_H
 
-#include "../Common/disDefines.h"
 #include "SystemAPI.h"
-#include "Constants.h"
+#include "../Common/Constants.h"
 #include "HttpParser.h"
 #include "HttpResponse.h"
 #include "../DB_API/DBController.h"
