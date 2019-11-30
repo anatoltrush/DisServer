@@ -13,13 +13,15 @@ void dis::Comment::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
 }
 
 void dis::Comment::fillByParse(const QVariantMap &params){
-
+    return;
 }
 
 QByteArray dis::Comment::createMessageBody(const QString &separ){
-
+    QByteArray res;
+    return res;
 }
 
 QByteArray dis::Comment::createMessageBodyHtml(){
-
+    QByteArray res;
+    return res;
 }

@@ -33,7 +33,7 @@ enum Sex{
     // other if need
 };
 
-class User : public IPrimitive // TODO: fill all fields
+class User : public IPrimitive
 {
 public:
     User() = default;

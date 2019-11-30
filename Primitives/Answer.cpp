@@ -7,8 +7,16 @@ void dis::Answer::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
     this->score = query.value(rec.indexOf(PROP_ANS_SCORE)).toInt();
 }
 
-void dis::Answer::fillByParse(const QVariantMap &params){}
+void dis::Answer::fillByParse(const QVariantMap &params){
+    return;
+}
 
-QByteArray dis::Answer::createMessageBody(const QString &separ){}
+QByteArray dis::Answer::createMessageBody(const QString &separ){
+    QByteArray res;
+    return res;
+}
 
-QByteArray dis::Answer::createMessageBodyHtml(){}
+QByteArray dis::Answer::createMessageBodyHtml(){
+    QByteArray res;
+    return res;
+}

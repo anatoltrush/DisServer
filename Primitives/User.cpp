@@ -22,13 +22,15 @@ void dis::User::fillBySQL(const QSqlQuery &query, const QSqlRecord &rec){
 }
 
 void dis::User::fillByParse(const QVariantMap &params){
-
+    return;
 }
 
 QByteArray dis::User::createMessageBody(const QString &separ){
-
+    QByteArray res;
+    return res;
 }
 
 QByteArray dis::User::createMessageBodyHtml(){
-
+    QByteArray res;
+    return res;
 }

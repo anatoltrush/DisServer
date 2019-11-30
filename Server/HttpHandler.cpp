@@ -116,7 +116,7 @@ void dis::HttpHandler::handle(const HttpParser &parser, const DBController &dbcn
                 status = dbApi->postFunction(parser);
                 if(status == HTTP_OK){
                     QString id = parser.object->getUUID();
-                    response.admitResult({id}); // TODO: put UUID here
+                    response.admitResult({id});
                 }
                 break;
             }

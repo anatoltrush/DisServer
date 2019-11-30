@@ -19,11 +19,14 @@ public:
 
     bool addComment(const dis::Comment &comment);
 
+    bool updateComment(const QString &uuid, const dis::Comment &newComm);
+
     bool getCommentByUuid(const QString &uuid, dis::Comment &comment);
     bool getCommUuidsByPostUuid(const QString &postUuid, std::vector<QString> &commUuids);
+    bool isHasReceiver(const QString &uuid, QString &receiverUuid);
 
+    bool deleteCommByUuidPseudo(const QString &uuid);
     bool deleteCommentByUuid(const QString &uuid);
-
     [[deprecated("Old version. Use <deleteCommentByPostUuidAll> instead")]]
     bool deleteCommentByPostUuidRecurs(const QString &postUuid);
     bool deleteCommentByPostUuidAll(const QString &postUuid);

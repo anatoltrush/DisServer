@@ -26,6 +26,11 @@ bool dis::CommentAPI::addComment(const dis::Comment &comment){
     }
 }
 
+bool dis::CommentAPI::updateComment(const QString &uuid, const dis::Comment &newComm){
+    QSqlQuery query(db);
+    return false;
+}
+
 bool dis::CommentAPI::getCommentByUuid(const QString &uuid, dis::Comment &comment){
     QSqlQuery query(db);
     query.prepare("SELECT * FROM " + tableName + " WHERE " + PROP_COMM_UUID + " = ?");
@@ -60,6 +65,48 @@ bool dis::CommentAPI::getCommUuidsByPostUuid(const QString &postUuid, std::vecto
         }
         return true;
     }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::CommentAPI::isHasReceiver(const QString &uuid, QString &receiverUuid){
+    QSqlQuery query(db);
+    QString strQuery = "SELECT " + QString(PROP_COMM_UUID_RCVR) + " FROM " + tableName + " WHERE " + PROP_COMM_UUID + " = ?";
+    query.prepare(strQuery);
+    query.addBindValue(uuid);
+    if(query.exec()){
+        if(query.first()){
+            receiverUuid = query.value(0).toString();
+            return true;
+        }
+        else return false;
+    }
+    else{
+        qDebug() << db.lastError().text();
+        return false;
+    }
+}
+
+bool dis::CommentAPI::deleteCommByUuidPseudo(const QString &uuid){
+    ImageAPI imgAPI;
+    std::vector<QString> imgUuids;
+    bool isimgsGot = imgAPI.getImagesUuidsByPostUuid(uuid, imgUuids);
+    if(!isimgsGot) return false;
+    if(imgUuids.size() > 0){
+        for(const auto& id : imgUuids){
+            bool isImgDltd = imgAPI.deleteImageByUuid(id);
+            if(!isImgDltd) return false;
+        }
+    }
+
+    QSqlQuery query(db);
+    QString strQuery = "UPDATE " + tableName + " SET " + PROP_COMM_ISDLTD + " = ? WHERE " + PROP_USR_UUID + " = ?";
+    query.prepare(strQuery);
+    query.addBindValue(true);
+    query.addBindValue(uuid);
+    if(query.exec()) return true;
     else{
         qDebug() << db.lastError().text();
         return false;
@@ -161,23 +208,31 @@ int dis::CommentAPI::getFunction(const HttpParser &parser, std::vector<std::uniq
     return HTTP_METHOD_NOT_ALLOWED;
 }
 
-int dis::CommentAPI::postFunction(const dis::HttpParser &parser){}
+int dis::CommentAPI::postFunction(const dis::HttpParser &parser){
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
-int dis::CommentAPI::patchFunction(const dis::HttpParser &parser){}
+int dis::CommentAPI::patchFunction(const dis::HttpParser &parser){
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
 int dis::CommentAPI::deleteFunction(const HttpParser &parser){
-//    if(parser.function == "deleteCommentByUuid"){
-//        QString uuidForDel = parser.params.value(PROP_COMM_UUID).toString();
-//        bool isExctd = deleteCommentByUuid(uuidForDel);
-//        return isExctd ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
-//    }
-//    else return HTTP_METHOD_NOT_ALLOWED;
-
-    // ------
-    /*
-     * if (main)  -> makeCap
-     * else deleteCommentByUuid
-*/
+    if(parser.function == "deleteCommentByUuid"){
+        QString uuidForDel = parser.params.value(PROP_COMM_UUID).toString();
+        QString receiver;
+        bool isCommGot = isHasReceiver(uuidForDel, receiver);
+        if(!isCommGot) return HTTP_INTERNAL_SERVER_ERROR;
+        if(receiver.size() == 0){ // main comment
+            bool isMainDltd = deleteCommByUuidPseudo(uuidForDel);
+            if(!isMainDltd) return HTTP_INTERNAL_SERVER_ERROR;
+        }
+        else{ // secondary comment
+            bool isSecDltd = deleteCommentByUuid(uuidForDel);
+            if(!isSecDltd) return HTTP_INTERNAL_SERVER_ERROR;
+        }
+        return HTTP_OK;
+    }
+    else return HTTP_METHOD_NOT_ALLOWED;
 }
 
 bool dis::CommentAPI::deleteCommentUuid(const QString &uuid){

@@ -172,7 +172,9 @@ int dis::UserAPI::postFunction(const dis::HttpParser &parser){
     return HTTP_METHOD_NOT_ALLOWED;
 }
 
-int dis::UserAPI::patchFunction(const dis::HttpParser &parser){}
+int dis::UserAPI::patchFunction(const dis::HttpParser &parser){
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
 int dis::UserAPI::deleteFunction(const HttpParser &parser){
     // del Imgs+Flwers+Flwings+ListOfVoted+Usr

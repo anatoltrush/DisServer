@@ -134,18 +134,21 @@ int dis::ImageAPI::getFunction(const HttpParser &parser, std::vector<std::unique
     return HTTP_METHOD_NOT_ALLOWED;
 }
 
-int dis::ImageAPI::postFunction(const dis::HttpParser &parser){}
+int dis::ImageAPI::postFunction(const dis::HttpParser &parser){
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
-int dis::ImageAPI::patchFunction(const dis::HttpParser &parser){}
+int dis::ImageAPI::patchFunction(const dis::HttpParser &parser){
+    return HTTP_METHOD_NOT_ALLOWED;
+}
 
 int dis::ImageAPI::deleteFunction(const HttpParser &parser){
-    // TODO: (SEE Comment deletion) impl ImageAPI::deleteFunction(const HttpParser &parser)
-    // 1) USE deleteCommentByPostUuidFull (send this->uuid)
-    // 2) then kill itself
-
-//    // no necessary to implement
-//    qDebug() << "-----> WARNING: USING UNIMPLEMENTED METHOD! <-----";
-    //    return HTTP_METHOD_NOT_ALLOWED;
+    if(parser.function == "deleteImageByUuid"){
+        QString uuidForDel = parser.params.value(PROP_IMG_UUID).toString();
+        bool isExctd = deleteImageByUuid(uuidForDel);
+        return isExctd ? HTTP_OK : HTTP_INTERNAL_SERVER_ERROR;
+    }
+    else return HTTP_METHOD_NOT_ALLOWED;
 }
 
 bool dis::ImageAPI::deleteImageUuid(const QString &uuid){
