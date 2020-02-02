@@ -3,7 +3,6 @@
 
 #include <QString>
 
-#include "../Common/unique.h"
 #include "../Common/Constants.h"
 #include "../Primitives/IPrimitive.h"
 #include "../Server/HttpParser.h"

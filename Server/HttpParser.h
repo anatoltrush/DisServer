@@ -2,7 +2,6 @@
 #define HTTPPARSER_H
 
 #include "../Common/Constants.h"
-#include "../Common/unique.h"
 #include "../Primitives/Discussion.h"
 #include "../Primitives/Answer.h"
 #include "../Primitives/Comment.h"
